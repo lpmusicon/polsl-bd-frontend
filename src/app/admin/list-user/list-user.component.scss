@@ -1,0 +1,9 @@
+mat-toolbar {
+    display: flex;
+    span.flex {
+        flex: 1 0 auto;
+    }
+    button:not(:last-child) {
+        margin: 0 12px;
+    }
+}
