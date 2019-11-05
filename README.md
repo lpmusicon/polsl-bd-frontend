@@ -1,6 +1,18 @@
-# BdUbiquitousWaffleFrontend
+# Frontend do naszego ładnego projektu z BD
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
+## Nauka matołki
+
+Kompletny start: [AngularIO](https://angular.io/start)
+Pierwsze kroki: [AngularIO pt2](https://angular.io/tutorial)
+Routing: [Routing](https://angular.io/guide/router)
+Material: [Material](https://material.angular.io/guides)
+Material Komponenty: [Komponenty](https://material.angular.io/components/categories)
+
+
+## Wymagania
+
+[NodeJS](https://nodejs.org/en/)
+[AngularCLI](https://cli.angular.io)
 
 ## Development server
 
