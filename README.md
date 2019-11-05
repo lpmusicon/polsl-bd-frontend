@@ -1,12 +1,26 @@
 # Frontend do naszego ładnego projektu z BD
 
+## Polecany Soft
+
+[GitKraken](https://www.gitkraken.com)
+
+[VS Code](https://code.visualstudio.com)
+
+[Ubuntu for Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+
 ## Nauka matołki
 
 Kompletny start: [AngularIO](https://angular.io/start)
+
 Pierwsze kroki: [AngularIO pt2](https://angular.io/tutorial)
+
 Routing: [Routing](https://angular.io/guide/router)
+
 Material: [Material](https://material.angular.io/guides)
+
 Material Komponenty: [Komponenty](https://material.angular.io/components/categories)
+
 
 
 ## Wymagania
