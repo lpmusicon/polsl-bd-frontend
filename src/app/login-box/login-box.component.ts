@@ -17,7 +17,6 @@ export class LoginBoxComponent implements OnInit {
 
 
   public onSubmit(event: any): void {
-    console.log("Hello!", event);
     this.router.navigateByUrl('admin');
   }
 }

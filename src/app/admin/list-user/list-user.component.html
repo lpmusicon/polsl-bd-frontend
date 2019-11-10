@@ -1,1 +1,30 @@
-<mat-toolbar><span>Super Panel Kontrolny NASA</span><span class="flex"></span><button mat-button>Dodaj użyszkodnika</button><button mat-raised-button>Zdetonuj sesję</button></mat-toolbar>
+<mat-toolbar>
+    <span>Super Panel Kontrolny NASA</span>
+    <span class="flex"></span>
+    <button mat-button [routerLink]="['admin/add-user']">Dodaj użyszkodnika</button>
+    <button mat-raised-button>Zdetonuj sesję</button>
+</mat-toolbar>
+
+
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <mat-list>
+            <mat-form-field matSubheader>
+                <input matInput placeholder="Nazwa użytkownika" />
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <h2 matLine>Marcinex</h2>
+                <p matLine>Lekarz</p>
+                <span class="flex"></span>
+                <button type="submit" mat-raised-button>Zarządzaj</button>
+            </mat-list-item>
+            <mat-list-item>
+                <h2 matLine>Marcinexv2</h2>
+                <p matLine>Helikopter Apache</p>
+                <span class="flex"></span>
+                <button type="submit" mat-raised-button>Zarządzaj</button>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

@@ -26,7 +26,7 @@ import { RecepcjaModule } from './recepcja/recepcja.module';
     MaterialModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
