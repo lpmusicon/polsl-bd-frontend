@@ -1,12 +1,15 @@
-<mat-toolbar>
-    <span>Dodawanie użytkownika</span>
-    <span class="flex"></span>
-    <button mat-raised-button>Zdetonuj sesję</button>
-</mat-toolbar>
 <div class="wrapper">
+    <mat-toolbar>
+        <span>Dodawanie użytkownika</span>
+        <span class="flex"></span>
+        <button mat-raised-button>Zdetonuj sesję</button>
+    </mat-toolbar>
     <div class="inner-wrapper">
         <form (submit)="onSubmit($event)">
             <h2>Tworzenie nowego konta</h2>
+            <mat-form-field>
+                <input matInput placeholder="Login użytkownika" required />
+            </mat-form-field>
             <div class="double-input">
                 <mat-form-field>
                     <input matInput placeholder="Imię" required />
