@@ -3,31 +3,33 @@
     <span class="flex"></span>
     <button mat-raised-button>Zdetonuj sesję</button>
 </mat-toolbar>
-
-
 <div class="wrapper">
     <div class="inner-wrapper">
         <form (submit)="onSubmit($event)">
             <h2>Tworzenie nowego konta</h2>
-            <mat-form-field>
-                <input matInput placeholder="Imię" required />
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Nazwisko" required />
-            </mat-form-field>
-            <mat-form-field>
+            <div class="double-input">
+                <mat-form-field>
+                    <input matInput placeholder="Imię" required />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nazwisko" required />
+                </mat-form-field>
+            </div>
+            <div class="double-input">
+                <mat-form-field>
                     <mat-label>Typ konta</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
-                        {{userType.viewValue}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Hasło" type="password" required />
-                <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
-            </mat-form-field>
-            <button type="submit" mat-raised-button>Stwórz użytkownika</button>
+                    <mat-select>
+                        <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
+                            {{userType.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Hasło" type="password" required />
+                    <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
+                </mat-form-field>
+            </div>
+            <button type="submit" mat-raised-button>Dodaj użytkownika</button>
         </form>
     </div>
 </div>
