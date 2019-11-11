@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginBoxComponent } from './login-box/login-box.component';
-import { ListUserComponent } from './admin/list-user/list-user.component';
+
 
 /*
   TO JEST MODUŁ ROUTERA
@@ -10,7 +10,10 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
 */
 const routes: Routes = [
   { path: '', component: LoginBoxComponent },
-  {path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+  { path: 'lab', loadChildren: () => import('./laboratorium/laboratorium.module').then(m => m.LaboratoriumModule)},
+  { path: 'lekarz', loadChildren: () => import('./lekarz/lekarz.module').then(m => m.LekarzModule)},
+  { path: 'recepcja', loadChildren: () => import('./recepcja/recepcja.module').then(m => m.RecepcjaModule)},
 ];
 
 @NgModule({
