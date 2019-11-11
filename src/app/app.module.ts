@@ -11,6 +11,7 @@ import { AdminModule } from './admin/admin.module';
 import { LaboratoriumModule } from './laboratorium/laboratorium.module';
 import { LekarzModule } from './lekarz/lekarz.module';
 import { RecepcjaModule } from './recepcja/recepcja.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RecepcjaModule } from './recepcja/recepcja.module';
     LoginBoxComponent
   ],
   imports: [
+    FormsModule,
     AdminModule,
     LaboratoriumModule,
     LekarzModule,

@@ -6,15 +6,19 @@ import { ResetPasswordUserComponent } from './reset-password-user/reset-password
 import { SetExpiryDateUserComponent } from './set-expiry-date-user/set-expiry-date-user.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { MaterialModule } from '../material/material.module';
+import { ListItemManageComponent } from './list-user/list-item-manage/list-item-manage.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AddUserComponent,
     ListUserComponent,
     ResetPasswordUserComponent,
-    SetExpiryDateUserComponent
+    SetExpiryDateUserComponent,
+    ListItemManageComponent
   ],
   imports: [
+    FormsModule,
     MaterialModule,
     AdminRoutingModule,
     CommonModule

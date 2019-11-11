@@ -6,31 +6,27 @@
         <button mat-raised-button>Zdetonuj sesję</button>
     </mat-toolbar>
     <div class="inner-wrapper">
-        <mat-list>
-            <mat-form-field matSubheader>
-                <input matInput placeholder="Nazwa użytkownika" />
+        <div class="search-box">
+            <mat-form-field>
+                <input matInput (keyup.enter)="filterResults()" [(ngModel)]="filterCriteria" #searchBar="ngModel" placeholder="Nazwa użytkownika" />
             </mat-form-field>
+            <button mat-icon-button (click)="filterResults()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+        <mat-list>
             <mat-divider></mat-divider>
-            <mat-list-item>
-                <h2 matLine>Marcinex</h2>
-                <p matLine>Lekarz</p>
-                <span class="flex"></span>
-                <button mat-raised-button [matMenuTriggerFor]="menu">Zarządzaj</button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                    <button (click)="openResetPasswordDialog()" mat-menu-item>Zresetuj hasło</button>
-                    <button (click)="openSetExpiryDateDialog()" mat-menu-item>Ustaw datę wygaśnięcia konta</button>
-                </mat-menu>
+            <mat-list-item *ngIf="users.length == 0">
+                <h2 matLine>Brak użytkowników</h2>
+                <p matLine>Smutna ta przychodnia</p>
             </mat-list-item>
-            <mat-list-item>
-                <h2 matLine>Marcinexv2</h2>
-                <p matLine>Helikopter Apache</p>
+            <mat-list-item *ngFor="let user of users">
+                <h2 matLine>{{ user.name }}</h2>
+                <p matLine>{{ user.role }}</p>
                 <span class="flex"></span>
-                <button mat-raised-button [matMenuTriggerFor]="menu">Zarządzaj</button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                    <button (click)="openResetPasswordDialog()" mat-menu-item>Zresetuj hasło</button>
-                    <button (click)="openSetExpiryDateDialog()" mat-menu-item>Ustaw datę wygaśnięcia konta</button>
-                </mat-menu>
+                <app-list-item-manage [user-id]="user.id"></app-list-item-manage>
             </mat-list-item>
         </mat-list>
     </div>
 </div>
+

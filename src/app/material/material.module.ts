@@ -10,10 +10,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [],
   imports: [
+    MatIconModule,
     MatSidenavModule,
     MatButtonModule,
     MatInputModule,
@@ -28,6 +30,7 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
     CommonModule
   ],
   exports: [
+    MatIconModule,
     MatToolbarModule,
     MatListModule,
     MatButtonModule,

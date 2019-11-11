@@ -1,0 +1,8 @@
+<button mat-raised-button [matMenuTriggerFor]="menu">Zarządzaj</button>
+
+<mat-menu #menu="matMenu" xPosition="before">
+    <ng-template matMenuContent>
+        <button (click)="openResetPasswordDialog($event)" mat-menu-item>Zresetuj hasło</button>
+        <button (click)="openSetExpiryDateDialog($event)" mat-menu-item>Ustaw datę wygaśnięcia konta</button>
+    </ng-template>
+</mat-menu>
