@@ -7,6 +7,7 @@ div.wrapper {
     min-height: 100vh;
     mat-toolbar {
         display: flex;
+        background-color: #ebebeb;
         span.flex {
             flex: 1 0 auto;
         }
@@ -23,6 +24,9 @@ div.wrapper {
         border: 1px solid rgba(255, 255, 255, 0.03);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
         padding: 24px;
+        h3 {
+            font-weight: 500;
+        }
         div.search-box {
             display: flex;
             flex-direction: row;
@@ -45,14 +49,12 @@ div.wrapper {
                 // background-color: #474747;
                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
                 p {
+                    margin-top: 5px;
                     color: rgb(190, 190, 190);
                 }
             }
-            mat-list-item:nth-child(even) {
-                // background-color: #3a3a3a;
-            }
             mat-list-item:hover {
-                // background-color: #505050;
+                background-color: #f1f1f1;
             }
             h4 {
                 color: #212121;

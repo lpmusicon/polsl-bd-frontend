@@ -1,11 +1,12 @@
 <div class="wrapper">
     <mat-toolbar>
-        <span>Super Panel Kontrolny NASA</span>
+        <span>Panel Administratora</span>
         <span class="flex"></span>
         <button mat-button (click)="openAddUserDialog()">Dodaj użyszkodnika</button>
         <button mat-raised-button>Zdetonuj sesję</button>
     </mat-toolbar>
     <div class="inner-wrapper">
+        <h3>Lista użytkowników</h3>
         <div class="search-box">
             <mat-form-field>
                 <input matInput (keyup.enter)="filterResults()" [(ngModel)]="filterCriteria" #searchBar="ngModel" placeholder="Nazwa użytkownika" />
