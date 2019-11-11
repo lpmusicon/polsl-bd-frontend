@@ -27,8 +27,8 @@
                 <span class="flex"></span>
                 <button mat-raised-button [matMenuTriggerFor]="menu">Zarządzaj</button>
                 <mat-menu #menu="matMenu" xPosition="before">
-                    <button mat-menu-item>Zresetuj hasło</button>
-                    <button mat-menu-item>Ustaw datę wygaśnięcia konta</button>
+                    <button (click)="openResetPasswordDialog()" mat-menu-item>Zresetuj hasło</button>
+                    <button (click)="openSetExpiryDateDialog()" mat-menu-item>Ustaw datę wygaśnięcia konta</button>
                 </mat-menu>
             </mat-list-item>
         </mat-list>

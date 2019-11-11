@@ -20,14 +20,14 @@ export class ListUserComponent implements OnInit {
     const openAddUserDialogRef = this.dialog.open(AddUserComponent, {
       width: '650px',
     });
-    {}
+    
     openAddUserDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
 
   openSetExpiryDateDialog(): void {
-
+    console.log("Hello");
     const openSetExpiryDateDialogRef = this.dialog.open(SetExpiryDateUserComponent, {
       width: '650px',
     });
@@ -39,6 +39,7 @@ export class ListUserComponent implements OnInit {
   }
 
   openResetPasswordDialog(): void {
+    console.log("HI");
     const openResetPasswordDialogRef = this.dialog.open(ResetPasswordUserComponent, {
       width: '650px',
     });
