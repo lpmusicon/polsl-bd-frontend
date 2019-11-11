@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 export interface userType {
   value: string;
@@ -12,7 +13,11 @@ export interface userType {
 })
 export class AddUserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private openAddUserDialogRef: MatDialogRef<AddUserComponent>) { }
+
+  public addUserDialogCancel() {
+    this.openAddUserDialogRef.close();
+  }
 
   ngOnInit() {
   }

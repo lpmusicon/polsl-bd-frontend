@@ -6,6 +6,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [],
@@ -16,6 +20,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatToolbarModule,
     MatListModule,
     MatSelectModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule, 
+    MatRippleModule,
     CommonModule
   ],
   exports: [
@@ -24,7 +33,12 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatInputModule,
     MatSidenavModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule, 
+    MatRippleModule
   ]
 })
 export class MaterialModule { }

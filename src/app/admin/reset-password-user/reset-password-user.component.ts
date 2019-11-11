@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-reset-password-user',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetPasswordUserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private openResetPasswordDialogRef: MatDialogRef<ResetPasswordUserComponent>) { }
+
+  public resetPasswordDialogCancel() {
+    this.openResetPasswordDialogRef.close();
+  }
 
   ngOnInit() {
   }

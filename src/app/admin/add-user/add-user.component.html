@@ -1,9 +1,4 @@
 <div class="wrapper">
-    <mat-toolbar>
-        <span>Dodawanie użytkownika</span>
-        <span class="flex"></span>
-        <button mat-raised-button>Zdetonuj sesję</button>
-    </mat-toolbar>
     <div class="inner-wrapper">
         <form (submit)="onSubmit($event)">
             <h2>Tworzenie nowego konta</h2>
@@ -32,7 +27,11 @@
                     <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
                 </mat-form-field>
             </div>
-            <button type="submit" mat-raised-button>Dodaj użytkownika</button>
+            <div class="double-input">
+                <span class="flex"></span>
+                <button mat-raised-button (click)="addUserDialogCancel()">Anuluj</button>
+                <button type="submit" mat-raised-button>Dodaj użytkownika</button>
+            </div>
         </form>
     </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-set-expiry-date-user',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SetExpiryDateUserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private openSetExpiryDateDialogRef: MatDialogRef<SetExpiryDateUserComponent>) { }
+
+  public setExpiryDateCancel() {
+    this.openSetExpiryDateDialogRef.close();
+  }
 
   ngOnInit() {
   }

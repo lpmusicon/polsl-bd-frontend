@@ -9,15 +9,20 @@ import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [
-    AddUserComponent, 
-    ListUserComponent, 
-    ResetPasswordUserComponent, 
+    AddUserComponent,
+    ListUserComponent,
+    ResetPasswordUserComponent,
     SetExpiryDateUserComponent
   ],
   imports: [
     MaterialModule,
     AdminRoutingModule,
     CommonModule
+  ],
+  entryComponents: [
+    AddUserComponent,
+    ResetPasswordUserComponent,
+    SetExpiryDateUserComponent
   ]
 })
 export class AdminModule { }

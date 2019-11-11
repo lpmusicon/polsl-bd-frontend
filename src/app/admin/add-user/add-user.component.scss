@@ -1,31 +1,17 @@
-mat-toolbar {
-    display: flex;
-    span.flex {
-        flex: 1 0 auto;
-    }
-    button:not(:last-child) {
-        margin: 0 12px;
-    }
-}
 div.wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #363636;
     width: 100%;
     height: 100%;
     div.inner-wrapper {
         width: 100%;
         height: 100%;
-        background: #363636;
         box-sizing: border-box;
-        border: 1px solid rgba(255, 255, 255, 0.03);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
         padding: 24px;
-        padding-top: 40px;
         form {
-            width: 90%;
+            width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -45,6 +31,13 @@ div.wrapper {
                 }  
                 mat-form-field:last-child {
                     margin-left: 8px;
+                }
+                span.flex {
+                    flex: 1 0 auto;
+                }
+                .mat-raised-button:last-child {
+                    margin-left: 20px;
+                    background-color: #c2185b;
                 }
             }
 

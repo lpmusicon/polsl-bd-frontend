@@ -10,7 +10,6 @@ import { AddUserComponent } from './add-user/add-user.component';
 */
 const routes: Routes = [
   { path: 'admin', component: ListUserComponent },
-  { path: 'admin/add-user', component: AddUserComponent },
 ];
 
 @NgModule({
