@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { SetExpiryDateUserComponent } from '../../set-expiry-date-user/set-expiry-date-user.component';
 import { ResetPasswordUserComponent } from '../../reset-password-user/reset-password-user.component';
 
@@ -10,7 +10,7 @@ import { ResetPasswordUserComponent } from '../../reset-password-user/reset-pass
 })
 export class ListItemManageComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   @Input("user-id") public userId: any;
 
@@ -23,7 +23,7 @@ export class ListItemManageComponent implements OnInit {
     });
 
     openSetExpiryDateDialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed', result);
     });
 
   }
@@ -36,7 +36,14 @@ export class ListItemManageComponent implements OnInit {
     });
 
     openResetPasswordDialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed', result);
+      this.openSnackBar("Zresetowano hasło", "FUK GO BAK");
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
     });
   }
 

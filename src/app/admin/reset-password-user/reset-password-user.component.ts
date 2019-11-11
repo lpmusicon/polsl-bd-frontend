@@ -14,6 +14,11 @@ export class ResetPasswordUserComponent implements OnInit {
     this.openResetPasswordDialogRef.close();
   }
 
+  public onSubmit() {
+    console.log("Submit me babe one more time");
+    this.openResetPasswordDialogRef.close({ podajeHaslo: "okon" });
+  }
+
   ngOnInit() {
   }
 

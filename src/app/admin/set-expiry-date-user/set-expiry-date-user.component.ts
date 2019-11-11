@@ -14,6 +14,11 @@ export class SetExpiryDateUserComponent implements OnInit {
     this.openSetExpiryDateDialogRef.close();
   }
 
+  public onSubmit() {
+    console.log("Submit me babe one more time");
+    this.openSetExpiryDateDialogRef.close({ reason: "save" });
+  }
+
   ngOnInit() {
   }
 

@@ -19,6 +19,10 @@ export class AddUserComponent implements OnInit {
     this.openAddUserDialogRef.close();
   }
 
+  public onSubmit() {
+    console.log("Submit me babe one more time");
+  }
+
   ngOnInit() {
   }
 

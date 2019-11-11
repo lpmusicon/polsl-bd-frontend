@@ -46,6 +46,7 @@ export class ListUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    //TODO: Replace by real data
     for(let i = 0; i < 696; i++) {
       this.users.push({ id: i, name: `Name ${i}`, role: "Spadochroniarz "});
     }
