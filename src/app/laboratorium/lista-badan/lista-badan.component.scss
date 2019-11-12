@@ -29,6 +29,9 @@ div.wrapper {
         }
         table {
             width: 100%;
+            td.padd.mat-cell {
+                padding: 8px;
+            }
         }
           
         .mat-form-field {
