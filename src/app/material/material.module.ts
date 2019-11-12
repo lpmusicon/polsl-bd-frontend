@@ -12,10 +12,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [],
   imports: [
+    MatPaginatorModule,
+    MatSortModule,
     MatSnackBarModule,
     MatIconModule,
     MatSidenavModule,
@@ -29,9 +34,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDatepickerModule,
     MatNativeDateModule, 
     MatRippleModule,
+    MatTableModule,
     CommonModule
   ],
   exports: [
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
     MatSnackBarModule,
     MatIconModule,
     MatToolbarModule,

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { SetExpiryDateUserComponent } from '../../set-expiry-date-user/set-expiry-date-user.component';
-import { ResetPasswordUserComponent } from '../../reset-password-user/reset-password-user.component';
+import { AnulujBadanieComponent } from '../../anuluj-badanie/anuluj-badanie.component';
+import { WykonajBadanieComponent } from '../../wykonaj-badanie/wykonaj-badanie.component'
 
 @Component({
   selector: 'app-list-item-manage',
@@ -12,15 +12,15 @@ export class ListItemManageComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
-  @Input("user") public user: any;
+  @Input("lab-examination") public LabExamination: any;
 
   ngOnInit() {}
 
-  openSetExpiryDateDialog(...args): void {
-    console.log("setting for: ", this.user);
-    const openSetExpiryDateDialogRef = this.dialog.open(SetExpiryDateUserComponent, {
+  openCancelLabExaminationDialog(...args): void {
+    console.log("setting for: ", this.LabExamination);
+    const openSetExpiryDateDialogRef = this.dialog.open(AnulujBadanieComponent, {
       width: '650px',
-      data: { user: this.user }
+      data: { user: this.LabExamination }
     });
 
     openSetExpiryDateDialogRef.afterClosed().subscribe(result => {
@@ -29,12 +29,12 @@ export class ListItemManageComponent implements OnInit {
 
   }
 
-  openResetPasswordDialog(...args): void {
+  openMakeLabExaminationDialog(...args): void {
     console.log(args);
-    console.log("setting for: ", this.user);
-    const openResetPasswordDialogRef = this.dialog.open(ResetPasswordUserComponent, {
+    console.log("setting for: ", this.LabExamination);
+    const openResetPasswordDialogRef = this.dialog.open(WykonajBadanieComponent, {
       width: '650px',
-      data: { user: this.user }
+      data: { user: this.LabExamination }
     });
 
     openResetPasswordDialogRef.afterClosed().subscribe(result => {

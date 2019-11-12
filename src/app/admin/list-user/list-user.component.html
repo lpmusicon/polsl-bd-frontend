@@ -2,32 +2,45 @@
     <mat-toolbar>
         <span>Panel Administratora</span>
         <span class="flex"></span>
-        <button mat-button (click)="openAddUserDialog()">Dodaj użyszkodnika</button>
+        <button mat-button (click)="openAddUserDialog()">Dodaj użytkownika</button>
         <button mat-raised-button>Zdetonuj sesję</button>
     </mat-toolbar>
     <div class="inner-wrapper">
         <h3>Lista użytkowników</h3>
-        <div class="search-box">
-            <mat-form-field>
-                <input matInput (keyup.enter)="filterResults()" [(ngModel)]="filterCriteria" #searchBar="ngModel" placeholder="Nazwa użytkownika" />
-            </mat-form-field>
-            <button mat-icon-button (click)="filterResults()">
-                <mat-icon>search</mat-icon>
-            </button>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <div>
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa użytkownika </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ konta </th>
+                    <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
+                    <td mat-cell *matCellDef="let user">
+                        <app-list-item-manage [user]="user"></app-list-item-manage>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <div id="scroll">
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </div>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
-        <mat-list>
-            <mat-divider></mat-divider>
-            <mat-list-item *ngIf="users.length == 0">
-                <h2 matLine>Brak użytkowników</h2>
-                <p matLine>Smutna ta przychodnia</p>
-            </mat-list-item>
-            <mat-list-item *ngFor="let user of users">
-                <h2 matLine>{{ user.name }}</h2>
-                <p matLine>{{ user.role }}</p>
-                <span class="flex"></span>
-                <app-list-item-manage [user-id]="user.id"></app-list-item-manage>
-            </mat-list-item>
-        </mat-list>
     </div>
 </div>
-
