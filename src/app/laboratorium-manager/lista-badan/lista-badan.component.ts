@@ -13,6 +13,7 @@ export interface KLabExamination {
   type: string;
   madeBy: string;
   result: string;
+  examDate: string;
   actions: any;
 }
 
@@ -35,7 +36,7 @@ export class ListaBadanComponent implements OnInit {
 
   public KLabExaminations: KLabExamination[] = [];
 
-  displayedColumns: string[] = ['position', 'comment', 'date', 'type', 'worker', 'result', 'actions'];
+  displayedColumns: string[] = ['position', 'comment', 'orDate', 'type', 'worker', 'result', 'examDate', 'actions'];
   dataSource = new MatTableDataSource(this.KLabExaminations);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -48,7 +49,7 @@ export class ListaBadanComponent implements OnInit {
   ngOnInit() {
 
     for(let i = 0; i < 696; i++) {
-      this.KLabExaminations.push({ id: i, docComment: `Leżę na sklocie w kontenerze z ${i}-ma Rumunami gorzała leci 10-ocio l. Bongo się kopci na psie kurwa dredy pierdolniety jamajczyk mu zrobił ?! I chuj. Jakiś chyba ?? Węgier ssie mi palca u nogi ??! Jebla idzie dostać. Trzymajcie się w tej Anglii !!!`, orderDate: '11/13/2019', type: "Badanie krwi", madeBy: "Twój Stary", result: "Dostał jebla", actions:""});
+      this.KLabExaminations.push({ id: i, docComment: `Leżę na sklocie w kontenerze z ${i}-ma Rumunami gorzała leci 10-ocio l. Bongo się kopci na psie kurwa dredy pierdolniety jamajczyk mu zrobił ?! I chuj. Jakiś chyba ?? Węgier ssie mi palca u nogi ??! Jebla idzie dostać. Trzymajcie się w tej Anglii !!!`, orderDate: '11/13/2019', type: "Badanie krwi", madeBy: "Twój Stary", result: "Dostał jebla", examDate: '11/13/2020', actions:""});
     }
 
     this.dataSource.paginator = this.paginator;

@@ -22,7 +22,7 @@
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.docComment}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="date">
+            <ng-container matColumnDef="orDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zlecenia </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.orderDate}} </td>
             </ng-container>
@@ -40,6 +40,11 @@
             <ng-container matColumnDef="result">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik badania </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="examDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wykonania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.examDate}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
