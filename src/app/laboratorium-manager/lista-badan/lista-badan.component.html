@@ -1,6 +1,6 @@
 <div class="wrapper">
     <mat-toolbar>
-        <span>Panel Laboratorium</span>
+        <span>Panel Kierownika Laboratorium</span>
         <span class="flex"></span>
         <button mat-raised-button>Zdetonuj sesję</button>
     </mat-toolbar>
@@ -30,6 +30,16 @@
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.type}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="worker">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Pracownik </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.madeBy}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="result">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik badania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AnulujBadanieComponent } from '../../anuluj-badanie/anuluj-badanie.component';
-import { WykonajBadanieComponent } from '../../wykonaj-badanie/wykonaj-badanie.component'
+import { ZatwierdzBadanieComponent } from '../../zatwierdz-badanie/zatwierdz-badanie.component'
 
 @Component({
   selector: 'app-list-item-manage',
@@ -12,32 +12,32 @@ export class ListItemManageComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
-  @Input("lab-examination") public LabExamination: any;
+  @Input("lab-examination") public KLabExamination: any;
 
   ngOnInit() {}
 
   openCancelLabExaminationDialog(...args): void {
-    console.log("setting for: ", this.LabExamination);
-    const openSetExpiryDateDialogRef = this.dialog.open(AnulujBadanieComponent, {
+    console.log("setting for: ", this.KLabExamination);
+    const openCancelLabExaminationDialogRef = this.dialog.open(AnulujBadanieComponent, {
       width: '650px',
-      data: { LabExamination: this.LabExamination }
+      data: { LabExamination: this.KLabExamination }
     });
 
-    openSetExpiryDateDialogRef.afterClosed().subscribe(result => {
+    openCancelLabExaminationDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
 
   }
 
-  openMakeLabExaminationDialog(...args): void {
+  openCommitLabExaminationDialog(...args): void {
     console.log(args);
-    console.log("setting for: ", this.LabExamination);
-    const openResetPasswordDialogRef = this.dialog.open(WykonajBadanieComponent, {
+    console.log("setting for: ", this.KLabExamination);
+    const openCommitLabExaminationDialogRef = this.dialog.open(ZatwierdzBadanieComponent, {
       width: '650px',
-      data: { LabExamination: this.LabExamination }
+      data: { LabExamination: this.KLabExamination }
     });
 
-    openResetPasswordDialogRef.afterClosed().subscribe(result => {
+    openCommitLabExaminationDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
   }

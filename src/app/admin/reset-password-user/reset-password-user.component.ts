@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
-import {MAT_DIALOG_DATA} from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { Inject } from '@angular/core';
 
 @Component({
@@ -19,7 +19,6 @@ export class ResetPasswordUserComponent implements OnInit {
 
   public onSubmit() {
     console.log("Submit me babe one more time");
-    console.log("");
     this.openResetPasswordDialogRef.close({ reason: "save" });
     this.openSnackBar("Hasło użytkownika "+ this.data.user.name +" zostało zresetowane", "Ok");
   }

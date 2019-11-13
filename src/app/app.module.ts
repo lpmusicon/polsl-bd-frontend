@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material/material.module';
 import { AdminModule } from './admin/admin.module';
 import { LaboratoriumModule } from './laboratorium/laboratorium.module';
+import { LaboratoriumManagerModule } from "./laboratorium-manager/laboratorium-manager.module";
 import { LekarzModule } from './lekarz/lekarz.module';
 import { RecepcjaModule } from './recepcja/recepcja.module';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     AdminModule,
     LaboratoriumModule,
+    LaboratoriumManagerModule,
     LekarzModule,
     RecepcjaModule,
     BrowserModule,
