@@ -1,6 +1,6 @@
 <div class="wrapper">
         <div class="inner-wrapper">
-            <form (submit)="onSubmit($event)">
+            <form (submit)="onSubmit($event)" ngNativeValidate>
                 <h2>Zatwierdzanie badania</h2>
                 <span>Badanie nr {{ data.LabExamination.id }}</span>
                 <span>Typ badania: {{ data.LabExamination.type }}</span>

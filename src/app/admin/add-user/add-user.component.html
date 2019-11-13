@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="inner-wrapper">
-        <form (submit)="onSubmit($event)">
+        <form (submit)="onSubmit($event)" ngNativeValidate> 
             <h2>Tworzenie nowego konta</h2>
             <mat-form-field>
                 <input matInput placeholder="Login użytkownika" required />
@@ -30,7 +30,7 @@
             <div class="double-input">
                 <span class="flex"></span>
                 <button type="button" mat-raised-button (click)="addUserDialogCancel()">Anuluj</button>
-                <button type="submit" mat-raised-button>Dodaj użytkownika</button>
+                <button mat-raised-button>Dodaj użytkownika</button>
             </div>
         </form>
     </div>
