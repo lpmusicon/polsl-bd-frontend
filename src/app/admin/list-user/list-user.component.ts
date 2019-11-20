@@ -1,17 +1,13 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AddUserComponent } from '../add-user/add-user.component';
-
-interface User {
-  id: number;
-  name: string;
-  role: string;
-  actions: any;
-}
+import { DbCommunicationService } from 'src/app/db-communication.service';
+import { UserDTO } from 'src/app/DTO/UserDto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-list-user',
@@ -21,11 +17,15 @@ interface User {
 })
 export class ListUserComponent implements OnInit {
 
-  public users: User[] = [];
+  public users: UserDTO[] = [];
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) { 
+  constructor(
+    public dialog: MatDialog,
+    private _router: Router,
+    private route: ActivatedRoute,
+    private _db: DbCommunicationService) {
     this.route.queryParams.subscribe(params => {
-      if(params["user"]) {
+      if (params["user"]) {
         console.log("User: ", params["user"]);
       }
       console.log(params);
@@ -35,14 +35,14 @@ export class ListUserComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'role', 'actions'];
   dataSource = new MatTableDataSource(this.users);
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   openAddUserDialog(): void {
     const openAddUserDialogRef = this.dialog.open(AddUserComponent, {
       width: '650px',
     });
-    
+
     openAddUserDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
@@ -53,14 +53,30 @@ export class ListUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    //TODO: Replace by real data
-    for(let i = 0; i < 696; i++) {
-      this.users.push({ id: i, name: `Name ${i}`, role: "Spadochroniarz", actions:""});
-    }
+    this._db.UserAll().subscribe({
+      next: this.handleData.bind(this),
+      error: this.handleError.bind(this)
+    })
 
+  }
+
+  private handleData(data: UserDTO[])
+  {
+    console.log(data);
+    this.users = data;
+    this.dataSource = new MatTableDataSource(this.users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
 
+  private handleError(err: HttpErrorResponse)
+  {
+    console.warn(err);
+  }
+
+  public logout(): void {
+    this._db.logout();
+    this._router.navigate(['/']);
   }
 
 }

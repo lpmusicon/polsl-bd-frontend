@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListaWizytComponent } from './lista-wizyt/lista-wizyt.component';
+import { DoctorGuard } from '../Guard/doctor-guard';
+import { RouteGuard } from '../Guard/route-guard';
 
 /*
   TO JEST MODUŁ ROUTERA
@@ -8,7 +10,7 @@ import { ListaWizytComponent } from './lista-wizyt/lista-wizyt.component';
   A PRZYNAJMNIEJ STANDARDOWE ENDPOINTY
 */
 const routes: Routes = [
-  { path: 'lekarz', component: ListaWizytComponent },
+  { path: 'lekarz', canActivate: [RouteGuard, DoctorGuard], canLoad: [RouteGuard, DoctorGuard], component: ListaWizytComponent },
 ];
 
 @NgModule({

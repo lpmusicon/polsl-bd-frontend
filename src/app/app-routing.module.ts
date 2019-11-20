@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginBoxComponent } from './login-box/login-box.component';
+import { RouteGuard } from './Guard/route-guard';
 
 
 /*

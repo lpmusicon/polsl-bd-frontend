@@ -20,7 +20,7 @@ export class ListItemManageComponent implements OnInit {
     console.log("setting for: ", this.user);
     const openSetExpiryDateDialogRef = this.dialog.open(SetExpiryDateUserComponent, {
       width: '650px',
-      data: { user: this.user }
+      data: this.user
     });
 
     openSetExpiryDateDialogRef.afterClosed().subscribe(result => {
@@ -34,7 +34,7 @@ export class ListItemManageComponent implements OnInit {
     console.log("setting for: ", this.user);
     const openResetPasswordDialogRef = this.dialog.open(ResetPasswordUserComponent, {
       width: '650px',
-      data: { user: this.user }
+      data: this.user
     });
 
     openResetPasswordDialogRef.afterClosed().subscribe(result => {

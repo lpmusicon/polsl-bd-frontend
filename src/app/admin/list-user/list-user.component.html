@@ -3,7 +3,7 @@
         <span>Panel Administratora</span>
         <span class="flex"></span>
         <button mat-button (click)="openAddUserDialog()">Dodaj użytkownika</button>
-        <button mat-raised-button>Zdetonuj sesję</button>
+        <button mat-raised-button (click)="logout()">💣 Zdetonuj sesję 💣</button>
     </mat-toolbar>
     <div class="inner-wrapper">
         <h3>Lista użytkowników</h3>
@@ -15,12 +15,12 @@
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa użytkownika </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.login}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="role">

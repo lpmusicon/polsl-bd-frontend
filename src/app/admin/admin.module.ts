@@ -7,7 +7,7 @@ import { SetExpiryDateUserComponent } from './set-expiry-date-user/set-expiry-da
 import { AdminRoutingModule } from './admin-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { ListItemManageComponent } from './list-user/list-item-manage/list-item-manage.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     AdminRoutingModule,
     CommonModule

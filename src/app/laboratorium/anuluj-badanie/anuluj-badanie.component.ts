@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-anuluj-badanie',
@@ -8,7 +8,10 @@ import { MatDialogRef, MatSnackBar } from '@angular/material';
 })
 export class AnulujBadanieComponent implements OnInit {
 
-  constructor(private openResetPasswordDialogRef: MatDialogRef<AnulujBadanieComponent>, private _snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    private openResetPasswordDialogRef: MatDialogRef<AnulujBadanieComponent>, 
+    private _snackBar: MatSnackBar, 
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
