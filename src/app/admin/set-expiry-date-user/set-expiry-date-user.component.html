@@ -1,10 +1,10 @@
 <div class="wrapper">
     <div class="inner-wrapper">
-        <form (submit)="onSubmit($event)" ngNativeValidate>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <h2>Ustaw datę wygaśnięcia konta</h2>
-            <span>Użytkownik {{ data.user.name }} ({{ data.user.role }})</span>
+            <span>Użytkownik {{ user.login }} ({{ user.role }})</span>
             <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Wybierz datę" required>
+                    <input formControlName="disabledTo" matInput [matDatepicker]="picker" placeholder="Wybierz datę" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>

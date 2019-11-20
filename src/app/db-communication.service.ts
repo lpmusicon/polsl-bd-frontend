@@ -6,6 +6,7 @@ import { ILogin } from './Form/ILogin';
 import { map } from 'rxjs/operators';
 import { UserDTO } from './DTO/UserDto';
 import { INewPassword } from './Form/INewPassword';
+import { IDisabledTo } from './Form/IDisabledTo';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,10 @@ export class DbCommunicationService {
 
   public UserPasswd(userId: number, newPassword: INewPassword): Observable<any> {
     return this.http.patch<any>(`https://localhost:5001/user/${userId}/passwd`, newPassword);
+  }
+
+  public UserDisable(userId: number, newDisabled: IDisabledTo): Observable<any> {
+    return this.http.patch<any>(`https://localhost:5001/user/${userId}/disable`, newDisabled);
   }
 
   

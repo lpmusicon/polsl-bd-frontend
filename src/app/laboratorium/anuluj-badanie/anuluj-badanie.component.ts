@@ -9,7 +9,7 @@ import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 export class AnulujBadanieComponent implements OnInit {
 
   constructor(
-    private openResetPasswordDialogRef: MatDialogRef<AnulujBadanieComponent>, 
+    private openCancelLabExamination: MatDialogRef<AnulujBadanieComponent>, 
     private _snackBar: MatSnackBar, 
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
