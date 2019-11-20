@@ -1,16 +1,14 @@
 <div class="wrapper">
         <div class="inner-wrapper">
             <form (submit)="onSubmit($event)" ngNativeValidate>
-                <h2>Anulowanie badania</h2>
+                <h2>Zatwierdzanie badania</h2>
                 <span>Badanie nr {{ data.LabExamination.id }}</span>
                 <span>Typ badania: {{ data.LabExamination.type }}</span>
-                <mat-form-field>
-                    <input matInput placeholder="Podaj powód" type="text" required />
-                </mat-form-field>
+                <h2>Czy potwierdzasz że badanie zostało wykonane poprawnie?</h2>
                 <div class="double-input">
                     <span class="flex"></span>
-                    <button type="button" mat-raised-button (click)="cancelLabExaminationAbort()">Anuluj</button>
-                    <button type="submit" mat-raised-button>Zapisz</button>
+                    <button type="button" mat-raised-button (click)="cancelCommitLabExamination()">Nie</button>
+                    <button type="submit" mat-raised-button>Tak</button>
                 </div>
             </form>
         </div>

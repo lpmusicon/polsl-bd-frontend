@@ -1,1 +1,17 @@
-<p>wykonaj-badanie works!</p>
+<div class="wrapper">
+        <div class="inner-wrapper">
+            <form (submit)="onSubmit($event)" ngNativeValidate>
+                <h2>Wprowadź wynik badania</h2>
+                <span>Badanie nr {{ data.LabExamination.id }}</span>
+                <span>Typ badania: {{ data.LabExamination.type }}</span>
+                <mat-form-field>
+                    <input matInput placeholder="Wynik badania" type="text" required />
+                </mat-form-field>
+                <div class="double-input">
+                    <span class="flex"></span>
+                    <button type="button" mat-raised-button (click)="cancelLabExaminationAbort()">Anuluj</button>
+                    <button type="submit" mat-raised-button>Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </div>
