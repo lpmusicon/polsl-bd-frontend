@@ -1,1 +1,44 @@
-<p>dodaj-wizyte works!</p>
+<div class="wrapper">
+    <mat-toolbar>
+        <span>Panel Recepcji</span>
+        <span class="flex"></span>
+        <button mat-raised-button>Zdetonuj sesję</button>
+    </mat-toolbar>
+    <div class="inner-wrapper">
+        <form (submit)="onSubmit($event)" ngNativeValidate>
+            <h2>Tworzenie nowej wizyty</h2>
+            <mat-divider></mat-divider>
+            <h3>Wybierz pacjenta</h3>
+            <mat-form-field>
+                <mat-select [disableOptionCentering]="true" #select1 placeholder="Pacjent">
+                    <mat-select-filter *ngIf="select1.focused" [array]="patients"
+                        (filteredReturn)="filteredList1 =$event" [displayMember]="'viewValue'"></mat-select-filter>
+                    <mat-option *ngFor="let item of filteredList1" [value]="item">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <span>Pacjent nie znajduje się na liście?</span>
+            <div class="single-input">
+                <button mat-raised-button type="button" (click)="openAddPatientDialog()">Dodaj pacjenta</button>
+            </div>
+            <br>
+            <h3>Wybierz lekarza</h3>
+            <mat-form-field>
+                <mat-select [disableOptionCentering]="true" #select2 placeholder="Lekarz">
+                    <mat-select-filter *ngIf="select2.focused" [array]="doctors"
+                        (filteredReturn)="filteredList2 =$event" [displayMember]="'viewValue'"></mat-select-filter>
+                    <mat-option *ngFor="let item of filteredList2" [value]="item">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="double-input">
+                <span class="flex"></span>
+                <button type="button" mat-raised-button [routerLink]="'/recepcja'">Anuluj</button>
+                <button mat-raised-button>Dodaj wizytę</button>
+            </div>
+        </form>
+    </div>
+</div>

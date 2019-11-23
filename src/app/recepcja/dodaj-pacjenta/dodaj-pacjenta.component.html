@@ -1,1 +1,20 @@
-<p>dodaj-pacjenta works!</p>
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <form (submit)="onSubmit($event)" ngNativeValidate> 
+            <h2>Dodawanie nowego pacjenta do bazy</h2>
+            <div class="double-input">
+                <mat-form-field>
+                    <input matInput placeholder="Imię" required />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nazwisko" required />
+                </mat-form-field>
+            </div>
+            <div class="double-input">
+                <span class="flex"></span>
+                <button type="button" mat-raised-button (click)="addPatientDialogCancel()">Anuluj</button>
+                <button mat-raised-button>Dodaj pacjenta</button>
+            </div>
+        </form>
+    </div>
+</div>

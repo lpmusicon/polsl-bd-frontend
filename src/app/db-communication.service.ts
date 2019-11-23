@@ -18,7 +18,7 @@ export class DbCommunicationService {
   }
 
   public authenticate(iLogin: ILogin): Observable<AuthDTO> {
-    return this.http.post<AuthDTO>("https://localhost:5001/user/authenticate", iLogin)
+    return this.http.post<AuthDTO>("http://localhost:5000/user/authenticate", iLogin)
       .pipe(
         map((dto: AuthDTO) => {
           dto.disabledTo = new Date(dto.disabledTo);
@@ -29,7 +29,7 @@ export class DbCommunicationService {
   }
 
   public UserAll(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>("https://localhost:5001/user/all")
+    return this.http.get<UserDTO[]>("http://localhost:5000/user/all")
       .pipe(
         map((dtos: UserDTO[]) => {
           dtos.map((dto: UserDTO) => { dto.disabledTo = new Date(dto.disabledTo); return dto; });
@@ -39,11 +39,11 @@ export class DbCommunicationService {
   }
 
   public UserPasswd(userId: number, newPassword: INewPassword): Observable<any> {
-    return this.http.patch<any>(`https://localhost:5001/user/${userId}/passwd`, newPassword);
+    return this.http.patch<any>(`http://localhost:5000/user/${userId}/passwd`, newPassword);
   }
 
   public UserDisable(userId: number, newDisabled: IDisabledTo): Observable<any> {
-    return this.http.patch<any>(`https://localhost:5001/user/${userId}/disable`, newDisabled);
+    return this.http.patch<any>(`http://localhost:5000/user/${userId}/disable`, newDisabled);
   }
 
   

@@ -20,6 +20,7 @@ import { DoctorGuard } from './Guard/doctor-guard';
 import { LabWGuard } from './Guard/labw-guard';
 import { LabMGuard } from './Guard/labm-guard';
 import { RecpGuard } from './Guard/recp-guard';
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { RecpGuard } from './Guard/recp-guard';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatSelectFilterModule,
   ],
   providers: [
     RouteGuard,
