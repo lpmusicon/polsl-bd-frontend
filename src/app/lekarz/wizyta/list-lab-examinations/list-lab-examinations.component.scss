@@ -1,31 +1,41 @@
 div.wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    background: #fff;
     width: 100%;
+    mat-toolbar {
+        display: flex;
+        background-color: #ebebeb;
+        span.flex {
+            flex: 1 0 auto;
+        }
+        button:not(:last-child) {
+            margin: 0 12px;
+        }
+    }
     div.inner-wrapper {
         width: 100%;
         height: 100%;
+        
+        background: #fff;
         box-sizing: border-box;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        //box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
         padding: 24px;
-        padding-top: 40px;
+        h3 {
+            font-weight: 500;
+        }
         span {
-            margin: 20px 0;
+            line-height: 150%;
         }
         form {
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
             mat-form-field {
-                margin-top: 10px;
-                flex: 1 0 auto;
+                textarea {
+                    margin-top: 25px;
+                    min-height: 50px;
+                }
             }
-            span.flex {
-                flex: 1 0 auto;
-            }
-
             div.double-input {
                 display: flex;
                 flex-direction: row;
@@ -47,6 +57,7 @@ div.wrapper {
                     background-color: #3f51b5;
                 }
             }
+
             h2 {
                 margin: 0;
                 padding: 0;
@@ -56,6 +67,22 @@ div.wrapper {
             button {
                 margin-top: 20px;
             }
-        }  
+        }
+        table {
+            width: 100%;
+            td.padd.mat-cell {
+                padding: 8px;
+                text-align: justify;
+                max-width: 400px;
+            }
+            th.mat-header-cell {
+                padding: 8px;
+            }
+        }
+          
+        .mat-form-field {
+            font-size: 14px;
+            width: 100%;
+        }
     }
 }

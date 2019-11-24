@@ -1,0 +1,41 @@
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="examinations" matSort>
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="doc_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Wykonano przez </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Typ badania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.type}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="result">
+                <th mat-header-cell *matHeaderCellDef> Wynik </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data badania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="examinationsDisplayedColumns"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: examinationsDisplayedColumns;"></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
