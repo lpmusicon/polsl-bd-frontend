@@ -1,1 +1,50 @@
-Jestem lekarzę
+<div class="wrapper">
+    <mat-toolbar>
+        <span>Panel Lekarza</span>
+        <span class="flex"></span>
+        <button mat-raised-button>Zdetonuj sesję</button>
+    </mat-toolbar>
+    <div class="inner-wrapper">
+        <h3>Lista Wizyt</h3>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj" value="">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="pat_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Pacjent </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="doc_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data rejestracji </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
+                <td class="padd" mat-cell *matCellDef="let element"> 
+                    <button mat-raised-button (click)="openStartVisitDialog(element, $event)">Rozpocznij wizytę</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="wrapper">
+        <div class="inner-wrapper">
+            <form (submit)="onSubmit($event)" ngNativeValidate>
+                <h2>Badanie dla: {{ data.patId }}</h2><br>
+                <h2>Wybierz typ badania laboratoryjnego</h2>
+                <mat-form-field>
+                    <mat-label>Typ badania</mat-label>
+                    <mat-select required>
+                        <mat-option *ngFor="let examType of examTypes" [value]="examType.value">
+                            {{examType.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="double-input">
+                    <span class="flex"></span>
+                    <button type="button" mat-raised-button (click)="cancelAddLabExamination()">Anuluj</button>
+                    <button type="submit" mat-raised-button>Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </div>

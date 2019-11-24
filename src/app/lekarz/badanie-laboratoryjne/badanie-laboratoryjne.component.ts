@@ -7,26 +7,26 @@ export interface examType {
 }
 
 @Component({
-  selector: 'app-badanie-fizykalne',
-  templateUrl: './badanie-fizykalne.component.html',
-  styleUrls: ['./badanie-fizykalne.component.scss']
+  selector: 'app-badanie-laboratoryjne',
+  templateUrl: './badanie-laboratoryjne.component.html',
+  styleUrls: ['./badanie-laboratoryjne.component.scss']
 })
-export class BadanieFizykalneComponent implements OnInit {
+export class BadanieLaboratoryjneComponent implements OnInit {
 
   constructor(
-    private openAddExaminationRef: MatDialogRef<BadanieFizykalneComponent>, 
+    private openAddLabExaminationRef: MatDialogRef<BadanieLaboratoryjneComponent>, 
     private _snackBar: MatSnackBar, 
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  public cancelAddExamination() {
-    this.openAddExaminationRef.close({ reason: "cancel" });
+  public cancelAddLabExamination() {
+    this.openAddLabExaminationRef.close({ reason: "cancel" });
     this.openSnackBar("Anulowano", "Ok");
   }
 
   public onSubmit() {
     console.log("Submit me babe one more time");
-    this.openAddExaminationRef.close({ reason: "save" });
-    this.openSnackBar("Badanie zostało wykonane", "Ok");
+    this.openAddLabExaminationRef.close({ reason: "save" });
+    this.openSnackBar("Badanie zostało zlecone", "Ok");
   }
 
   ngOnInit() {

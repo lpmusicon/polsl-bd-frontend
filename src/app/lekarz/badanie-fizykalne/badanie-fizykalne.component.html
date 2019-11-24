@@ -1,1 +1,25 @@
-<p>badanie-fizykalne works!</p>
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <form (submit)="onSubmit($event)" ngNativeValidate>
+            <h2>Badanie dla: {{ data.patId }}</h2><br>
+            <h2>Wybierz typ badania fizykalnego</h2>
+            <mat-form-field>
+                <mat-label>Typ badania</mat-label>
+                <mat-select required>
+                    <mat-option *ngFor="let examType of examTypes" [value]="examType.value">
+                        {{examType.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <h2>Wprowadź wynik badania</h2>
+            <mat-form-field>
+                <input matInput placeholder="Wynik badania" type="text" required />
+            </mat-form-field>
+            <div class="double-input">
+                <span class="flex"></span>
+                <button type="button" mat-raised-button (click)="cancelAddExamination()">Anuluj</button>
+                <button type="submit" mat-raised-button>Zapisz</button>
+            </div>
+        </form>
+    </div>
+</div>

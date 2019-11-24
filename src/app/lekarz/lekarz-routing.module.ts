@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ListaWizytComponent } from './lista-wizyt/lista-wizyt.component';
 import { DoctorGuard } from '../Guard/doctor-guard';
 import { RouteGuard } from '../Guard/route-guard';
+import { WizytaComponent } from './wizyta/wizyta.component';
 
 /*
   TO JEST MODUŁ ROUTERA
@@ -11,6 +12,7 @@ import { RouteGuard } from '../Guard/route-guard';
 */
 const routes: Routes = [
   { path: 'lekarz', canActivate: [RouteGuard, DoctorGuard], canLoad: [RouteGuard, DoctorGuard], component: ListaWizytComponent },
+  { path: 'lekarz/wizyta/:id', canActivate: [RouteGuard, DoctorGuard], canLoad: [RouteGuard, DoctorGuard], component: WizytaComponent },
 ];
 
 @NgModule({

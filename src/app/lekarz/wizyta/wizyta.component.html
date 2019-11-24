@@ -1,1 +1,165 @@
-<p>wizyta works!</p>
+<div class="wrapper">
+    <mat-toolbar>
+        <span>Panel Lekarza</span>
+        <span class="flex"></span>
+        <button mat-raised-button>Zdetonuj sesję</button>
+    </mat-toolbar>
+    <div class="inner-wrapper">
+
+        <h3>Dane wizyty</h3>
+        <span>Numer wizyty: {{ data }}</span><br>
+        <span>Data rejestracji: </span><br>
+        <span>Imię i nazwisko pacjenta: </span><br>
+
+        <form (submit)="onSubmit($event)" ngNativeValidate>
+            <mat-form-field>
+                <textarea matInput placeholder="Opis wizyty" type="text" required></textarea>
+            </mat-form-field>
+
+            <h3>Lista poprzednich wizyt pacjenta</h3>
+            <div>
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <table mat-table [dataSource]="visits" matSort>
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="doc_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef> Opis wizyty </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.desc}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="diagnose">
+                        <th mat-header-cell *matHeaderCellDef> Diagnoza </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.diagnose}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wizyty </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="visitsDisplayedColumns"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: visitsDisplayedColumns;"></tr>
+
+                </table>
+                <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+            </div>
+            <h3>Badania laboratoryjne</h3>
+
+            <div class="single-input">
+                <button mat-raised-button type="button" (click)="openAddLabExaminationDialog()">Zleć badanie</button>
+            </div>
+            <br>
+            <div>
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <table mat-table [dataSource]="labExaminations" matSort>
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="doc_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Zlecono przez </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="worker_name">
+                        <th mat-header-cell *matHeaderCellDef> Wykonano przez </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.workerName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Typ badania </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.type}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="result">
+                        <th mat-header-cell *matHeaderCellDef> Wynik </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data badania </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="labExaminationsDisplayedColumns"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: labExaminationsDisplayedColumns;"></tr>
+
+                </table>
+                <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+            </div>
+            <h3>Badania fizykalne</h3>
+
+            <div class="single-input">
+                <button mat-raised-button type="button" (click)="openAddExaminationDialog()">Dodaj badanie</button>
+            </div>
+            <br>
+            <div>
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <table mat-table [dataSource]="examinations" matSort>
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="doc_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Wykonano przez </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Typ badania </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.type}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="result">
+                        <th mat-header-cell *matHeaderCellDef> Wynik </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data badania </th>
+                        <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="examinationsDisplayedColumns"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: examinationsDisplayedColumns;"></tr>
+
+                </table>
+                <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+            </div>
+
+            <mat-form-field>
+                <textarea matInput placeholder="Diagnoza" type="text" required></textarea>
+            </mat-form-field>
+            <div class="double-input">
+                <span class="flex"></span>
+                <button type="button" mat-raised-button [routerLink]="'/lekarz'">Anuluj</button>
+                <button type="submit" mat-raised-button>Zakończ wizytę</button>
+            </div>
+        </form>
+    </div>
+</div>
