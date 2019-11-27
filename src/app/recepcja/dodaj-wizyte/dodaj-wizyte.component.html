@@ -5,12 +5,12 @@
         <button mat-raised-button>Zdetonuj sesję</button>
     </mat-toolbar>
     <div class="inner-wrapper">
-        <form (submit)="onSubmit($event)" ngNativeValidate>
+        <form (submit)="onSubmit($event)">
             <h2>Tworzenie nowej wizyty</h2>
-            <mat-divider></mat-divider>
-            <h3>Wybierz pacjenta</h3>
+            <br>
+            <span>Wybierz pacjenta</span>
             <mat-form-field>
-                <mat-select [disableOptionCentering]="true" #select1 placeholder="Pacjent">
+                <mat-select [disableOptionCentering]="true" #select1 placeholder="Pacjent" required>
                     <mat-select-filter *ngIf="select1.focused" [array]="patients"
                         (filteredReturn)="filteredList1 =$event" [displayMember]="'viewValue'"></mat-select-filter>
                     <mat-option *ngFor="let item of filteredList1" [value]="item">
@@ -24,9 +24,9 @@
                 <button mat-raised-button type="button" (click)="openAddPatientDialog()">Dodaj pacjenta</button>
             </div>
             <br>
-            <h3>Wybierz lekarza</h3>
+            <span>Wybierz lekarza</span>
             <mat-form-field>
-                <mat-select [disableOptionCentering]="true" #select2 placeholder="Lekarz">
+                <mat-select [disableOptionCentering]="true" #select2 placeholder="Lekarz" required>
                     <mat-select-filter *ngIf="select2.focused" [array]="doctors"
                         (filteredReturn)="filteredList2 =$event" [displayMember]="'viewValue'"></mat-select-filter>
                     <mat-option *ngFor="let item of filteredList2" [value]="item">
@@ -37,7 +37,7 @@
             <div class="double-input">
                 <span class="flex"></span>
                 <button type="button" mat-raised-button [routerLink]="'/recepcja'">Anuluj</button>
-                <button mat-raised-button>Dodaj wizytę</button>
+                <button type="submit" mat-raised-button>Dodaj wizytę</button>
             </div>
         </form>
     </div>
