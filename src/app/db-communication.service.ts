@@ -7,18 +7,37 @@ import { map } from 'rxjs/operators';
 import { UserDTO } from './DTO/UserDto';
 import { INewPassword } from './Form/INewPassword';
 import { IDisabledTo } from './Form/IDisabledTo';
+import { IUserRegister } from './Form/IUserRegister';
+import { UserRoleDTO } from './DTO/UserRoleDTO';
+import { VisitDTO } from './DTO/VisitDTO';
+import { IVisitRegister } from './Form/IVisitRegister';
+import { IVisitCancel } from './Form/IVisitCancel';
+import { PatientDTO } from './DTO/PatientDTO';
+import { IPatientRegister } from './Form/IPatientRegister';
+import { PatientVisitDTO } from './DTO/PatientVisitDTO';
+import { IVisitClose } from './Form/IVisitClose';
+import { DictionaryDTO } from './DTO/DictionaryDTO';
+import { PhysicalExaminationDTO } from './DTO/PhysicalExaminationDTO';
+import { IExaminationPerform } from './Form/IExaminationPerform';
+import { LaboratoryExaminationDTO } from './DTO/LaboratoryExaminationDTO';
+import { ILaboratoryExamination } from './Form/ILaboratoryExamination';
+import { ILaboratoryExaminationDo } from './Form/ILaboratoryExaminationDo';
+import { ILaboratoryExaminationAbort } from './Form/ILaboratoryExaminationAbort';
+import { ILaboratoryExaminationApprove } from './Form/ILaboratoryExaminationApprove';
+import { ILaboratoryExaminationReject } from './Form/ILaboratoryExaminationReject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbCommunicationService {
   private _user: AuthDTO;
+  private _serverURL: string;
   constructor(private http: HttpClient) {
-
+    this._serverURL = `http://localhost:5000`;
   }
 
   public authenticate(iLogin: ILogin): Observable<AuthDTO> {
-    return this.http.post<AuthDTO>("http://localhost:5000/user/authenticate", iLogin)
+    return this.http.post<AuthDTO>(`${this._serverURL}/user/authenticate`, iLogin)
       .pipe(
         map((dto: AuthDTO) => {
           dto.disabledTo = new Date(dto.disabledTo);
@@ -28,25 +47,6 @@ export class DbCommunicationService {
       );
   }
 
-  public UserAll(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>("http://localhost:5000/user/all")
-      .pipe(
-        map((dtos: UserDTO[]) => {
-          dtos.map((dto: UserDTO) => { dto.disabledTo = new Date(dto.disabledTo); return dto; });
-          return dtos;
-        })
-      );
-  }
-
-  public UserPasswd(userId: number, newPassword: INewPassword): Observable<any> {
-    return this.http.patch<any>(`http://localhost:5000/user/${userId}/passwd`, newPassword);
-  }
-
-  public UserDisable(userId: number, newDisabled: IDisabledTo): Observable<any> {
-    return this.http.patch<any>(`http://localhost:5000/user/${userId}/disable`, newDisabled);
-  }
-
-  
   public setUser(user: AuthDTO): void {
     this._user = user;
   }
@@ -58,4 +58,119 @@ export class DbCommunicationService {
   public logout(): void {
     delete this._user;
   }
+
+  public UserAll(): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(`${this._serverURL}/user/all`)
+      .pipe(
+        map((dtos: UserDTO[]) => {
+          dtos.map((dto: UserDTO) => { dto.disabledTo = new Date(dto.disabledTo); return dto; });
+          return dtos;
+        })
+      );
+  }
+
+  public UserPasswd(userId: number, newPassword: INewPassword): Observable<any> {
+    return this.http.patch<any>(`${this._serverURL}/user/${userId}/passwd`, newPassword);
+  }
+
+  public UserDisable(userId: number, newDisabled: IDisabledTo): Observable<any> {
+    return this.http.patch<any>(`${this._serverURL}/user/${userId}/disable`, newDisabled);
+  }
+
+  public UserRegister(iUserRegister: IUserRegister): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/user/register`, iUserRegister);
+  }
+
+  public UserRoles(): Observable<UserRoleDTO[]> {
+    return this.http.get<UserRoleDTO[]>(`${this._serverURL}/user/roles`);
+  }
+
+  public VisitAll(): Observable<VisitDTO[]> {
+    return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/all`);
+  }
+
+  public VisitRegisteredAll(): Observable<VisitDTO[]> {
+    return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/registered/all`);
+  }
+
+  public VisitRegister(iVisitRegister: IVisitRegister): Observable<any> {
+    return this.http.post<Observable<any>>(`${this._serverURL}/visit/register`, iVisitRegister);
+  }
+
+  public VisitCancel(visitId: number, iVisitCancel: IVisitCancel): Observable<any> {
+    return this.http.post<Observable<any>>(`${this._serverURL}/visit/${visitId}/cancel`, iVisitCancel);
+  }
+
+  public VisitClose(visitId: number, iVisitClose: IVisitClose): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/visit/${visitId}/close`, iVisitClose);
+  }
+
+  public PatientAll(): Observable<PatientDTO[]> {
+    return this.http.get<PatientDTO[]>(`${this._serverURL}/patient/all`);
+  }
+
+  public PatientRegister(iPatientRegister: IPatientRegister): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/patient/register`, iPatientRegister);
+  }
+
+  public PatientVisits(patientId: number): Observable<PatientVisitDTO[]> {
+    return this.http.get<PatientVisitDTO[]>(`${this._serverURL}/patient/${patientId}/visit/all`);
+  }
+
+  public ExaminationDictionaryAll(): Observable<DictionaryDTO[]> {
+    return this.http.get<DictionaryDTO[]>(`${this._serverURL}/examination/dictionary/all`);
+  }
+
+  public LaboratoryExaminationDictionary(): Observable<DictionaryDTO[]> {
+    return this.http.get<DictionaryDTO[]>(`${this._serverURL}/examination/dictionary/laboratory`);
+  }
+
+  public PhysicalExaminationDictionary(): Observable<DictionaryDTO[]> {
+    return this.http.get<DictionaryDTO[]>(`${this._serverURL}/examination/dictionary/physical`);
+  }
+
+  public PhysicalExaminationAll(visitId: number): Observable<PhysicalExaminationDTO[]> {
+    return this.http.get<PhysicalExaminationDTO[]>(`${this._serverURL}/examination/physical/performed/${visitId}`);
+  }
+
+  public PhysicalExaminationPerform(iExaminationPerform: IExaminationPerform): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/examination/physical/perform`, iExaminationPerform);
+  }
+
+  public LaboratoryExaminationAll(): Observable<LaboratoryExaminationDTO[]> {
+    return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/all`);
+  }
+
+  public LaboratoryExaminationOrdered(): Observable<LaboratoryExaminationDTO[]> {
+    return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/ordered`);
+  }
+
+  public LaboratoryExaminationOrderedVisit(visitId: number): Observable<LaboratoryExaminationDTO[]> {
+    return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/ordered/${visitId}`);
+  }
+
+  public LaboratoryExaminationPending(): Observable<LaboratoryExaminationDTO[]> {
+    return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/pending`);
+  }
+
+  public LaboratoryExaminationOrder(iLaboratoryExamination: ILaboratoryExamination): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/examination/laboratory/order `, iLaboratoryExamination);
+  }
+
+  public LaboratoryExaminationDo(examinationId: number, iLaboratoryExaminationDo: ILaboratoryExaminationDo): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/examination/laboratory/${examinationId}/do`, iLaboratoryExaminationDo);
+  }
+
+  public LaboratoryExaminationAbort(examinationId: number, iLaboratoryExaminationAbort: ILaboratoryExaminationAbort): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/examination/laboratory/${examinationId}/abort`, iLaboratoryExaminationAbort);
+  }
+
+  public LaboratoryExaminationApprove(examinationId: number, iLaboratoryExaminationApprove: ILaboratoryExaminationApprove): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/examination/laboratory/${examinationId}/approve`, iLaboratoryExaminationApprove);
+  }
+
+  public LaboratoryExaminationReject(examinationId: number, iLaboratoryExaminationReject: ILaboratoryExaminationReject): Observable<any> {
+    return this.http.post<any>(`${this._serverURL}/examination/laboratory/${examinationId}/reject`, iLaboratoryExaminationReject);
+  }
+  
 }
