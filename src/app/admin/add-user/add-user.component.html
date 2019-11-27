@@ -1,29 +1,34 @@
 <div class="wrapper">
     <div class="inner-wrapper">
-        <form (submit)="onSubmit($event)" ngNativeValidate> 
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <h2>Tworzenie nowego konta</h2>
             <mat-form-field>
-                <input matInput placeholder="Login użytkownika" required />
+                <input matInput placeholder="Login użytkownika" formControlName="Login" required />
+                <mat-error *ngIf="form.get('Login').hasError('required')">Login jest wymagany</mat-error>
             </mat-form-field>
             <div class="double-input">
                 <mat-form-field>
-                    <input matInput placeholder="Imię" required />
+                    <input matInput placeholder="Imię" formControlName="Name" required />
+                    <mat-error *ngIf="form.get('Name').hasError('required')">Imię jest wymagane</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Nazwisko" required />
+                    <input matInput placeholder="Nazwisko" formControlName="LastName" required />
+                    <mat-error *ngIf="form.get('LastName').hasError('required')">Nazwisko jest wymagane</mat-error>
                 </mat-form-field>
             </div>
             <div class="double-input">
                 <mat-form-field>
                     <mat-label>Typ konta</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="UserType" required>
                         <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
                             {{userType.viewValue}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="form.get('UserType').hasError('required')">Typ konta jest wymagany</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Hasło" type="password" required />
+                    <input matInput placeholder="Hasło" type="password" formControlName="NewPassword" required />
+                    <mat-error *ngIf="form.get('NewPassword').hasError('required')">Nowe hasło jest wymagane</mat-error>
                     <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
                 </mat-form-field>
             </div>

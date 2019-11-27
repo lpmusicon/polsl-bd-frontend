@@ -1,10 +1,11 @@
 <div class="wrapper">
     <div class="inner-wrapper">
-        <form (submit)="onSubmit($event)" ngNativeValidate>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <h2>Anulowanie wizyty</h2>
             <span>Czy na pewno chcesz anulować wizytę nr {{ data.id }} pacjenta {{ data.patientName }}?</span>
             <mat-form-field>
-                <input matInput placeholder="Podaj powód" type="text" required />
+                <input matInput placeholder="Podaj powód" formControlName="Reason" type="text" required />
+                <mat-error *ngIf="form.get('Reason').hasError('required')">Wymagane jest podanie powodu anulowania</mat-error>
             </mat-form-field>
             <div class="double-input">
                 <span class="flex"></span>

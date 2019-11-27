@@ -9,6 +9,7 @@ import { BadanieLaboratoryjneComponent } from './badanie-laboratoryjne/badanie-l
 import { PreviousVisitsComponent } from './wizyta/previous-visits/previous-visits.component';
 import { ListExaminationsComponent } from './wizyta/list-examinations/list-examinations.component';
 import { ListLabExaminationsComponent } from './wizyta/list-lab-examinations/list-lab-examinations.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ListLabExaminationsComponent } from './wizyta/list-lab-examinations/lis
     LekarzRoutingModule,
     CommonModule,
     MaterialModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [
     BadanieFizykalneComponent,
