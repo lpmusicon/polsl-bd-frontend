@@ -32,9 +32,7 @@ export class ListExaminationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    for(let i = 0; i < 3; i++) {
-      this.Examinations.push({ id: i, docName: "Macin", type: "Badanie dupy", result: "OH YES" , date: '13/37/2019', });
-    }
+    
     this.examinations.paginator = this.paginator;
     this.examinations.sort = this.sort;
   }

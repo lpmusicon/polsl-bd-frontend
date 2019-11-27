@@ -5,18 +5,14 @@
         <button mat-raised-button>Zdetonuj sesję</button>
     </mat-toolbar>
     <div class="inner-wrapper">
-
-        <h3>Wizyta nr {{ data }}</h3>
-        <span>Data rejestracji: </span><br>
-        <span>Pacjent: </span><br>
-
+        <h3>Wizyta nr {{ visit.id }}</h3>
+        <span>Data rejestracji: {{ visit.registerDate }}</span>
+        <span>Pacjent: </span>
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <mat-form-field >
                 <textarea matInput placeholder="Opis wizyty" formControlName="Description" type="text" required></textarea>
-                <mat-error *ngIf="form.get('Login').hasError('Description')">Opis wizyty jest wymagany</mat-error>
+                <mat-error *ngIf="form.get('Description').hasError('required')">Opis wizyty jest wymagany</mat-error>
             </mat-form-field>
-            <br>
-
             <mat-accordion>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -26,11 +22,7 @@
                         <mat-panel-description>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-
-
-
                     <app-previous-visits [patient]="patient"></app-previous-visits>
-
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -40,15 +32,10 @@
                         <mat-panel-description>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-
                     <div class="single-input">
-                        <button mat-raised-button type="button" (click)="openAddLabExaminationDialog()">Zleć
-                            badanie</button>
+                        <button mat-raised-button type="button" (click)="openAddLabExaminationDialog()">Zleć badanie</button>
                     </div>
-                    <br>
-
                     <app-list-lab-examinations [patient]="patient"></app-list-lab-examinations>
-
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -58,18 +45,12 @@
                         <mat-panel-description>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-
                     <div class="single-input">
-                        <button mat-raised-button type="button" (click)="openAddExaminationDialog()">Dodaj
-                            badanie</button>
+                        <button mat-raised-button type="button" (click)="openAddExaminationDialog()">Dodaj badanie</button>
                     </div>
-                    <br>
-
                     <app-list-examinations [patient]="patient"></app-list-examinations>
-
                 </mat-expansion-panel>
             </mat-accordion>
-            <br>
             <mat-form-field>
                 <textarea matInput placeholder="Diagnoza" formControlName="Diagnosis" type="text" required></textarea>
                 <mat-error *ngIf="form.get('Diagnosis').hasError('required')">Diagnoza jest wymagana</mat-error>

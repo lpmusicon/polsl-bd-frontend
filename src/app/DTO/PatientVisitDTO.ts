@@ -1,7 +1,7 @@
+import { PatientDTO } from './PatientDTO';
+
 export class PatientVisitDTO {
-    PatientVisitId: number;
-    Description: string;
-    Diagnosis: string;
-    Status: string;
-    CloseDate?: Date;
+    Id: number;
+    Patient: PatientDTO;
+    RegisterDate: Date;
 }

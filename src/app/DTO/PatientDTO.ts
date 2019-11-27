@@ -5,5 +5,5 @@ export class PatientDTO {
     Name: string;
     Lastname: string;
     PESEL: string;
-    PatientVisits: VisitDTO[];
+    PatientVisits?: VisitDTO[];
 }

@@ -33,9 +33,7 @@ export class ListLabExaminationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    for(let i = 0; i < 2; i++) {
-      this.LabExaminations.push({ id: i, docName: "Czesiek", workerName: "Macin", type: "Badanie wkurwa", result: "Oh yes" , date: '21/37/2019', });
-    }
+    
     this.labExaminations.paginator = this.paginator;
     this.labExaminations.sort = this.sort;
   }

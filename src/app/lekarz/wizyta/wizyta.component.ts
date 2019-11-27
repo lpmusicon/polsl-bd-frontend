@@ -6,6 +6,8 @@ import { BadanieLaboratoryjneComponent } from '../badanie-laboratoryjne/badanie-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { VisitDTO } from 'src/app/DTO/VisitDTO';
+import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
 
 
 @Component({
@@ -14,7 +16,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./wizyta.component.scss']
 })
 export class WizytaComponent implements OnInit {
-
+  public visit: PatientVisitDTO;
+  public visits: VisitDTO[];
+  public visitId: number;
 
   constructor(
     public dialog: MatDialog,
@@ -23,19 +27,12 @@ export class WizytaComponent implements OnInit {
     private _fb: FormBuilder,
     private _db: DbCommunicationService,
     private _snackBar: MatSnackBar
-  ) {
-    this.route.queryParams.subscribe(params => {
-      if (params["badanie"]) {
-        console.log("Badanie: ", params["badanie"]);
-      }
-      console.log("Par: ", params);
-    })
-  }
+  ) {}
 
   openAddExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieFizykalneComponent, {
       width: '650px',
-      data: { patId: this.data }
+      data: { patId: '' }
     });
 
     openAddExamintionDialogRef.afterClosed().subscribe(result => {
@@ -46,7 +43,7 @@ export class WizytaComponent implements OnInit {
   openAddLabExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieLaboratoryjneComponent, {
       width: '650px',
-      data: { patId: this.data }
+      data: { patId: '' }
     });
 
     openAddExamintionDialogRef.afterClosed().subscribe(result => {
@@ -54,11 +51,21 @@ export class WizytaComponent implements OnInit {
     });
   }
 
-  private data;
-
   private handleParams(a) {
-    console.log(a.id);
-    this.data = a.id;
+    this.visitId = a.id;
+    this._db.Visit(this.visitId).subscribe({
+      next: this.handleData.bind(this),
+      error: this.handleError.bind(this)
+    })
+  }
+
+  private handleData(visit: PatientVisitDTO) {
+    console.log(visit);
+    this.visit = visit;
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    console.warn(err);
   }
 
   public form: FormGroup;
@@ -74,23 +81,28 @@ export class WizytaComponent implements OnInit {
   public onSubmit(value: any): void {
     if (!this.form.valid) return;
     //TODO db
-
+    
   }
 
   ngOnInit() {
+    this.visit = {
+      Id: 0,
+      RegisterDate: new Date(),
+      Patient: {
+        PatientId: 0,
+        Name: '',
+        Lastname: '',
+        PESEL: ''
+      }
+    }
     this.buildForm();
     this.route.params.subscribe({
       next: this.handleParams.bind(this)
     });
   }
-  //TODO replace any
+  
   private handleResponse(auth: any): void {
-
     this.openSnackBar("Wizyta pacjenta " + "TODO" + " została zakończona", "Ok");
-    window.setTimeout(() => {
-
-      this._router.navigate(["/lekarz"]);
-    }, 1000);
   }
 
   private handleAuthError(err: HttpErrorResponse): void {
