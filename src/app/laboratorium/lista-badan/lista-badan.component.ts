@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
+import { DbCommunicationService } from 'src/app/db-communication.service';
+import { LaboratoryExaminationOrderedDTO } from 'src/app/DTO/LaboratoryExaminationOrderedDTO';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface LabExamination {
   id: number;
@@ -22,7 +25,11 @@ export interface LabExamination {
 })
 export class ListaBadanComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {
+  constructor(
+    public dialog: MatDialog, 
+    private route: ActivatedRoute,
+    private _db: DbCommunicationService,
+    private router: Router) {
     this.route.queryParams.subscribe(params => {
       if(params["lab-examination"]) {
         console.log("LabExamination: ", params["lab-examination"]);
@@ -32,6 +39,11 @@ export class ListaBadanComponent implements OnInit {
   }
 
   public LabExaminations: LabExamination[] = [];
+
+  public logout(): void {
+    this._db.logout();
+    this.router.navigate(['/']);
+  }
 
   displayedColumns: string[] = ['position', 'comment', 'date', 'type', 'actions'];
   dataSource = new MatTableDataSource(this.LabExaminations);
@@ -43,11 +55,24 @@ export class ListaBadanComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  private handleResponse(data: LaboratoryExaminationOrderedDTO) {
+    console.log(data);
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    console.warn(err);
+  }
+
+  loadData() {
+    this._db.LaboratoryExaminationOrdered().subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
+  }
+
   ngOnInit() {
 
-    for(let i = 0; i < 696; i++) {
-      this.LabExaminations.push({ id: i, docComment: `Mój stary to fanatyk wędkarstwa. Pół mieszkania zajebane wędkami najgorsze. Średnio raz w miesiącu ktoś wdepnie w leżący na ziemi haczyk czy kotwicę i trzeba wyciągać w szpitalu bo mają zadziory na końcu. W swoim 22 letnim życiu już z ${i} razy byłem na takim zabiegu. Tydzień temu poszedłem na jakieś losowe badania to baba z recepcji jak mnie tylko zobaczyła to kazała buta ściągać xD bo myślała, że znowu hak w nodze.`, orderDate: '11/13/2019', type: "Badanie krwi", actions:""});
-    }
+    this.loadData();
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

@@ -4,11 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-
-export interface userType {
-  value: string;
-  viewValue: string;
-}
+import { IUserRegister } from 'src/app/Form/IUserRegister';
+import { UserRoleDTO } from 'src/app/DTO/UserRoleDTO';
 
 @Component({
   selector: 'app-add-user',
@@ -26,7 +23,7 @@ export class AddUserComponent implements OnInit {
     ) { }
 
   public addUserDialogCancel() {
-    this.openAddUserDialogRef.close({reason: "cancel"});
+    this.openAddUserDialogRef.close({ reason: "cancel" });
     this.openSnackBar("Anulowano", "Ok");
   }
 
@@ -37,16 +34,18 @@ export class AddUserComponent implements OnInit {
       Login: ['', Validators.required],
       Name: ['', Validators.required],
       LastName: ['', Validators.required],
-      UserType: ['', Validators.required],
-      NewPassword: ['', Validators.required]
+      Role: ['', Validators.required],
+      Password: ['', Validators.required]
     });
   }
   
-  //TODO replace any
-  public onSubmit(value: any): void {
+  public onSubmit(iUserRegister: IUserRegister): void {
     if (!this.form.valid) return;
-    //TODO db
     
+    this._db.UserRegister(iUserRegister).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
   }
 
   openSnackBar(message: string, action: string) {
@@ -59,41 +58,22 @@ export class AddUserComponent implements OnInit {
     this.buildForm();
   }
 
-  //TODO replace any
-  private handleResponse(auth: any): void {
-
-
+  private handleResponse(): void {
     this.openSnackBar("Dodano użytkownika " + this.form.get("Login").value, "Ok");
-    window.setTimeout(() => {
-
-this._router.navigate(["/admin"]);
-
-
-    }, 1000);
+    this.openAddUserDialogRef.close({ reason: "added" });
   }
 
-private handleAuthError(err: HttpErrorResponse): void {
-    switch (err.status) {
-      case 400:
-        //Złe dane
-        this.openSnackBar("Niepoprawne dane/brak danych", "Ok");
-        console.warn("Wrong/empty data");
-        break;
-      default:
-        //Nieokreślony błąd
-        this.openSnackBar("Wystąpił nieokreślony błąd", "Ok");
-        console.warn("Generic error");
-        break;
-    }
+  private handleError(err: HttpErrorResponse)
+  {
     console.warn(err);
   }
 
-  userTypes: userType[] = [
-    { value: 'admin-0', viewValue: 'Admin' },
-    { value: 'lekarz-1', viewValue: 'Lekarz' },
-    { value: 'recepcja-2', viewValue: 'Recepcja' },
-    { value: 'lab-3', viewValue: 'Laborant' },
-    { value: 'lab_kier-4', viewValue: 'Kierownik Laboratorium' }
+  Roles: UserRoleDTO[] = [
+    { Mnemo: 'ADMN', Name: 'Administrator' },
+    { Mnemo: 'DOCT', Name: 'Lekarz' },
+    { Mnemo: 'RECP', Name: 'Recepcjonista' },
+    { Mnemo: 'LABW', Name: 'Pracownik Laboratorium' },
+    { Mnemo: 'LABM', Name: 'Kierownik Laboratorium' }
   ];
 }
 
