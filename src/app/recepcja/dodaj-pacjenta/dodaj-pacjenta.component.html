@@ -1,13 +1,15 @@
 <div class="wrapper">
     <div class="inner-wrapper">
-        <form (submit)="onSubmit($event)"> 
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <h2>Dodawanie nowego pacjenta do bazy</h2>
             <div class="double-input">
                 <mat-form-field>
-                    <input matInput placeholder="Imię" required />
+                    <input matInput placeholder="Imię" formControlName="Name" required />
+                    <mat-error *ngIf="form.get('Name').hasError('required')">Imię jest wymagane</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Nazwisko" required />
+                    <input matInput placeholder="Nazwisko" formControlName="LastName" required />
+                    <mat-error *ngIf="form.get('LastName').hasError('required')">Nazwisko jest wymagane</mat-error>
                 </mat-form-field>
             </div>
             <div class="double-input">

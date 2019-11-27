@@ -8,6 +8,7 @@ import { RecepcjaRoutingModule } from './recepcja-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -18,7 +19,8 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     FormsModule,
     CommonModule,
     MaterialModule,
-    MatSelectFilterModule
+    MatSelectFilterModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     AnulujWizyteComponent,

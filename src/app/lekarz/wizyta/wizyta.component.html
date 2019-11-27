@@ -10,9 +10,10 @@
         <span>Data rejestracji: </span><br>
         <span>Pacjent: </span><br>
 
-        <form (submit)="onSubmit($event)" ngNativeValidate>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <mat-form-field >
-                <textarea matInput placeholder="Opis wizyty" type="text" required></textarea>
+                <textarea matInput placeholder="Opis wizyty" formControlName="Description" type="text" required></textarea>
+                <mat-error *ngIf="form.get('Login').hasError('Description')">Opis wizyty jest wymagany</mat-error>
             </mat-form-field>
             <br>
 
@@ -70,7 +71,8 @@
             </mat-accordion>
             <br>
             <mat-form-field>
-                <textarea matInput placeholder="Diagnoza" type="text" required></textarea>
+                <textarea matInput placeholder="Diagnoza" formControlName="Diagnosis" type="text" required></textarea>
+                <mat-error *ngIf="form.get('Diagnosis').hasError('required')">Diagnoza jest wymagana</mat-error>
             </mat-form-field>
             <div class="double-input">
                 <span class="flex"></span>
