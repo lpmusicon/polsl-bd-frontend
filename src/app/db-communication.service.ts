@@ -25,6 +25,9 @@ import { ILaboratoryExaminationDo } from './Form/ILaboratoryExaminationDo';
 import { ILaboratoryExaminationAbort } from './Form/ILaboratoryExaminationAbort';
 import { ILaboratoryExaminationApprove } from './Form/ILaboratoryExaminationApprove';
 import { ILaboratoryExaminationReject } from './Form/ILaboratoryExaminationReject';
+import { LaboratoryExaminationOrderedDTO } from './DTO/LaboratoryExaminationOrderedDTO';
+import { LaboratoryExaminationExecutedDTO } from './DTO/LaboratoryExaminationExecutedDTO';
+import { LaboratoryExaminationOrderedVisitDTO } from './DTO/LaboratoryExaminationOrderedVisitDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -141,16 +144,16 @@ export class DbCommunicationService {
     return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/all`);
   }
 
-  public LaboratoryExaminationOrdered(): Observable<LaboratoryExaminationDTO[]> {
-    return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/ordered`);
+  public LaboratoryExaminationOrdered(): Observable<LaboratoryExaminationOrderedDTO[]> {
+    return this.http.get<LaboratoryExaminationOrderedDTO[]>(`${this._serverURL}/examination/laboratory/ordered`);
   }
 
-  public LaboratoryExaminationOrderedVisit(visitId: number): Observable<LaboratoryExaminationDTO[]> {
-    return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/ordered/${visitId}`);
+  public LaboratoryExaminationOrderedVisit(visitId: number): Observable<LaboratoryExaminationOrderedVisitDTO[]> {
+    return this.http.get<LaboratoryExaminationOrderedVisitDTO[]>(`${this._serverURL}/examination/laboratory/ordered/${visitId}`);
   }
 
-  public LaboratoryExaminationPending(): Observable<LaboratoryExaminationDTO[]> {
-    return this.http.get<LaboratoryExaminationDTO[]>(`${this._serverURL}/examination/laboratory/pending`);
+  public LaboratoryExaminationPending(): Observable<LaboratoryExaminationExecutedDTO[]> {
+    return this.http.get<LaboratoryExaminationExecutedDTO[]>(`${this._serverURL}/examination/laboratory/pending`);
   }
 
   public LaboratoryExaminationOrder(iLaboratoryExamination: ILaboratoryExamination): Observable<any> {

@@ -1,3 +1,3 @@
 export class ILaboratoryExaminationAbort {
-    //TODo
+    Reason: string;
 }
