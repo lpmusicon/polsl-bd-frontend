@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ILaboratoryExaminationReject } from 'src/app/Form/ILaboratoryExaminationReject';
 
 @Component({
   selector: 'app-anuluj-badanie',
@@ -26,10 +27,12 @@ export class AnulujBadanieComponent implements OnInit {
     this.openSnackBar("Anulowano", "Ok");
   }
 
-  //TODO replace any
-  public onSubmit(value: any): void {
+  public onSubmit(value: ILaboratoryExaminationReject): void {
     if (!this.form.valid) return;
-    //TODO db
+    this._db.LaboratoryExaminationReject(this.data.LabExamination.id, value).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
     
   }
 
@@ -45,17 +48,14 @@ export class AnulujBadanieComponent implements OnInit {
     this.buildForm();
   }
 
-  //TODO replace any
-private handleResponse(auth: any): void {
+
+private handleResponse(): void {
 
   this.openSnackBar("Badanie nr " + this.data.LabExamination.id + " zostało anulowane", "Ok");
-  window.setTimeout(() => {
 
-  this._router.navigate(["/klab"]);
-  }, 1000);
 }
 
-private handleAuthError(err: HttpErrorResponse): void {
+private handleError(err: HttpErrorResponse): void {
   switch (err.status) {
 case 404:
       this.openSnackBar("Nie znaleziono badania", "Ok");
