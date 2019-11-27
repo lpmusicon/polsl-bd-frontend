@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { IVisitCancel } from 'src/app/Form/IVisitCancel';
 
 @Component({
   selector: 'app-anuluj-wizyte',
@@ -27,10 +28,12 @@ export class AnulujWizyteComponent implements OnInit {
   }
 
 
-//TODO replace any
-public onSubmit(value: any): void {
+public onSubmit(value: IVisitCancel): void {
   if (!this.form.valid) return;
-  //TODO db
+  this._db.VisitCancel(this.data.Visit.id, value).subscribe({
+    next: this.handleResponse.bind(this),
+    error: this.handleError.bind(this)
+  })
   
 }
 
@@ -48,17 +51,12 @@ public onSubmit(value: any): void {
   }
 
   
-//TODO replace any
-private handleResponse(auth: any): void {
+private handleResponse(): void {
 
   this.openSnackBar("Wizyta nr " + this.data.Visit.id + " została anulowana", "Ok");
-  window.setTimeout(() => {
-
-  this._router.navigate(["/recepcja"]);
-  }, 1000);
 }
 
-private handleAuthError(err: HttpErrorResponse): void {
+private handleError(err: HttpErrorResponse): void {
   switch (err.status) {
 case 404:
       this.openSnackBar("Nie znaleziono wizyty", "Ok");

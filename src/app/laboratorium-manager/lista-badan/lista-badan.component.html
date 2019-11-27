@@ -14,37 +14,37 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.Id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="comment">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Komentarz Lekarza </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.docComment}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.DoctorComment}} </td>
             </ng-container>
 
             <ng-container matColumnDef="orDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zlecenia </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.orderDate}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.OrderDate}} </td>
             </ng-container>
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.type}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.LaboratoryExaminationName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="worker">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pracownik </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.madeBy}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.Worker}} </td>
             </ng-container>
 
             <ng-container matColumnDef="result">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.Result}} </td>
             </ng-container>
 
             <ng-container matColumnDef="examDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wykonania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.examDate}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.ExaminationDate}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">

@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IVisitRegister } from 'src/app/Form/IVisitRegister';
+import { PatientDTO } from 'src/app/DTO/PatientDTO';
+import { PersonDTO } from 'src/app/DTO/PersonDTO';
 
 
 export interface Doctor {
@@ -49,28 +52,49 @@ export class DodajWizyteComponent implements OnInit {
     });
   }
 
-  //TODO replace any
-  public onSubmit(value: any): void {
+  public onSubmit(value: IVisitRegister): void {
     if (!this.form.valid) return;
-    //TODO db
+    this._db.VisitRegister(value).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
 
+  }
+
+  loadData() {
+    this._db.PatientAll().subscribe({
+      next: this.handleData.bind(this),
+      error: this.handleError.bind(this)
+    })
+
+    //TODO doctors
+    /*
+    this._db.().subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
+    */
   }
 
   ngOnInit() {
     this.buildForm();
+    this.loadData();
   }
 
-  //TODO replace any
-  private handleResponse(auth: any): void {
+  private handleResponse(): void {
 
     this.openSnackBar("Wizyta pacjenta " + this.form.get("Patient").value + " została zarejestrowana", "Ok");
-    window.setTimeout(() => {
-
-      this._router.navigate(["/recepcja"]);
-    }, 1000);
   }
 
-  private handleAuthError(err: HttpErrorResponse): void {
+  private handleData(dataDoc: PersonDTO[], dataPat: PatientDTO)
+  {
+    console.log(dataDoc);
+    this.doctors = dataDoc;
+    console.log(dataPat);
+    this.patients = dataPat;
+  }
+
+  private handleError(err: HttpErrorResponse): void {
     switch (err.status) {
       case 404:
         this.openSnackBar("Nie znaleziono pacjenta lub lekarza", "Ok");
@@ -99,21 +123,9 @@ export class DodajWizyteComponent implements OnInit {
     });
   }
 
-  doctors: Doctor[] = [
-    { value: 'doc-1', viewValue: 'Jaracz' },
-    { value: 'doc-2', viewValue: 'Zjadacz' },
-    { value: 'doc-3', viewValue: 'Podpalacz' },
-    { value: 'doc-4', viewValue: 'Laborant' },
-    { value: 'doc-5', viewValue: 'Kierownik Laboratorium' }
-  ];
+  doctors: any;
 
-  patients: Patient[] = [
-    { value: 'pat-1', viewValue: 'Jaracz' },
-    { value: 'pat-2', viewValue: 'Zjadacz' },
-    { value: 'pat-3', viewValue: 'Podpalacz' },
-    { value: 'pat-4', viewValue: 'Laborant' },
-    { value: 'pat-5', viewValue: 'Kierownik Laboratorium' }
-  ];
+  patients: any;
 
   public filteredList1 = this.patients.slice();
   public filteredList2 = this.doctors.slice();

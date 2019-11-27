@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { IPatientRegister } from 'src/app/Form/IPatientRegister';
 
 @Component({
   selector: 'app-dodaj-pacjenta',
@@ -25,10 +26,12 @@ export class DodajPacjentaComponent implements OnInit {
     this.openSnackBar("Anulowano", "Ok");
   }
   
- //TODO replace any
- public onSubmit(value: any): void {
+ public onSubmit(value: IPatientRegister): void {
   if (!this.form.valid) return;
-  //TODO db
+  this._db.PatientRegister(value).subscribe({
+    next: this.handleResponse.bind(this),
+    error: this.handleError.bind(this)
+  })
   
 }
 
@@ -51,17 +54,13 @@ export class DodajPacjentaComponent implements OnInit {
     this.buildForm();
   }
 
-  //TODO replace any
-private handleResponse(auth: any): void {
+
+private handleResponse(): void {
 
   this.openSnackBar("Dodano pacjenta " + this.form.get("Name").value + " " + this.form.get("Last").value, "Ok");
-  window.setTimeout(() => {
-
-  this._router.navigate(["/recepcja/addvisit"]);
-  }, 1000);
 }
 
-private handleAuthError(err: HttpErrorResponse): void {
+private handleError(err: HttpErrorResponse): void {
   switch (err.status) {
     case 400:
       //Złe dane

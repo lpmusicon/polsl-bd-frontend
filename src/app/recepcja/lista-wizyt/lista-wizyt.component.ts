@@ -6,6 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AnulujWizyteComponent } from '../anuluj-wizyte/anuluj-wizyte.component';
 import { DodajPacjentaComponent } from '../dodaj-pacjenta/dodaj-pacjenta.component';
+import { DbCommunicationService } from 'src/app/db-communication.service';
+import { VisitDTO } from 'src/app/DTO/VisitDTO';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 export interface Visit {
@@ -23,7 +26,11 @@ export interface Visit {
 })
 export class ListaWizytComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {
+  constructor(
+    public dialog: MatDialog, 
+    private route: ActivatedRoute,
+    private _db: DbCommunicationService,
+    ) {
     this.route.queryParams.subscribe(params => {
       if(params["visit"]) {
         console.log("Visit: ", params["visit"]);
@@ -36,7 +43,7 @@ export class ListaWizytComponent implements OnInit {
 
   @Input("element") public visit: any;
 
-  public Visits: Visit[] = [];
+  public Visits: VisitDTO[] = [];
 
   displayedColumns: string[] = ['position', 'pat_name', 'doc_name', 'date', 'actions'];
   dataSource = new MatTableDataSource(this.Visits);
@@ -48,13 +55,34 @@ export class ListaWizytComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  ngOnInit() {
-    for(let i = 0; i < 696; i++) {
-      this.Visits.push({ id: i, date: '11/13/2019', patientName: "Łukaszek", docName: "Czesiek", actions:""});
-    }
-
+  private handleData(data: VisitDTO[])
+  {
+    console.log(data);
+    this.Visits = data;
+    this.dataSource = new MatTableDataSource(this.Visits);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  loadData() {
+    this._db.LaboratoryExaminationOrdered().subscribe({
+      next: this.handleData.bind(this),
+      error: this.handleError.bind(this)
+    })
+  }
+
+  private handleError(err: HttpErrorResponse): void {
+    switch (err.status) {
+      default:
+        //Nieokreślony błąd
+        console.warn("Generic error");
+        break;
+    }
+    console.warn(err);
+  }
+
+  ngOnInit() {
+    this.loadData();
   }
 
   openCancelVisitDialog(data: Visit, e: HTMLElement): void {
