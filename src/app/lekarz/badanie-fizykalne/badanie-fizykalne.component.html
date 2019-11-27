@@ -1,19 +1,21 @@
 <div class="wrapper">
     <div class="inner-wrapper">
-        <form (submit)="onSubmit($event)" ngNativeValidate>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <h2>Badanie dla: {{ data.patId }}</h2><br>
             <h2>Wybierz typ badania fizykalnego</h2>
             <mat-form-field>
                 <mat-label>Typ badania</mat-label>
-                <mat-select required>
+                <mat-select formControlName="ExamType" required>
                     <mat-option *ngFor="let examType of examTypes" [value]="examType.value">
                         {{examType.viewValue}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="form.get('ExamType').hasError('required')">Typ badania jest wymagany</mat-error>
             </mat-form-field>
             <h2>Wprowadź wynik badania</h2>
             <mat-form-field>
-                <input matInput placeholder="Wynik badania" type="text" required />
+                <input matInput placeholder="Wynik badania" formControlName="Result" type="text" required />
+                <mat-error *ngIf="form.get('Result').hasError('required')">Wynik badania jest wymagany</mat-error>
             </mat-form-field>
             <div class="double-input">
                 <span class="flex"></span>

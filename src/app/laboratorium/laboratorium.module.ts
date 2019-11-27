@@ -7,6 +7,7 @@ import { LaboratoriumRoutingModule } from './laboratorium-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { ListItemManageComponent } from './lista-badan/list-item-manage/list-item-manage.component'
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -21,7 +22,8 @@ import { ListItemManageComponent } from './lista-badan/list-item-manage/list-ite
     CommonModule,
     FormsModule,
     MaterialModule,
-    LaboratoriumRoutingModule
+    LaboratoriumRoutingModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     AnulujBadanieComponent,
