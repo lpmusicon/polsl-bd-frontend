@@ -67,17 +67,14 @@ export class DodajWizyteComponent implements OnInit {
 
   loadData() {
     this._db.PatientAll().subscribe({
-      next: this.handleData.bind(this),
+      next: this.handlePatients.bind(this),
       error: this.handleError.bind(this)
     })
 
-    //TODO doctors
-    /*
-    this._db.().subscribe({
-      next: this.handleResponse.bind(this),
+    this._db.DoctorAll().subscribe({
+      next: this.handleDoctors.bind(this),
       error: this.handleError.bind(this)
     })
-    */
   }
 
   ngOnInit() {
@@ -90,12 +87,14 @@ export class DodajWizyteComponent implements OnInit {
     this.openSnackBar("Wizyta pacjenta " + this.form.get("Patient").value + " została zarejestrowana", "Ok");
   }
 
-  private handleData(dataDoc: PersonDTO[], dataPat: PatientDTO)
-  {
-    console.log(dataDoc);
-    this.doctors = dataDoc;
+  private handlePatients(dataPat: PatientDTO[]) {
     console.log(dataPat);
     this.patients = dataPat;
+  }
+
+  private handleDoctors(data: PersonDTO[]) {
+    console.log(data);
+    this.doctors = data;
   }
 
   private handleError(err: HttpErrorResponse): void {
@@ -127,12 +126,12 @@ export class DodajWizyteComponent implements OnInit {
     });
   }
 
-  doctors: any;
+  doctors: PersonDTO[];
 
-  patients: any;
+  patients: PatientDTO[];
 
-  public filteredList1 = this.patients.slice();
-  public filteredList2 = this.doctors.slice();
+  public filteredList1 = this.patients;
+  public filteredList2 = this.doctors;
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {

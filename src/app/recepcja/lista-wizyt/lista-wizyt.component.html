@@ -15,22 +15,22 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.PatientVisitId}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
             <!-- TODO PatientName -->
             <ng-container matColumnDef="pat_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pacjent </th>
-                <td class="padd" mat-cell *matCellDef="let element">  </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.patient.name}}  {{element.patient.lastname}} </td>
             </ng-container>
 
             <ng-container matColumnDef="doc_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctor.name}}  {{element.doctor.lastname}}</td>
             </ng-container>
 
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data rejestracji </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ formatDate(element.registerDate) }} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">

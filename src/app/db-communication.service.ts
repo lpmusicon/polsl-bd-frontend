@@ -28,6 +28,7 @@ import { ILaboratoryExaminationReject } from './Form/ILaboratoryExaminationRejec
 import { LaboratoryExaminationOrderedDTO } from './DTO/LaboratoryExaminationOrderedDTO';
 import { LaboratoryExaminationExecutedDTO } from './DTO/LaboratoryExaminationExecutedDTO';
 import { LaboratoryExaminationOrderedVisitDTO } from './DTO/LaboratoryExaminationOrderedVisitDTO';
+import { PersonDTO } from './DTO/PersonDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -184,6 +185,10 @@ export class DbCommunicationService {
 
   public LaboratoryExaminationReject(examinationId: number, iLaboratoryExaminationReject: ILaboratoryExaminationReject): Observable<any> {
     return this.http.post<any>(`${this._serverURL}/examination/laboratory/${examinationId}/reject`, iLaboratoryExaminationReject);
+  }
+
+  public DoctorAll(): Observable<PersonDTO[]> {
+    return this.http.get<PersonDTO[]>(`${this._serverURL}/doctor/all`);
   }
   
 }

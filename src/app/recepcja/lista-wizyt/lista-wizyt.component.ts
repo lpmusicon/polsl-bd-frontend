@@ -70,10 +70,15 @@ export class ListaWizytComponent implements OnInit {
   }
 
   loadData() {
-    this._db.LaboratoryExaminationOrdered().subscribe({
+    this._db.VisitRegisteredAll().subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
     })
+  }
+
+  public formatDate(d: string): string {
+    const date = new Date(d);
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
   }
 
   private handleError(err: HttpErrorResponse): void {
