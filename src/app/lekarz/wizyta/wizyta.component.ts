@@ -32,7 +32,7 @@ export class WizytaComponent implements OnInit {
   openAddExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieFizykalneComponent, {
       width: '650px',
-      data: { patId: '' }
+      data: { VisitId: this.visitId }
     });
 
     openAddExamintionDialogRef.afterClosed().subscribe(result => {
@@ -43,12 +43,18 @@ export class WizytaComponent implements OnInit {
   openAddLabExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieLaboratoryjneComponent, {
       width: '650px',
-      data: { patId: '' }
-    });
+      data: { VisitId: this.visitId }
+    })
 
-    openAddExamintionDialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    openAddExamintionDialogRef.afterClosed().subscribe({
+      next: () => {
+        this.fetchLabExaminations();
+      }
     });
+  }
+
+  private fetchLabExaminations() {
+    this._db.LaboratoryExaminationOrderedVisit
   }
 
   private handleParams(a) {

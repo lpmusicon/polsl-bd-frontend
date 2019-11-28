@@ -49,6 +49,11 @@ export class DodajWizyteComponent implements OnInit {
     });
   }
 
+  public logout(): void {
+    this._db.logout();
+    this._router.navigate(['/']);
+  }
+
   //TODO replace any
   public onSubmit(value: any): void {
     if (!this.form.valid) return;

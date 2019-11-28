@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AnulujWizyteComponent } from '../anuluj-wizyte/anuluj-wizyte.component';
 import { DodajPacjentaComponent } from '../dodaj-pacjenta/dodaj-pacjenta.component';
+import { DbCommunicationService } from 'src/app/db-communication.service';
 
 
 export interface Visit {
@@ -23,7 +24,11 @@ export interface Visit {
 })
 export class ListaWizytComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {
+  constructor(
+    public dialog: MatDialog, 
+    private route: ActivatedRoute,
+    private _router: Router,
+    private _db: DbCommunicationService) {
     this.route.queryParams.subscribe(params => {
       if(params["visit"]) {
         console.log("Visit: ", params["visit"]);
@@ -46,6 +51,11 @@ export class ListaWizytComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public logout(): void {
+    this._db.logout();
+    this._router.navigate(['/']);
   }
 
   ngOnInit() {
