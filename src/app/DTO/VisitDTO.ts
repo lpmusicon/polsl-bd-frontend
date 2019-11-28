@@ -1,7 +1,8 @@
 export class VisitDTO {
-    PatientVisitId: number;
-    Description: string;
-    Diagnosis: string;
-    Status: string;
-    CloseDate?: Date;
+    id: number;
+    description: string;
+    diagnosis: string;
+    status: string;
+    closeDate?: Date;
+    registerDate: Date;
 }

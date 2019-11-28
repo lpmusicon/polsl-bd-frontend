@@ -1,5 +1,5 @@
 export class DictionaryDTO {
-    ID: number;
-    Name: string;
-    Type: string;
+    id: number;
+    name: string;
+    type: string;
 }

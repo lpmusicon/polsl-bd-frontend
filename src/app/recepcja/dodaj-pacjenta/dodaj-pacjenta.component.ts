@@ -43,7 +43,8 @@ export class DodajPacjentaComponent implements OnInit {
   private buildForm(): void {
     this.form = this._fb.group({
       Name: ['', Validators.required],
-      LastName: ['', Validators.required]
+      LastName: ['', Validators.required],
+      PESEL: ['', Validators.required]
     });
   }
 

@@ -73,7 +73,7 @@ export class ListaBadanComponent implements OnInit {
   ngOnInit() {
 
     this.loadData();
-
+    
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

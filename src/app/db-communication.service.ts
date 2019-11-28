@@ -93,7 +93,13 @@ export class DbCommunicationService {
   }
 
   public VisitRegisteredAll(): Observable<VisitDTO[]> {
-    return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/registered/all`);
+    return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/registered/all`)
+    .pipe(
+      map((dtos: VisitDTO[]) => {
+        dtos.map((dto: VisitDTO) => { dto.registerDate = new Date(dto.registerDate); return dto; });
+        return dtos;
+      })
+    );
   }
 
   public VisitRegister(iVisitRegister: IVisitRegister): Observable<any> {
@@ -106,6 +112,10 @@ export class DbCommunicationService {
 
   public VisitClose(visitId: number, iVisitClose: IVisitClose): Observable<any> {
     return this.http.post<any>(`${this._serverURL}/visit/${visitId}/close`, iVisitClose);
+  }
+
+  public Visit(visitId: number): Observable<PatientVisitDTO> {
+    return this.http.get<PatientVisitDTO>(`${this._serverURL}/visit/${visitId}`);
   }
 
   public PatientAll(): Observable<PatientDTO[]> {

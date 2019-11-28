@@ -32,9 +32,7 @@ export class PreviousVisitsComponent implements OnInit {
   }
 
   ngOnInit() {
-    for(let i = 0; i < 696; i++) {
-      this.Visits.push({ id: i, desc: "Potrzebna decyzja czy pracownik laboratorium może widzieć wykonane badania innego pracownika", diagnose: "rak", date: '11/13/2019', docName: "Czesiek"});
-    }
+    
     this.visits.paginator = this.paginator;
     this.visits.sort = this.sort;
   }
