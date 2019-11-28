@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ILaboratoryExaminationDo } from 'src/app/Form/ILaboratoryExaminationDo';
 
 @Component({
   selector: 'app-wykonaj-badanie',
@@ -26,10 +27,12 @@ export class WykonajBadanieComponent implements OnInit {
     this.openSnackBar("Anulowano", "Ok");
   }
 
-  //TODO replace any
-  public onSubmit(value: any): void {
+  public onSubmit(value: ILaboratoryExaminationDo): void {
     if (!this.form.valid) return;
-    //TODO db
+    this._db.LaboratoryExaminationDo(this.data.LabExamination.id, value).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
     
   }
 
@@ -48,13 +51,9 @@ export class WykonajBadanieComponent implements OnInit {
   private handleResponse(auth: any): void {
 
     this.openSnackBar("Wynik badania nr "+ this.data.LabExamination.id +" został zapisany", "Ok");
-    window.setTimeout(() => {
-
-    this._router.navigate(["/lab"]);
-    }, 1000);
   }
 
-  private handleAuthError(err: HttpErrorResponse): void {
+  private handleError(err: HttpErrorResponse): void {
     switch (err.status) {
 	case 404:
         this.openSnackBar("Nie znaleziono takiego badania", "Ok");

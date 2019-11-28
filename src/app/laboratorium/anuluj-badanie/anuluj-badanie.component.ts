@@ -26,7 +26,6 @@ export class AnulujBadanieComponent implements OnInit {
     this.openSnackBar("Anulowano", "Ok");
   }
 
-  //TODO replace any
   public onSubmit(iLaboratoryExamination: ILaboratoryExaminationAbort): void {
     if (!this.form.valid) return;
     
@@ -43,6 +42,7 @@ export class AnulujBadanieComponent implements OnInit {
       Reason: ['', Validators.required],
     });
   }
+
 
   ngOnInit() {
     this.buildForm();

@@ -5,17 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
+import { DbCommunicationService } from 'src/app/db-communication.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LaboratoryExaminationExecutedDTO } from 'src/app/DTO/LaboratoryExaminationExecutedDTO';
 
-export interface KLabExamination {
-  id: number;
-  docComment: string;
-  orderDate: any;
-  type: string;
-  madeBy: string;
-  result: string;
-  examDate: string;
-  actions: any;
-}
 
 
 @Component({
@@ -25,7 +18,11 @@ export interface KLabExamination {
 })
 export class ListaBadanComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {
+  constructor(
+    public dialog: MatDialog, 
+    private route: ActivatedRoute,
+    private _db: DbCommunicationService,
+    ) {
     this.route.queryParams.subscribe(params => {
       if(params["k-lab-examination"]) {
         console.log("KLabExamination: ", params["k-lab-examination"]);
@@ -34,10 +31,10 @@ export class ListaBadanComponent implements OnInit {
     })
   }
 
-  public KLabExaminations: KLabExamination[] = [];
+  public KLabExaminations: LaboratoryExaminationExecutedDTO[] = [];
 
   displayedColumns: string[] = ['position', 'comment', 'orDate', 'type', 'worker', 'result', 'examDate', 'actions'];
-  dataSource = new MatTableDataSource(this.KLabExaminations);
+  dataSource: any;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -46,14 +43,35 @@ export class ListaBadanComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  ngOnInit() {
-
-    for(let i = 0; i < 696; i++) {
-      this.KLabExaminations.push({ id: i, docComment: `Leżę na sklocie w kontenerze z ${i}-ma Rumunami gorzała leci 10-ocio l. Bongo się kopci na psie kurwa dredy pierdolniety jamajczyk mu zrobił ?! I chuj. Jakiś chyba ?? Węgier ssie mi palca u nogi ??! Jebla idzie dostać. Trzymajcie się w tej Anglii !!!`, orderDate: '11/13/2019', type: "Badanie krwi", madeBy: "Twój Stary", result: "Dostał jebla", examDate: '11/13/2020', actions:""});
-    }
-
+  private handleData(data: LaboratoryExaminationExecutedDTO[])
+  {
+    console.log(data);
+    this.KLabExaminations = data;
+    this.dataSource = new MatTableDataSource(this.KLabExaminations);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+  
+  private handleError(err: HttpErrorResponse): void {
+    switch (err.status) {
+      default:
+        //Nieokreślony błąd
+        console.warn("Generic error");
+        break;
+    }
+    console.warn(err);
+  }
+
+  loadData() {
+    this._db.LaboratoryExaminationPending().subscribe({
+      next: this.handleData.bind(this),
+      error: this.handleError.bind(this)
+    })
+  }
+
+  ngOnInit() {
+
+    this.loadData();
   }
 
 }

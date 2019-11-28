@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { AnulujWizyteComponent } from '../anuluj-wizyte/anuluj-wizyte.component';
 import { DodajPacjentaComponent } from '../dodaj-pacjenta/dodaj-pacjenta.component';
 import { DbCommunicationService } from 'src/app/db-communication.service';
+import { VisitDTO } from 'src/app/DTO/VisitDTO';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 export interface Visit {
@@ -41,7 +43,7 @@ export class ListaWizytComponent implements OnInit {
 
   @Input("element") public visit: any;
 
-  public Visits: Visit[] = [];
+  public Visits: VisitDTO[] = [];
 
   displayedColumns: string[] = ['position', 'pat_name', 'doc_name', 'date', 'actions'];
   dataSource = new MatTableDataSource(this.Visits);
@@ -57,14 +59,35 @@ export class ListaWizytComponent implements OnInit {
     this._db.logout();
     this._router.navigate(['/']);
   }
-
-  ngOnInit() {
-    for(let i = 0; i < 696; i++) {
-      this.Visits.push({ id: i, date: '11/13/2019', patientName: "Łukaszek", docName: "Czesiek", actions:""});
-    }
-
+  
+  private handleData(data: VisitDTO[])
+  {
+    this.Visits = data;
+    this.dataSource = new MatTableDataSource(this.Visits);
+    console.log(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  loadData() {
+    this._db.LaboratoryExaminationOrdered().subscribe({
+      next: this.handleData.bind(this),
+      error: this.handleError.bind(this)
+    })
+  }
+
+  private handleError(err: HttpErrorResponse): void {
+    switch (err.status) {
+      default:
+        //Nieokreślony błąd
+        console.warn("Generic error");
+        break;
+    }
+    console.warn(err);
+  }
+
+  ngOnInit() {
+    this.loadData();
   }
 
   openCancelVisitDialog(data: Visit, e: HTMLElement): void {

@@ -15,12 +15,12 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.PatientVisitId}} </td>
             </ng-container>
-
+            <!-- TODO PatientName -->
             <ng-container matColumnDef="pat_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pacjent </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+                <td class="padd" mat-cell *matCellDef="let element">  </td>
             </ng-container>
 
             <ng-container matColumnDef="doc_name">
