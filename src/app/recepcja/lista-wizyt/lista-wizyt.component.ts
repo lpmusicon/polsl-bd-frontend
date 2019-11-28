@@ -25,25 +25,20 @@ export interface Visit {
   styleUrls: ['./lista-wizyt.component.scss']
 })
 export class ListaWizytComponent implements OnInit {
-
-  constructor(
-    public dialog: MatDialog, 
-    private route: ActivatedRoute,
-    private _router: Router,
-    private _db: DbCommunicationService) {
-    this.route.queryParams.subscribe(params => {
-      if(params["visit"]) {
-        console.log("Visit: ", params["visit"]);
-      }
-      console.log("Par: ", params);
-    }) 
-  }
-
-  
-
-  @Input("element") public visit: any;
-
   public Visits: VisitDTO[] = [];
+  @Input('element') public visit: any;
+  constructor(
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router,
+    private db: DbCommunicationService) {
+    this.route.queryParams.subscribe(params => {
+      if (params.visit) {
+        console.log('Visit: ', params.visit);
+      }
+      console.log('Par: ', params);
+    });
+  }
 
   displayedColumns: string[] = ['position', 'pat_name', 'doc_name', 'date', 'actions'];
   dataSource = new MatTableDataSource(this.Visits);
@@ -56,24 +51,22 @@ export class ListaWizytComponent implements OnInit {
   }
 
   public logout(): void {
-    this._db.logout();
-    this._router.navigate(['/']);
+    this.db.logout();
+    this.router.navigate(['/']);
   }
-  
-  private handleData(data: VisitDTO[])
-  {
+
+  private handleData(data: VisitDTO[]) {
     this.Visits = data;
     this.dataSource = new MatTableDataSource(this.Visits);
-    console.log(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   loadData() {
-    this._db.VisitRegisteredAll().subscribe({
+    this.db.VisitRegisteredAll().subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
-    })
+    });
   }
 
   public formatDate(d: string): string {
@@ -84,8 +77,8 @@ export class ListaWizytComponent implements OnInit {
   private handleError(err: HttpErrorResponse): void {
     switch (err.status) {
       default:
-        //Nieokreślony błąd
-        console.warn("Generic error");
+        // Nieokreślony błąd
+        console.warn('Generic error');
         break;
     }
     console.warn(err);
@@ -96,14 +89,15 @@ export class ListaWizytComponent implements OnInit {
   }
 
   openCancelVisitDialog(data: Visit, e: HTMLElement): void {
-    console.log("setting for: ", this.visit);
+    console.log('setting for: ', data);
     const openCancelVisitDialogRef = this.dialog.open(AnulujWizyteComponent, {
       width: '650px',
-      data: { ...data }
+      data
     });
 
     openCancelVisitDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.loadData();
     });
 
   }
