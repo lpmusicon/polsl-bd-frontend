@@ -32,7 +32,7 @@ export class ListUserComponent implements OnInit {
     });
   }
 
-  displayedColumns: string[] = ['position', 'name', 'role', 'actions'];
+  displayedColumns: string[] = ['position', 'name', 'role', 'expiryDate', 'actions'];
   dataSource = new MatTableDataSource(this.users);
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -50,6 +50,11 @@ export class ListUserComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public formatDate(d: string): string {
+    const date = new Date(d);
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
   }
 
   ngOnInit() {

@@ -25,7 +25,7 @@ export class SetExpiryDateUserComponent implements OnInit {
 
   ngOnInit() {
     this.form = this._fb.group({
-      disabledTo: [this.user.disabledTo, Validators.required]
+      expiryDate: [this.user.expiryDate, Validators.required]
     });
   }
 

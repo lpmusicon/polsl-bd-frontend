@@ -36,6 +36,7 @@ export class AddUserComponent implements OnInit {
       LastName: ['', Validators.required],
       Role: ['', Validators.required],
       Password: ['', Validators.required],
+      ExpiryDate: ['', Validators.required],
       PWZNumber: ['']
     });
   }
