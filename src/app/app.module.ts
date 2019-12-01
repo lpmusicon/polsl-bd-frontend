@@ -49,7 +49,8 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     LabWGuard,
     LabMGuard,
     RecpGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })
