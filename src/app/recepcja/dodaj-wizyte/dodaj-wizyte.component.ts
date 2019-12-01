@@ -52,7 +52,8 @@ export class DodajWizyteComponent implements OnInit {
   private buildForm(): void {
     this.form = this.fb.group({
       PatientId: ['', Validators.required],
-      DoctorId: ['', Validators.required]
+      DoctorId: ['', Validators.required],
+      RegisterDate: ['', Validators.required]
     });
   }
 
