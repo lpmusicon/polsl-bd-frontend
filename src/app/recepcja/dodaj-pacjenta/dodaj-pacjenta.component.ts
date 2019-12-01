@@ -54,7 +54,6 @@ export class DodajPacjentaComponent implements OnInit {
     this.buildForm();
   }
 
-
   private handleResponse(): void {
     this.openSnackBar(`Dodano pacjenta ${this.form.get('Name').value} ${this.form.get('LastName').value}`, 'Ok');
     this.openAddPatientDialogRef.close();
