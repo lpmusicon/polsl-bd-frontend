@@ -53,7 +53,7 @@ export class LoginBoxComponent implements OnInit {
     console.log("Token: ", auth.token);
     console.log("Role: ", auth.role);
     console.log("userID", auth.userId);
-    console.log("disabledTo", auth.disabledTo);
+    console.log("disabledTo", auth.expiryDate);
 
     this.openSnackBar("Logowanie", "");
     window.setTimeout(() => {

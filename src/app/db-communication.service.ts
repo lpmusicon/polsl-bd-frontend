@@ -44,7 +44,7 @@ export class DbCommunicationService {
     return this.http.post<AuthDTO>(`${this._serverURL}/user/authenticate`, iLogin)
       .pipe(
         map((dto: AuthDTO) => {
-          dto.disabledTo = new Date(dto.disabledTo);
+          dto.expiryDate = new Date(dto.expiryDate);
           this.setUser(dto);
           return dto;
         })
@@ -67,7 +67,7 @@ export class DbCommunicationService {
     return this.http.get<UserDTO[]>(`${this._serverURL}/user/all`)
       .pipe(
         map((dtos: UserDTO[]) => {
-          dtos.map((dto: UserDTO) => { dto.disabledTo = new Date(dto.disabledTo); return dto; });
+          dtos.map((dto: UserDTO) => { dto.expiryDate = new Date(dto.expiryDate); return dto; });
           return dtos;
         })
       );

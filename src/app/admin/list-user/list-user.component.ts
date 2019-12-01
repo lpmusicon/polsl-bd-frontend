@@ -16,7 +16,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   encapsulation: ViewEncapsulation.None
 })
 export class ListUserComponent implements OnInit {
-
   public users: UserDTO[] = [];
 
   constructor(
@@ -51,11 +50,6 @@ export class ListUserComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  public formatDate(d: string): string {
-    const date = new Date(d);
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
   }
 
   ngOnInit() {

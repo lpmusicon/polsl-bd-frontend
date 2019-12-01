@@ -69,11 +69,6 @@ export class ListaWizytComponent implements OnInit {
     });
   }
 
-  public formatDate(d: string): string {
-    const date = new Date(d);
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-  }
-
   private handleError(err: HttpErrorResponse): void {
     switch (err.status) {
       default:

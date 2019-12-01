@@ -30,7 +30,7 @@
 
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data rejestracji </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{ formatDate(element.registerDate) }} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ element.registerDate | date:"dd/MM/yyyy" }} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
