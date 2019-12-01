@@ -27,10 +27,14 @@ div.wrapper {
                     flex: 1 0 auto;
                 }
                 mat-form-field:first-child {
-                    margin-right: 8px
+                    margin-right: 8px;
                 }  
                 mat-form-field:last-child {
                     margin-left: 8px;
+                }
+                mat-form-field:only-child {
+                    margin-left: 0px;
+                    margin-right: 0px;
                 }
                 span.flex {
                     flex: 1 0 auto;

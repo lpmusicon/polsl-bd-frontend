@@ -4,10 +4,11 @@
             <h2>Ustaw datę wygaśnięcia konta</h2>
             <span>Użytkownik {{ user.login }} ({{ user.role }})</span>
             <mat-form-field>
-                    <input formControlName="disabledTo" matInput [matDatepicker]="picker" placeholder="Wybierz datę" required>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
+                <input formControlName="disabledTo" matInput [matDatepicker]="picker" placeholder="Wybierz datę">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="form.get('disabledTo').hasError('required')">Data wygaśnięcia jest wymagana</mat-error>
+            </mat-form-field>
             <div class="double-input">
                 <span class="flex"></span>
                 <button mat-raised-button type="button" (click)="setExpiryDateCancel()">Anuluj</button>

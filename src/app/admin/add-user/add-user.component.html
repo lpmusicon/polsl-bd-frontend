@@ -21,9 +21,8 @@
                     <mat-label>Typ konta</mat-label>
                     <mat-select matInput formControlName="Role">
                         <mat-option *ngFor="let role of Roles" [value]="role.Mnemo">{{role.Name}}</mat-option>
-                        <mat-error *ngIf="form.get('Role').hasError('required')">Typ konta jest wymagany</mat-error>
                     </mat-select>
-                    
+                    <mat-error *ngIf="form.get('Role').hasError('required')">Typ konta jest wymagany</mat-error>
                 </mat-form-field>
                 <mat-form-field *ngIf="form.get('Role').value == 'DOCT'">
                     <input matInput placeholder="PWZ" formControlName="PWZNumber"/>
