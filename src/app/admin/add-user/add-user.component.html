@@ -19,17 +19,20 @@
             <div class="double-input">
                 <mat-form-field>
                     <mat-label>Typ konta</mat-label>
-                    <mat-select formControlName="Role">
+                    <mat-select matInput formControlName="Role">
                         <mat-option *ngFor="let role of Roles" [value]="role.Mnemo">{{role.Name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="form.get('Role').hasError('required')">Typ konta jest wymagany</mat-error>
                 </mat-form-field>
-                <mat-form-field>
-                    <input matInput placeholder="Hasło" type="password" formControlName="Password"/>
-                    <mat-error *ngIf="form.get('Password').hasError('required')">Nowe hasło jest wymagane</mat-error>
-                    <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
+                <mat-form-field *ngIf="form.get('Role').value == 'DOCT'">
+                    <input matInput placeholder="PWZ" formControlName="PWZNumber"/>
                 </mat-form-field>
             </div>
+            <mat-form-field>
+                <input matInput placeholder="Hasło" type="password"  formControlName="Password"/>
+                <mat-error *ngIf="form.get('Password').hasError('required')">Nowe hasło jest wymagane</mat-error>
+                <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
+            </mat-form-field>
             <div class="double-input">
                 <span class="flex"></span>
                 <button type="button" mat-raised-button (click)="addUserDialogCancel()">Anuluj</button>

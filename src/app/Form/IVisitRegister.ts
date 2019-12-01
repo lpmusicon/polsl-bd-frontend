@@ -1,12 +1,5 @@
-export class IVisitRegister
-{
-    PatientVisitId: number;
-    Description: string;
-    Diagnosis: string;
-    Status: string;
-    RegisterDate: Date;
-    CloseDate?: Date;
-    ReceptionistId: number;
+export class IVisitRegister {
     PatientId: number;
     DoctorId: number;
+    RegisterDate: Date;
 }

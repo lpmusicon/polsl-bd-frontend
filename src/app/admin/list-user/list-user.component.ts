@@ -21,15 +21,15 @@ export class ListUserComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private _router: Router,
+    private router: Router,
     private route: ActivatedRoute,
-    private _db: DbCommunicationService) {
+    private db: DbCommunicationService) {
     this.route.queryParams.subscribe(params => {
-      if (params["user"]) {
-        console.log("User: ", params["user"]);
+      if (params.user) {
+        console.log('User: ', params.user);
       }
       console.log(params);
-    })
+    });
   }
 
   displayedColumns: string[] = ['position', 'name', 'role', 'actions'];
@@ -53,30 +53,29 @@ export class ListUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._db.UserAll().subscribe({
+    this.db.UserAll().subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
-    })
+    });
 
-  }
-
-  private handleData(data: UserDTO[])
-  {
-    console.log(data);
-    this.users = data;
-    this.dataSource = new MatTableDataSource(this.users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
   }
 
-  private handleError(err: HttpErrorResponse)
-  {
+  private handleData(data: UserDTO[]) {
+    console.log(data);
+    this.users = data;
+    this.dataSource.data = data;
+  }
+
+  private handleError(err: HttpErrorResponse) {
     console.warn(err);
   }
 
   public logout(): void {
-    this._db.logout();
-    this._router.navigate(['/']);
+    this.db.logout();
+    this.router.navigate(['/']);
   }
 
 }

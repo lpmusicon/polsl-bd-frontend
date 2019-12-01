@@ -10,14 +10,14 @@
             <br>
             <span>Wybierz pacjenta</span>
             <mat-form-field>
-                <mat-select [disableOptionCentering]="true" #select1 placeholder="Pacjent" formControlName="Patient" required>
+                <mat-select [disableOptionCentering]="true" #select1 placeholder="Pacjent" formControlName="PatientId">
                     <mat-select-filter *ngIf="select1.focused" [array]="patients"
-                        (filteredReturn)="filteredList1 =$event" [displayMember]="'viewValue'"></mat-select-filter>
-                    <mat-option *ngFor="let item of patients" value="item.patientId">
-                        {{item.name}} {{item.lastname}} {{item.PESEL}}
+                        (filteredReturn)="filteredList1 =$event" [displayMember]="'fullName'"></mat-select-filter>
+                    <mat-option *ngFor="let item of filteredList1" [value]="item.patientId">
+                        {{item.fullName}} {{item.PESEL}}
                     </mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('Patient').hasError('required')">Należy wybrać pacjenta</mat-error>
+                <mat-error *ngIf="form.get('PatientId').hasError('required')">Należy wybrać pacjenta</mat-error>
             </mat-form-field>
             <br>
             <span>Pacjent nie znajduje się na liście?</span>
@@ -25,17 +25,25 @@
                 <button mat-raised-button type="button" (click)="openAddPatientDialog()">Dodaj pacjenta</button>
             </div>
             <br>
-            <span>Wybierz lekarza</span>
-            <mat-form-field>
-                <mat-select [disableOptionCentering]="true" #select2 placeholder="Lekarz" formControlName="Doctor" required>
-                    <mat-select-filter *ngIf="select2.focused" [array]="doctors"
-                        (filteredReturn)="filteredList2 =$event" [displayMember]="'viewValue'"></mat-select-filter>
-                    <mat-option *ngFor="let item of filteredList2" [value]="item">
-                        {{item.viewValue}}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="form.get('Doctor').hasError('required')">Należy wybrać lekarza</mat-error>
-            </mat-form-field>
+            <div class="double-input">
+                <mat-form-field>
+                    <mat-select [disableOptionCentering]="true" #select2 placeholder="Lekarz"
+                        formControlName="DoctorId">
+                        <mat-select-filter *ngIf="select2.focused" [array]="doctors"
+                            (filteredReturn)="filteredList2 =$event" [displayMember]="'fullName'"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredList2" [value]="item.id">
+                            {{item.fullName}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('DoctorId').hasError('required')">Należy wybrać lekarza</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="RegisterDate" matInput [matDatepicker]="picker" placeholder="Wybierz datę">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="form.get('RegisterDate').hasError('required')">Data wygaśnięcia jest wymagana</mat-error>
+                </mat-form-field>
+            </div>
             <div class="double-input">
                 <span class="flex"></span>
                 <button type="button" mat-raised-button [routerLink]="'/recepcja'">Anuluj</button>

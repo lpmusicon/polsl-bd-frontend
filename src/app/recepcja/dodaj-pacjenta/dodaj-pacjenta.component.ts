@@ -12,39 +12,38 @@ import { IPatientRegister } from 'src/app/Form/IPatientRegister';
   styleUrls: ['./dodaj-pacjenta.component.scss']
 })
 export class DodajPacjentaComponent implements OnInit {
-
+  public form: FormGroup;
   constructor(
-    private openAddPatientDialogRef: MatDialogRef<DodajPacjentaComponent>, 
-    private _router: Router,
-    private _fb: FormBuilder,
-    private _db: DbCommunicationService,
-    private _snackBar: MatSnackBar
-    ) { }
+    private openAddPatientDialogRef: MatDialogRef<DodajPacjentaComponent>,
+    private router: Router,
+    private fb: FormBuilder,
+    private db: DbCommunicationService,
+    private snackBar: MatSnackBar
+  ) { }
 
   public addPatientDialogCancel() {
-    this.openAddPatientDialogRef.close({reason: "cancel"});
-    this.openSnackBar("Anulowano", "Ok");
+    this.openAddPatientDialogRef.close({ reason: 'cancel' });
+    this.openSnackBar('Anulowano', 'Ok');
   }
-  
- public onSubmit(value: IPatientRegister): void {
-  if (!this.form.valid) return;
-  this._db.PatientRegister(value).subscribe({
-    next: this.handleResponse.bind(this),
-    error: this.handleError.bind(this)
-  })
-  
-}
+
+  public onSubmit(value: IPatientRegister): void {
+    console.log(value);
+    if (!this.form.valid) { return; }
+
+    this.db.PatientRegister(value).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    });
+  }
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
+    this.snackBar.open(message, action, {
       duration: 2000,
     });
   }
 
-  public form: FormGroup;
-
   private buildForm(): void {
-    this.form = this._fb.group({
+    this.form = this.fb.group({
       Name: ['', Validators.required],
       LastName: ['', Validators.required],
       PESEL: ['', Validators.required]
@@ -55,26 +54,25 @@ export class DodajPacjentaComponent implements OnInit {
     this.buildForm();
   }
 
-
-private handleResponse(): void {
-
-  this.openSnackBar("Dodano pacjenta " + this.form.get("Name").value + " " + this.form.get("Last").value, "Ok");
-}
-
-private handleError(err: HttpErrorResponse): void {
-  switch (err.status) {
-    case 400:
-      //Złe dane
-      this.openSnackBar("Niepoprawne dane/brak danych", "Ok");
-      console.warn("Wrong/empty data");
-      break;
-    default:
-      //Nieokreślony błąd
-      this.openSnackBar("Wystąpił nieokreślony błąd", "Ok");
-      console.warn("Generic error");
-      break;
+  private handleResponse(): void {
+    this.openSnackBar(`Dodano pacjenta ${this.form.get('Name').value} ${this.form.get('LastName').value}`, 'Ok');
+    this.openAddPatientDialogRef.close();
   }
-  console.warn(err);
-}
+
+  private handleError(err: HttpErrorResponse): void {
+    switch (err.status) {
+      case 400:
+        // Złe dane
+        this.openSnackBar('Niepoprawne dane/brak danych', 'Ok');
+        console.warn('Wrong/empty data');
+        break;
+      default:
+        // Nieokreślony błąd
+        this.openSnackBar('Wystąpił nieokreślony błąd', 'Ok');
+        console.warn('Generic error');
+        break;
+    }
+    console.warn(err);
+  }
 
 }

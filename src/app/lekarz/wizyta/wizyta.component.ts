@@ -19,14 +19,15 @@ export class WizytaComponent implements OnInit {
   public visit: PatientVisitDTO;
   public visits: VisitDTO[];
   public visitId: number;
+  public form: FormGroup;
 
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private _router: Router,
-    private _fb: FormBuilder,
-    private _db: DbCommunicationService,
-    private _snackBar: MatSnackBar
+    private router: Router,
+    private fb: FormBuilder,
+    private db: DbCommunicationService,
+    private snackBar: MatSnackBar
   ) {}
 
   openAddExaminationDialog(): void {
@@ -44,7 +45,7 @@ export class WizytaComponent implements OnInit {
     const openAddExamintionDialogRef = this.dialog.open(BadanieLaboratoryjneComponent, {
       width: '650px',
       data: { VisitId: this.visitId }
-    })
+    });
 
     openAddExamintionDialogRef.afterClosed().subscribe({
       next: () => {
@@ -54,15 +55,15 @@ export class WizytaComponent implements OnInit {
   }
 
   private fetchLabExaminations() {
-    this._db.LaboratoryExaminationOrderedVisit
+
   }
 
   private handleParams(a) {
     this.visitId = a.id;
-    this._db.Visit(this.visitId).subscribe({
+    this.db.Visit(this.visitId).subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
-    })
+    });
   }
 
   private handleData(visit: PatientVisitDTO) {
@@ -74,20 +75,17 @@ export class WizytaComponent implements OnInit {
     console.warn(err);
   }
 
-  public form: FormGroup;
-
   private buildForm(): void {
-    this.form = this._fb.group({
+    this.form = this.fb.group({
       Description: ['', Validators.required],
       Diagnosis: ['', Validators.required]
     });
   }
 
-  //TODO replace any
+  // TODO replace any
   public onSubmit(value: any): void {
-    if (!this.form.valid) return;
-    //TODO db
-    
+    if (!this.form.valid) { return; }
+    // TODO db
   }
 
   ngOnInit() {
@@ -95,43 +93,43 @@ export class WizytaComponent implements OnInit {
       Id: 0,
       RegisterDate: new Date(),
       Patient: {
-        PatientId: 0,
-        Name: '',
-        Lastname: '',
+        patientId: 0,
+        name: '',
+        lastname: '',
         PESEL: ''
       }
-    }
+    };
     this.buildForm();
     this.route.params.subscribe({
       next: this.handleParams.bind(this)
     });
   }
-  
+
   private handleResponse(auth: any): void {
-    this.openSnackBar("Wizyta pacjenta " + "TODO" + " została zakończona", "Ok");
+    this.openSnackBar(`Wizyta pacjenta  została zakończona`, 'Ok');
   }
 
   private handleAuthError(err: HttpErrorResponse): void {
     switch (err.status) {
       case 404:
-        this.openSnackBar("Nie znaleziono wizyty", "Ok");
+        this.openSnackBar('Nie znaleziono wizyty', 'Ok');
         break;
       case 400:
-        //Złe dane
-        this.openSnackBar("Niepoprawne dane/brak danych", "Ok");
-        console.warn("Wrong/empty data");
+        // Złe dane
+        this.openSnackBar('Niepoprawne dane/brak danych', 'Ok');
+        console.warn('Wrong/empty data');
         break;
       default:
-        //Nieokreślony błąd
-        this.openSnackBar("Wystąpił nieokreślony błąd", "Ok");
-        console.warn("Generic error");
+        // Nieokreślony błąd
+        this.openSnackBar('Wystąpił nieokreślony błąd', 'Ok');
+        console.warn('Generic error');
         break;
     }
     console.warn(err);
   }
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
+    this.snackBar.open(message, action, {
       duration: 2000,
     });
   }

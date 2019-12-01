@@ -1,9 +1,10 @@
 import { VisitDTO } from './VisitDTO';
 
 export class PatientDTO {
-    PatientId: number;
-    Name: string;
-    Lastname: string;
+    patientId: number;
+    name: string;
+    lastname: string;
     PESEL: string;
-    PatientVisits?: VisitDTO[];
+    patientVisits?: VisitDTO[];
+    fullName?: string;
 }
