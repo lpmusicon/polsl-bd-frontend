@@ -21,6 +21,7 @@ import { LabWGuard } from './Guard/labw-guard';
 import { LabMGuard } from './Guard/labm-guard';
 import { RecpGuard } from './Guard/recp-guard';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     LabWGuard,
     LabMGuard,
     RecpGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })
