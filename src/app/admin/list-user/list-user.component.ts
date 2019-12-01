@@ -45,6 +45,7 @@ export class ListUserComponent implements OnInit {
 
     openAddUserDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.loadData();
     });
   }
 
@@ -58,6 +59,10 @@ export class ListUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.db.UserAll().subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
@@ -65,7 +70,6 @@ export class ListUserComponent implements OnInit {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
   }
 
   private handleData(data: UserDTO[]) {
