@@ -1,0 +1,51 @@
+<div class="wrapper">
+    <mat-toolbar>
+        <span>Panel Recepcji</span>
+        <span class="flex"></span>
+        <button mat-button [routerLink]="'/recepcja/addvisit'">Dodaj wizytę</button>
+        <button mat-raised-button (click)="logout()">Zdetonuj sesję</button>
+    </mat-toolbar>
+    <div class="inner-wrapper">
+        <h3>Lista Wizyt</h3>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+            <!-- TODO PatientName -->
+            <ng-container matColumnDef="pat_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Pacjent </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.patient.name}}  {{element.patient.lastname}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="doc_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctor.name}}  {{element.doctor.lastname}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data rejestracji </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ element.registerDate | date:"dd/MM/yyyy" }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
+                <td class="padd" mat-cell *matCellDef="let element"> 
+                    <button mat-raised-button (click)="openCancelVisitDialog(element, $event)">Anuluj wizytę</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </div>
+</div>

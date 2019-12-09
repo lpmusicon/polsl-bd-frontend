@@ -1,0 +1,15 @@
+<div class="wrapper">
+        <div class="inner-wrapper">
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                <h2>Zatwierdzanie badania</h2>
+                <span>Badanie nr {{ data.LabExamination.Id }}</span>
+                <span>Typ badania: {{ data.LabExamination.LaboratoryExaminationName }}</span>
+                <h2>Czy potwierdzasz że badanie zostało wykonane poprawnie?</h2>
+                <div class="double-input">
+                    <span class="flex"></span>
+                    <button type="button" mat-raised-button (click)="cancelCommitLabExamination()">Nie</button>
+                    <button type="submit" mat-raised-button>Tak</button>
+                </div>
+            </form>
+        </div>
+    </div>

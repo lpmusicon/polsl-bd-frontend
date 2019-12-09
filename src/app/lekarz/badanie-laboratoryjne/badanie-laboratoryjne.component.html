@@ -1,0 +1,25 @@
+<div class="wrapper">
+        <div class="inner-wrapper">
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                <h2>Badanie dla: {{ data.patId }}</h2><br>
+                <h2>Wybierz typ badania laboratoryjnego</h2>
+                <mat-form-field>
+                    <mat-label>Typ badania</mat-label>
+                    <mat-select formControlName="ExaminationTypeId">
+                        <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
+                            {{examType.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('ExaminationTypeId').hasError('required')">Typ badania laboratoryjnego jest wymagany</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Uwagi" formControlName="DoctorComment" />
+                </mat-form-field>
+                <div class="double-input">
+                    <span class="flex"></span>
+                    <button type="button" mat-raised-button (click)="cancelAddLabExamination()">Anuluj</button>
+                    <button type="submit" mat-raised-button>Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,65 @@
+<div class="wrapper">
+    <mat-toolbar>
+        <span>Panel Kierownika Laboratorium</span>
+        <span class="flex"></span>
+        <button mat-raised-button>Zdetonuj sesję</button>
+    </mat-toolbar>
+    <div class="inner-wrapper">
+        <h3>Lista badań</h3>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.Id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="comment">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Komentarz Lekarza </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.DoctorComment}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="orDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zlecenia </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.OrderDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.LaboratoryExaminationName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="worker">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Pracownik </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.Worker}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="result">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik badania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.Result}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="examDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wykonania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.ExaminationDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
+                <td class="padd" mat-cell *matCellDef="let LabExamination">
+                    <app-list-item-manage [lab-examination]="LabExamination"></app-list-item-manage>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </div>
+</div>

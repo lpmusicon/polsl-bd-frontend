@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <h2>Dodawanie nowego pacjenta do bazy</h2>
+            <div class="double-input">
+                <mat-form-field>
+                    <input matInput placeholder="Imię" formControlName="Name"/>
+                    <mat-error *ngIf="form.get('Name').hasError('required')">Imię jest wymagane</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nazwisko" formControlName="LastName"/>
+                    <mat-error *ngIf="form.get('LastName').hasError('required')">Nazwisko jest wymagane</mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field>
+                <input matInput placeholder="PESEL" formControlName="PESEL"/>
+                <mat-error *ngIf="form.get('PESEL').hasError('required')">PESEL jest wymagany</mat-error>
+            </mat-form-field>
+            <div class="double-input">
+                <span class="flex"></span>
+                <button type="button" mat-raised-button (click)="addPatientDialogCancel()">Anuluj</button>
+                <button mat-raised-button>Dodaj pacjenta</button>
+            </div>
+        </form>
+    </div>
+</div>

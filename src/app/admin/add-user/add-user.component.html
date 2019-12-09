@@ -1,0 +1,52 @@
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <h2>Tworzenie nowego konta</h2>
+            <mat-form-field>
+                <input matInput placeholder="Login użytkownika" formControlName="Login" />
+                <mat-error *ngIf="form.get('Login').hasError('required')">Login jest wymagany</mat-error>
+            </mat-form-field>
+            <div class="double-input">
+                <mat-form-field>
+                    <input matInput placeholder="Imię" formControlName="Name" />
+                    <mat-error *ngIf="form.get('Name').hasError('required')">Imię jest wymagane</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nazwisko" formControlName="LastName" />
+                    <mat-error *ngIf="form.get('LastName').hasError('required')">Nazwisko jest wymagane</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="double-input">
+                <mat-form-field>
+                    <mat-label>Typ konta</mat-label>
+                    <mat-select matInput formControlName="Role" (selectionChange)="checkSelection()">
+                        <mat-option *ngFor="let role of Roles" [value]="role.Mnemo">{{role.Name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('Role').hasError('required')">Typ konta jest wymagany</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="form.get('Role').value == 'DOCT'">
+                    <input matInput placeholder="PWZ" formControlName="PWZNumber" />
+                </mat-form-field>
+            </div>
+            <div class="double-input">
+                <mat-form-field>
+                    <input formControlName="ExpiryDate" matInput [matDatepicker]="picker" placeholder="Wybierz datę">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="form.get('ExpiryDate').hasError('required')">Data wygaśnięcia jest wymagana
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Hasło" type="password" formControlName="Password" />
+                    <mat-error *ngIf="form.get('Password').hasError('required')">Nowe hasło jest wymagane</mat-error>
+                    <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="double-input">
+                <span class="flex"></span>
+                <button type="button" mat-raised-button (click)="addUserDialogCancel()">Anuluj</button>
+                <button mat-raised-button>Dodaj użytkownika</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+div.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    width: 100%;
+    mat-toolbar {
+        display: flex;
+        background-color: #ebebeb;
+        span.flex {
+            flex: 1 0 auto;
+        }
+        button:not(:last-child) {
+            margin: 0 12px;
+        }
+    }
+    div.inner-wrapper {
+        width: 100%;
+        height: 100%;
+        
+        background: #fff;
+        box-sizing: border-box;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        //box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
+        padding: 24px;
+        h3 {
+            font-weight: 500;
+        }
+        span {
+            line-height: 150%;
+        }
+        form {
+            mat-form-field {
+                textarea {
+                    margin-top: 25px;
+                    min-height: 50px;
+                }
+            }
+            div.double-input {
+                display: flex;
+                flex-direction: row;
+                justify-content: stretch;
+                mat-form-field {
+                    flex: 1 0 auto;
+                }
+                mat-form-field:first-child {
+                    margin-right: 8px
+                }  
+                mat-form-field:last-child {
+                    margin-left: 8px;
+                }
+                span.flex {
+                    flex: 1 0 auto;
+                }
+                .mat-raised-button:last-child {
+                    margin-left: 20px;
+                    background-color: #3f51b5;
+                }
+            }
+
+            h2 {
+                margin: 0;
+                padding: 0;
+                font-size: 1.5em;
+                font-weight: 400;
+            }
+            button {
+                margin-top: 20px;
+            }
+        }
+        table {
+            width: 100%;
+            td.padd.mat-cell {
+                padding: 8px;
+                text-align: justify;
+                max-width: 400px;
+            }
+            th.mat-header-cell {
+                padding: 8px;
+            }
+        }
+          
+        .mat-form-field {
+            font-size: 14px;
+            width: 100%;
+        }
+    }
+}

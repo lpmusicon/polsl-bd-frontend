@@ -1,0 +1,8 @@
+<button mat-button [matMenuTriggerFor]="menu">Zarządzaj</button>
+
+<mat-menu #menu="matMenu" xPosition="before">
+    <ng-template matMenuContent>
+        <button (click)="openCommitLabExaminationDialog($event)" mat-menu-item>Zatwierdź badanie</button>
+        <button (click)="openCancelLabExaminationDialog($event)" mat-menu-item>Anuluj badanie</button>
+    </ng-template>
+</mat-menu>

@@ -1,1 +1,17 @@
-<p>login-box działa!</p>
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <h2>Zaloguj się!</h2>
+            <mat-form-field>
+                <input matInput placeholder="Login" formControlName="Login" autocomplete="username" required/>
+                <mat-error *ngIf="form.get('Login').hasError('required')">Login jest wymagany</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Hasło" type="password" autocomplete="current-password" formControlName="Password" required/>
+                <mat-error *ngIf="form.get('Password').hasError('required')">Hasło jest wymagane</mat-error>
+            </mat-form-field>
+            <button type="submit" mat-raised-button>Logowanie</button>
+        </form>
+    </div>
+</div>
+

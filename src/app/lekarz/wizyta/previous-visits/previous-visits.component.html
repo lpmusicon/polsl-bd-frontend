@@ -1,0 +1,41 @@
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="visits" matSort>
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="doc_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Opis wizyty </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.desc}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="diagnose">
+                <th mat-header-cell *matHeaderCellDef> Diagnoza </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.diagnose}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wizyty </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="visitsDisplayedColumns"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: visitsDisplayedColumns;"></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
