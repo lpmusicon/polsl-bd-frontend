@@ -19,7 +19,7 @@
             <div class="double-input">
                 <mat-form-field>
                     <mat-label>Typ konta</mat-label>
-                    <mat-select matInput formControlName="Role">
+                    <mat-select matInput formControlName="Role" (selectionChange)="checkSelection()">
                         <mat-option *ngFor="let role of Roles" [value]="role.Mnemo">{{role.Name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="form.get('Role').hasError('required')">Typ konta jest wymagany</mat-error>

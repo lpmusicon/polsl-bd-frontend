@@ -27,6 +27,13 @@ export class AddUserComponent implements OnInit {
     this.openSnackBar("Anulowano", "Ok");
   }
 
+  public checkSelection(event: any) {
+    console.log(event);
+    if(this.form.get('Role').value !== "DOCT") {
+      this.form.get('PWZNumber').setValue('');
+    }
+  }
+
   public form: FormGroup;
 
   private buildForm(): void {
