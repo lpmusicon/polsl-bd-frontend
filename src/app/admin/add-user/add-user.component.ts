@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -34,17 +34,23 @@ export class AddUserComponent implements OnInit {
     }
   }
 
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
+}
+
   public form: FormGroup;
 
   private buildForm(): void {
     this.form = this._fb.group({
-      Login: ['', Validators.required],
-      Name: ['', Validators.required],
-      LastName: ['', Validators.required],
+      Login: ['', [Validators.required, this.noWhitespaceValidator]],
+      Name: ['', [Validators.required, this.noWhitespaceValidator]],
+      LastName: ['', [Validators.required, this.noWhitespaceValidator]],
       Role: ['', Validators.required],
-      Password: ['', Validators.required],
+      Password: ['', [Validators.required, this.noWhitespaceValidator, Validators.minLength(5)]],
       ExpiryDate: ['', Validators.required],
-      PWZNumber: ['']
+      PWZNumber: ['', [Validators.minLength(7), Validators.maxLength(7), Validators.pattern('[0-9]')]]
     });
   }
   
@@ -75,6 +81,7 @@ export class AddUserComponent implements OnInit {
   private handleError(err: HttpErrorResponse)
   {
     console.warn(err);
+    this.openSnackBar("Podane dane są niepoprawne, spróbuj ponownie", "");
   }
 
   Roles: UserRoleDTO[] = [

@@ -22,17 +22,10 @@ export class ListUserComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private db: DbCommunicationService) {
-    this.route.queryParams.subscribe(params => {
-      if (params.user) {
-        console.log('User: ', params.user);
-      }
-      console.log(params);
-    });
-  }
+    private db: DbCommunicationService) {}
 
-  displayedColumns: string[] = ['position', 'name', 'role', 'expiryDate', 'actions'];
-  dataSource = new MatTableDataSource(this.users);
+  displayedColumns: string[] = ['userId', 'name', 'role', 'expiryDate', 'actions'];
+  public dataSource: MatTableDataSource<UserDTO>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -53,6 +46,11 @@ export class ListUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.users);
+    this.loadData();
+  }
+
+  onChange() {
     this.loadData();
   }
 
@@ -67,7 +65,6 @@ export class ListUserComponent implements OnInit {
   }
 
   private handleData(data: UserDTO[]) {
-    console.log(data);
     this.users = data;
     this.dataSource.data = data;
   }

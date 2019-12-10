@@ -12,8 +12,7 @@
         </mat-form-field>
         <div>
             <table mat-table [dataSource]="dataSource" matSort>
-
-                <ng-container matColumnDef="position">
+                <ng-container matColumnDef="userId">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
                     <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
                 </ng-container>
@@ -36,7 +35,7 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
                     <td mat-cell *matCellDef="let user">
-                        <app-list-item-manage [user]="user"></app-list-item-manage>
+                        <app-list-item-manage (change)="onChange()" [user]="user"></app-list-item-manage>
                     </td>
                 </ng-container>
 
