@@ -78,10 +78,12 @@ export class DbCommunicationService {
   }
 
   public UserDisable(userId: number, newDisabled: IDisabledTo): Observable<any> {
+    newDisabled.expiryDate.setTime(newDisabled.expiryDate.getTime() + 3600000);
     return this.http.patch<any>(`${this._serverURL}/user/${userId}/disable`, newDisabled);
   }
 
   public UserRegister(iUserRegister: IUserRegister): Observable<any> {
+    iUserRegister.ExpiryDate.setTime(iUserRegister.ExpiryDate.getTime() + 3600000);
     return this.http.post<any>(`${this._serverURL}/user/register`, iUserRegister);
   }
 
@@ -104,6 +106,7 @@ export class DbCommunicationService {
   }
 
   public VisitRegister(iVisitRegister: IVisitRegister): Observable<any> {
+    iVisitRegister.RegisterDate.setTime(iVisitRegister.RegisterDate.getTime() + 3600000);
     return this.http.post<Observable<any>>(`${this._serverURL}/visit/register`, iVisitRegister);
   }
 

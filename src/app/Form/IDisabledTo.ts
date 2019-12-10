@@ -1,3 +1,3 @@
 export interface IDisabledTo {
-    disabledTo: Date;
+    expiryDate: Date;
 }
