@@ -23,14 +23,7 @@ export class ListaBadanComponent implements OnInit {
     private route: ActivatedRoute,
     private _db: DbCommunicationService,
     private router: Router
-    ) {
-    this.route.queryParams.subscribe(params => {
-      if(params["k-lab-examination"]) {
-        console.log("KLabExamination: ", params["k-lab-examination"]);
-      }
-      console.log(params);
-    })
-  }
+    ) {}
 
   public KLabExaminations: LaboratoryExaminationExecutedDTO[] = [];
 
@@ -39,7 +32,7 @@ export class ListaBadanComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  displayedColumns: string[] = ['position', 'comment', 'orDate', 'type', 'worker', 'result', 'examDate', 'actions'];
+  displayedColumns: string[] = ['id', 'doctorComment', 'orderDate', 'examinationName', 'worker', 'result', 'examinationDate', 'actions'];
   dataSource = new MatTableDataSource(this.KLabExaminations);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -72,10 +65,13 @@ export class ListaBadanComponent implements OnInit {
     })
   }
 
+  onChange() {
+    this.loadData();
+  }
+
   ngOnInit() {
 
     this.loadData();
-
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

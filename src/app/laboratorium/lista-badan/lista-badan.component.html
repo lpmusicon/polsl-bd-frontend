@@ -12,22 +12,22 @@
 
         <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="position">
+            <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="comment">
+            <ng-container matColumnDef="doctorComment">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Komentarz Lekarza </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorComment}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="date">
+            <ng-container matColumnDef="orderDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zlecenia </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.orderDate | date:"dd/MM/yyyy"}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="type">
+            <ng-container matColumnDef="laboratoryExaminationName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.laboratoryExaminationName}} </td>
             </ng-container>
@@ -35,7 +35,7 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
                 <td class="padd" mat-cell *matCellDef="let LabExamination">
-                    <app-list-item-manage [lab-examination]="LabExamination"></app-list-item-manage>
+                    <app-list-item-manage [lab-examination]="LabExamination" (change)="onChange()"></app-list-item-manage>
                 </td>
             </ng-container>
 
