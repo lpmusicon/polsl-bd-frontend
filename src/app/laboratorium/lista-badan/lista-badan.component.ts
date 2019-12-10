@@ -9,15 +9,6 @@ import { DbCommunicationService } from 'src/app/db-communication.service';
 import { LaboratoryExaminationOrderedDTO } from 'src/app/DTO/LaboratoryExaminationOrderedDTO';
 import { HttpErrorResponse } from '@angular/common/http';
 
-export interface LabExamination {
-  id: number;
-  docComment: string;
-  orderDate: any;
-  type: string;
-  actions: any;
-}
-
-
 @Component({
   selector: 'app-lista-badan',
   templateUrl: './lista-badan.component.html',
@@ -38,7 +29,7 @@ export class ListaBadanComponent implements OnInit {
     })
   }
 
-  public LabExaminations: LabExamination[] = [];
+  public LabExaminations: LaboratoryExaminationOrderedDTO[] = [];
 
   public logout(): void {
     this._db.logout();
@@ -55,8 +46,9 @@ export class ListaBadanComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  private handleResponse(data: LaboratoryExaminationOrderedDTO) {
+  private handleResponse(data: LaboratoryExaminationOrderedDTO[]) {
     console.log(data);
+    this.dataSource.data = data;
   }
 
   private handleError(err: HttpErrorResponse) {

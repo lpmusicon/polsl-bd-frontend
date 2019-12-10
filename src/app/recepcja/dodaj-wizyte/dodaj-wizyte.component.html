@@ -31,7 +31,7 @@
                         formControlName="DoctorId">
                         <mat-select-filter *ngIf="select2.focused" [array]="doctors"
                             (filteredReturn)="filteredList2 =$event" [displayMember]="'fullName'"></mat-select-filter>
-                        <mat-option *ngFor="let item of filteredList2" [value]="item.id">
+                        <mat-option *ngFor="let item of filteredList2" [value]="item.doctorId">
                             {{item.fullName}}
                         </mat-option>
                     </mat-select>

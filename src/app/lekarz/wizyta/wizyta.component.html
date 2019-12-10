@@ -6,7 +6,7 @@
     </mat-toolbar>
     <div class="inner-wrapper">
         <h3>Wizyta nr {{ visit.id }}</h3>
-        <span>Data rejestracji: {{ visit.registerDate }}</span>
+        <span>Data rejestracji: {{ visit.registerDate | date:"dd/MM/yyyy" }}</span>
         <span>Pacjent: </span>
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <mat-form-field >

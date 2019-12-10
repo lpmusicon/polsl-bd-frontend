@@ -14,22 +14,22 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.Id}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="comment">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Komentarz Lekarza </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.DoctorComment}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorComment}} </td>
             </ng-container>
 
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zlecenia </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.OrderDate}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.orderDate | date:"dd/MM/yyyy"}} </td>
             </ng-container>
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.LaboratoryExaminationName}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.laboratoryExaminationName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">

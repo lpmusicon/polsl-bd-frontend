@@ -5,19 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AnulujWizyteComponent } from '../anuluj-wizyte/anuluj-wizyte.component';
-import { DodajPacjentaComponent } from '../dodaj-pacjenta/dodaj-pacjenta.component';
 import { DbCommunicationService } from 'src/app/db-communication.service';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { HttpErrorResponse } from '@angular/common/http';
-
-
-export interface Visit {
-  id: number;
-  patientName: string;
-  docName: string;
-  date: any;
-  actions: any;
-}
 
 @Component({
   selector: 'app-lista-wizyt',
@@ -83,7 +73,7 @@ export class ListaWizytComponent implements OnInit {
     this.loadData();
   }
 
-  openCancelVisitDialog(data: Visit, e: HTMLElement): void {
+  openCancelVisitDialog(data: VisitDTO, e: HTMLElement): void {
     console.log('setting for: ', data);
     const openCancelVisitDialogRef = this.dialog.open(AnulujWizyteComponent, {
       width: '650px',

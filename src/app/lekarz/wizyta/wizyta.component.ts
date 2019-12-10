@@ -59,6 +59,7 @@ export class WizytaComponent implements OnInit {
   }
 
   private handleParams(a) {
+    console.log(a);
     this.visitId = a.id;
     this.db.Visit(this.visitId).subscribe({
       next: this.handleData.bind(this),

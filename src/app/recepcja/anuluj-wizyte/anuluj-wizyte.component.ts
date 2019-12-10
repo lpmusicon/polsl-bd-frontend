@@ -5,7 +5,6 @@ import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { IVisitCancel } from 'src/app/Form/IVisitCancel';
-import { Visit } from 'src/app/recepcja/lista-wizyt/lista-wizyt.component';
 
 @Component({
   selector: 'app-anuluj-wizyte',
@@ -21,7 +20,7 @@ export class AnulujWizyteComponent implements OnInit {
     private db: DbCommunicationService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: Visit) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   public form: FormGroup;
 
@@ -34,7 +33,7 @@ export class AnulujWizyteComponent implements OnInit {
   public onSubmit(value: IVisitCancel): void {
     if (!this.form.valid) { return; }
 
-    this.db.VisitCancel(this.data.id, value).subscribe({
+    this.db.VisitCancel(this.data.patientVisitId, value).subscribe({
       next: this.handleResponse.bind(this),
       error: this.handleError.bind(this)
     });
