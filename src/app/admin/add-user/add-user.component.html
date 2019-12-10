@@ -3,7 +3,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <h2>Tworzenie nowego konta</h2>
             <mat-form-field>
-                <input matInput placeholder="Login użytkownika" formControlName="Login" />
+                <input matInput placeholder="Login użytkownika" formControlName="Login" (keydown.space)="$event.preventDefault();"/>
                 <mat-error *ngIf="form.get('Login').hasError('required')">Login jest wymagany</mat-error>
             </mat-form-field>
             <div class="double-input">
@@ -25,7 +25,10 @@
                     <mat-error *ngIf="form.get('Role').hasError('required')">Typ konta jest wymagany</mat-error>
                 </mat-form-field>
                 <mat-form-field *ngIf="form.get('Role').value == 'DOCT'">
-                    <input matInput placeholder="PWZ" formControlName="PWZNumber" />
+                    <input matInput placeholder="PWZ" formControlName="PWZNumber" maxlength="7" />
+                    <mat-error *ngIf="form.get('PWZNumber').hasError('pattern')">Podana treść nie jest numerem</mat-error>
+                    <mat-error *ngIf="form.get('PWZNumber').hasError('maxlength')">Podany numer jest za długi</mat-error>
+                    <mat-error *ngIf="form.get('PWZNumber').hasError('minlength')">Podany numer jest za krótki</mat-error>
                 </mat-form-field>
             </div>
             <div class="double-input">
@@ -38,7 +41,8 @@
                 </mat-form-field>
                 <mat-form-field>
                     <input matInput placeholder="Hasło" type="password" formControlName="Password" />
-                    <mat-error *ngIf="form.get('Password').hasError('required')">Nowe hasło jest wymagane</mat-error>
+                    <mat-error *ngIf="form.get('Password').hasError('required')">Hasło jest wymagane</mat-error>
+                    <mat-error *ngIf="form.get('Password').hasError('minlength')">Hasło musi mieć minimum pięć znaków</mat-error>
                     <mat-hint>Pamiętaj o ustawieniu mocnego hasła!</mat-hint>
                 </mat-form-field>
             </div>
