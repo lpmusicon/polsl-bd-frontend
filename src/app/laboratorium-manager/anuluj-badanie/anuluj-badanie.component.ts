@@ -50,9 +50,8 @@ export class AnulujBadanieComponent implements OnInit {
 
 
 private handleResponse(): void {
-
-  this.openSnackBar("Badanie nr " + this.data.LabExamination.id + " zostało anulowane", "Ok");
-
+  this.openSnackBar("Badanie nr " + this.data.KLabExamination.id + " zostało anulowane", "Ok");
+  this.openCancelLabExamination.close();
 }
 
 private handleError(err: HttpErrorResponse): void {
