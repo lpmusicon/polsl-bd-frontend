@@ -2,12 +2,12 @@
     <mat-toolbar>
         <span>Panel Lekarza</span>
         <span class="flex"></span>
-        <button mat-raised-button>Zdetonuj sesję</button>
+        <button mat-raised-button (click)="logout()">Zdetonuj sesję</button>
     </mat-toolbar>
     <div class="inner-wrapper">
-        <h3>Wizyta nr {{ visit.id }}</h3>
-        <span>Data rejestracji: {{ visit.registerDate | date:"dd/MM/yyyy" }}</span>
-        <span>Pacjent: </span>
+        <h3>Wizyta nr {{ visit.patientVisitId }}</h3>
+        <span>Data rejestracji: {{ visit.registerDate | date:"dd/MM/yyyy" }}</span><br>
+        <span>Pacjent: {{ visit.patient.name }} {{ visit.patient.lastname }}</span>
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <mat-form-field >
                 <textarea matInput placeholder="Opis wizyty" formControlName="Description" type="text" required></textarea>
@@ -51,6 +51,7 @@
                     <app-list-examinations [patient]="patient"></app-list-examinations>
                 </mat-expansion-panel>
             </mat-accordion>
+            <br>
             <mat-form-field>
                 <textarea matInput placeholder="Diagnoza" formControlName="Diagnosis" type="text" required></textarea>
                 <mat-error *ngIf="form.get('Diagnosis').hasError('required')">Diagnoza jest wymagana</mat-error>
