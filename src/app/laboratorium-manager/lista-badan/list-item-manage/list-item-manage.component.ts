@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AnulujBadanieComponent } from '../../anuluj-badanie/anuluj-badanie.component';
 import { ZatwierdzBadanieComponent } from '../../zatwierdz-badanie/zatwierdz-badanie.component'
@@ -13,6 +13,7 @@ export class ListItemManageComponent implements OnInit {
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   @Input("lab-examination") public KLabExamination: any;
+  @Output("change") public change: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {}
 
@@ -20,11 +21,12 @@ export class ListItemManageComponent implements OnInit {
     console.log("setting for: ", this.KLabExamination);
     const openCancelLabExaminationDialogRef = this.dialog.open(AnulujBadanieComponent, {
       width: '650px',
-      data: { LabExamination: this.KLabExamination }
+      data: { KLabExamination: this.KLabExamination }
     });
 
     openCancelLabExaminationDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.change.emit();
     });
 
   }
@@ -34,11 +36,12 @@ export class ListItemManageComponent implements OnInit {
     console.log("setting for: ", this.KLabExamination);
     const openCommitLabExaminationDialogRef = this.dialog.open(ZatwierdzBadanieComponent, {
       width: '650px',
-      data: { LabExamination: this.KLabExamination }
+      data: { KLabExamination: this.KLabExamination }
     });
 
     openCommitLabExaminationDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.change.emit();
     });
   }
 

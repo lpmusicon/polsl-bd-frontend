@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListaBadanComponent } from './lista-badan/lista-badan.component';
+import { RouteGuard } from '../Guard/route-guard';
+import { LabMGuard } from '../Guard/labm-guard';
 
 /*
   TO JEST MODUŁ ROUTERA
@@ -8,7 +10,7 @@ import { ListaBadanComponent } from './lista-badan/lista-badan.component';
   A PRZYNAJMNIEJ STANDARDOWE ENDPOINTY
 */
 const routes: Routes = [
-  { path: 'klab', component: ListaBadanComponent },
+  { path: 'klab', canActivate: [RouteGuard, LabMGuard], component: ListaBadanComponent },
 ];
 
 @NgModule({

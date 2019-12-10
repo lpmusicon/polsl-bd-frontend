@@ -2,8 +2,8 @@
         <div class="inner-wrapper">
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
                 <h2>Zatwierdzanie badania</h2>
-                <span>Badanie nr {{ data.LabExamination.Id }}</span>
-                <span>Typ badania: {{ data.LabExamination.LaboratoryExaminationName }}</span>
+                <span>Badanie nr {{ data.KLabExamination.id }}</span>
+                <span>Typ badania: {{ data.KLabExamination.examinationName }}</span>
                 <h2>Czy potwierdzasz że badanie zostało wykonane poprawnie?</h2>
                 <div class="double-input">
                     <span class="flex"></span>

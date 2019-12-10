@@ -29,7 +29,7 @@ export class AnulujBadanieComponent implements OnInit {
 
   public onSubmit(value: ILaboratoryExaminationReject): void {
     if (!this.form.valid) return;
-    this._db.LaboratoryExaminationReject(this.data.LabExamination.id, value).subscribe({
+    this._db.LaboratoryExaminationReject(this.data.KLabExamination.id, value).subscribe({
       next: this.handleResponse.bind(this),
       error: this.handleError.bind(this)
     })
@@ -50,9 +50,8 @@ export class AnulujBadanieComponent implements OnInit {
 
 
 private handleResponse(): void {
-
-  this.openSnackBar("Badanie nr " + this.data.LabExamination.id + " zostało anulowane", "Ok");
-
+  this.openSnackBar("Badanie nr " + this.data.KLabExamination.id + " zostało anulowane", "Ok");
+  this.openCancelLabExamination.close();
 }
 
 private handleError(err: HttpErrorResponse): void {

@@ -2,8 +2,9 @@
         <div class="inner-wrapper">
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
                 <h2>Anulowanie badania</h2>
-                <span>Badanie nr {{ data.LabExamination.Id }}</span>
-                <span>Typ badania: {{ data.LabExamination.LaboratoryExaminationName }}</span>
+                <span>Badanie nr {{ data.KLabExamination.id }}</span>
+                <span>Typ badania: {{ data.KLabExamination.examinationName }}</span>
+                <span>Wynik badania: {{ data.KLabExamination.result }}</span>
                 <mat-form-field>
                     <input matInput placeholder="Podaj powód" formControlName="Reason" type="text" required />
                     <mat-error *ngIf="form.get('Reason').hasError('required')">Wymagane jest podanie powodu anulowania</mat-error>

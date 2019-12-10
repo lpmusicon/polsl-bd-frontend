@@ -29,7 +29,7 @@ export class ZatwierdzBadanieComponent implements OnInit {
 
   public onSubmit(value: ILaboratoryExaminationApprove): void {
     if (!this.form.valid) return;
-    this._db.LaboratoryExaminationApprove(this.data.LabExamination.id, value).subscribe({
+    this._db.LaboratoryExaminationApprove(this.data.KLabExamination.id, value).subscribe({
       next: this.handleResponse.bind(this),
       error: this.handleError.bind(this)
     })
@@ -45,12 +45,13 @@ export class ZatwierdzBadanieComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
     this.buildForm();
   }
 
   private handleResponse(): void {
-
-    this.openSnackBar("Zatwierdzono badanie nr " + this.data.LabExamination.id, "Ok");
+    this.openSnackBar("Zatwierdzono badanie nr " + this.data.KLabExamination.id, "Ok");
+    this.openCommitLabExamination.close();
   }
 
   private handleError(err: HttpErrorResponse): void {

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -22,19 +22,18 @@ export class ListaBadanComponent implements OnInit {
     public dialog: MatDialog, 
     private route: ActivatedRoute,
     private _db: DbCommunicationService,
-    ) {
-    this.route.queryParams.subscribe(params => {
-      if(params["k-lab-examination"]) {
-        console.log("KLabExamination: ", params["k-lab-examination"]);
-      }
-      console.log(params);
-    })
-  }
+    private router: Router
+    ) {}
 
   public KLabExaminations: LaboratoryExaminationExecutedDTO[] = [];
 
-  displayedColumns: string[] = ['position', 'comment', 'orDate', 'type', 'worker', 'result', 'examDate', 'actions'];
-  dataSource: any;
+  public logout(): void {
+    this._db.logout();
+    this.router.navigate(['/']);
+  }
+
+  displayedColumns: string[] = ['id', 'doctorComment', 'orderDate', 'examinationName', 'worker', 'result', 'examinationDate', 'actions'];
+  dataSource = new MatTableDataSource(this.KLabExaminations);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -46,10 +45,7 @@ export class ListaBadanComponent implements OnInit {
   private handleData(data: LaboratoryExaminationExecutedDTO[])
   {
     console.log(data);
-    this.KLabExaminations = data;
-    this.dataSource = new MatTableDataSource(this.KLabExaminations);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.data = data;
   }
   
   private handleError(err: HttpErrorResponse): void {
@@ -69,9 +65,15 @@ export class ListaBadanComponent implements OnInit {
     })
   }
 
+  onChange() {
+    this.loadData();
+  }
+
   ngOnInit() {
 
     this.loadData();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 }

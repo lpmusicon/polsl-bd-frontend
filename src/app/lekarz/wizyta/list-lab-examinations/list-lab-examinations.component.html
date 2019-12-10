@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="inner-wrapper">
         <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
         </mat-form-field>
 
         <table mat-table [dataSource]="labExaminations" matSort>

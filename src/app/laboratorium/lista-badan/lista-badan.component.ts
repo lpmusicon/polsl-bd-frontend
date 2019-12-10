@@ -36,15 +36,13 @@ export class ListaBadanComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  displayedColumns: string[] = ['position', 'comment', 'date', 'type', 'actions'];
+  displayedColumns: string[] = ['id', 'doctorComment', 'orderDate', 'laboratoryExaminationName', 'actions'];
   dataSource = new MatTableDataSource(this.LabExaminations);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+
 
   private handleResponse(data: LaboratoryExaminationOrderedDTO[]) {
     console.log(data);
@@ -60,6 +58,10 @@ export class ListaBadanComponent implements OnInit {
       next: this.handleResponse.bind(this),
       error: this.handleError.bind(this)
     })
+  }
+
+  onChange() {
+    this.loadData();
   }
 
   ngOnInit() {
