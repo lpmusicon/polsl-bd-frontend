@@ -34,7 +34,7 @@ export class ListItemManageComponent implements OnInit {
     console.log("setting for: ", this.KLabExamination);
     const openCommitLabExaminationDialogRef = this.dialog.open(ZatwierdzBadanieComponent, {
       width: '650px',
-      data: { LabExamination: this.KLabExamination }
+      data: { KLabExamination: this.KLabExamination }
     });
 
     openCommitLabExaminationDialogRef.afterClosed().subscribe(result => {

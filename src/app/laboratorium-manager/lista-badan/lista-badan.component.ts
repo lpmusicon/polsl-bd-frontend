@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -22,6 +22,7 @@ export class ListaBadanComponent implements OnInit {
     public dialog: MatDialog, 
     private route: ActivatedRoute,
     private _db: DbCommunicationService,
+    private router: Router
     ) {
     this.route.queryParams.subscribe(params => {
       if(params["k-lab-examination"]) {
@@ -33,8 +34,13 @@ export class ListaBadanComponent implements OnInit {
 
   public KLabExaminations: LaboratoryExaminationExecutedDTO[] = [];
 
+  public logout(): void {
+    this._db.logout();
+    this.router.navigate(['/']);
+  }
+
   displayedColumns: string[] = ['position', 'comment', 'orDate', 'type', 'worker', 'result', 'examDate', 'actions'];
-  dataSource: any;
+  dataSource = new MatTableDataSource(this.KLabExaminations);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -46,10 +52,7 @@ export class ListaBadanComponent implements OnInit {
   private handleData(data: LaboratoryExaminationExecutedDTO[])
   {
     console.log(data);
-    this.KLabExaminations = data;
-    this.dataSource = new MatTableDataSource(this.KLabExaminations);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.data = data;
   }
   
   private handleError(err: HttpErrorResponse): void {
@@ -72,6 +75,9 @@ export class ListaBadanComponent implements OnInit {
   ngOnInit() {
 
     this.loadData();
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 }
