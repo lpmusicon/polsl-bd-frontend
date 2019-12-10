@@ -42,9 +42,7 @@ export class ListaBadanComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+
 
   private handleResponse(data: LaboratoryExaminationOrderedDTO[]) {
     console.log(data);

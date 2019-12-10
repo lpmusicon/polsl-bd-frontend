@@ -2,49 +2,49 @@
     <mat-toolbar>
         <span>Panel Kierownika Laboratorium</span>
         <span class="flex"></span>
-        <button mat-raised-button>Zdetonuj sesję</button>
+        <button mat-raised-button (click)="logout()">Zdetonuj sesję</button>
     </mat-toolbar>
     <div class="inner-wrapper">
         <h3>Lista badań</h3>
         <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
         </mat-form-field>
 
         <table mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.Id}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="comment">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Komentarz Lekarza </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.DoctorComment}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorComment}} </td>
             </ng-container>
 
             <ng-container matColumnDef="orDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zlecenia </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.OrderDate}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.orderDate | date:"dd/MM/yyyy"}} </td>
             </ng-container>
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.LaboratoryExaminationName}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.examinationName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="worker">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pracownik </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.Worker}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.worker.name}} {{element.worker.lastname}}</td>
             </ng-container>
 
             <ng-container matColumnDef="result">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.Result}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
             </ng-container>
 
             <ng-container matColumnDef="examDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wykonania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.ExaminationDate}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.examinationDate | date:"dd/MM/yyyy"}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
