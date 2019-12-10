@@ -21,8 +21,12 @@ div.wrapper {
         background: #fff;
         box-sizing: border-box;
         border: 1px solid rgba(255, 255, 255, 0.03);
-        //box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
         padding: 24px;
+        
+        & > mat-form-field {
+            width: 100%;
+        }
+
         h3 {
             font-weight: 500;
         }

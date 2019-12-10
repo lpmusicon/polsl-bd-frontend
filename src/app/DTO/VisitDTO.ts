@@ -1,5 +1,5 @@
 export class VisitDTO {
-    id: number;
+    patientVisitId: number;
     description: string;
     diagnosis: string;
     status: string;

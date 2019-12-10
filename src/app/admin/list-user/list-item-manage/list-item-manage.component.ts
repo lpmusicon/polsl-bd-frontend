@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SetExpiryDateUserComponent } from '../../set-expiry-date-user/set-expiry-date-user.component';
 import { ResetPasswordUserComponent } from '../../reset-password-user/reset-password-user.component';
@@ -13,6 +13,7 @@ export class ListItemManageComponent implements OnInit {
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   @Input("user") public user: any;
+  @Output("change") public changed: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {}
 
@@ -25,6 +26,7 @@ export class ListItemManageComponent implements OnInit {
 
     openSetExpiryDateDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.changed.emit();
     });
 
   }
@@ -39,6 +41,7 @@ export class ListItemManageComponent implements OnInit {
 
     openResetPasswordDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.changed.emit();
     });
   }
 

@@ -69,8 +69,10 @@ export class LoginBoxComponent implements OnInit {
           this._router.navigate(['/recepcja']);
           break;
         case 'LABW':
-        case 'LABM':
           this._router.navigate(['/lab']);
+          break;
+        case 'LABM':
+          this._router.navigate(['/klab']);
           break;
         default:
           this.openSnackBar("Wystąpił nieokreślony błąd", "Ok");

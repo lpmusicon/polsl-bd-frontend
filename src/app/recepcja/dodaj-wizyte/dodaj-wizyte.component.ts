@@ -105,6 +105,7 @@ export class DodajWizyteComponent implements OnInit {
     for (const doc of data) {
       doc.fullName = `${doc.name} ${doc.lastname}`;
     }
+    
     this.doctors = data;
     this.filteredList2 = data;
   }

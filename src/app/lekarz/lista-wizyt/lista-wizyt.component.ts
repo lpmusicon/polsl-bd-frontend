@@ -47,7 +47,7 @@ export class ListaWizytComponent implements OnInit {
   }
 
   openStartVisitDialog(data: Visit): void {
-    this._router.navigate(["/lekarz/wizyta/" + data.id]);
+    this._router.navigate(["/lekarz/wizyta/" + data.patientVisitId]);
   }
 
   private loadData() {
