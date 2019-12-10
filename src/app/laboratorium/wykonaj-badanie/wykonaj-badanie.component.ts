@@ -49,8 +49,8 @@ export class WykonajBadanieComponent implements OnInit {
   }
 
   private handleResponse(auth: any): void {
-
     this.openSnackBar("Wynik badania nr "+ this.data.LabExamination.id +" został zapisany", "Ok");
+    this.openMakeLabExamination.close();
   }
 
   private handleError(err: HttpErrorResponse): void {

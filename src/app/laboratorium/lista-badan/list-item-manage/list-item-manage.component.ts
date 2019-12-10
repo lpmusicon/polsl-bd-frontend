@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AnulujBadanieComponent } from '../../anuluj-badanie/anuluj-badanie.component';
 import { WykonajBadanieComponent } from '../../wykonaj-badanie/wykonaj-badanie.component'
@@ -13,6 +13,7 @@ export class ListItemManageComponent implements OnInit {
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   @Input("lab-examination") public LabExamination: any;
+  @Output("change") public change: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {}
 
@@ -25,6 +26,7 @@ export class ListItemManageComponent implements OnInit {
 
     openSetExpiryDateDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.change.emit();
     });
 
   }
@@ -39,6 +41,7 @@ export class ListItemManageComponent implements OnInit {
 
     openResetPasswordDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.change.emit();
     });
   }
 
