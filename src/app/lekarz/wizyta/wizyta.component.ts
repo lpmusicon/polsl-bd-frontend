@@ -90,16 +90,7 @@ export class WizytaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.visit = {
-      Id: 0,
-      RegisterDate: new Date(),
-      Patient: {
-        patientId: 0,
-        name: '',
-        lastname: '',
-        PESEL: ''
-      }
-    };
+    
     this.buildForm();
     this.route.params.subscribe({
       next: this.handleParams.bind(this)

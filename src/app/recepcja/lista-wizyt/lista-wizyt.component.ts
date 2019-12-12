@@ -9,13 +9,16 @@ import { DbCommunicationService } from 'src/app/db-communication.service';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { HttpErrorResponse } from '@angular/common/http';
 
+interface Visit extends VisitDTO {
+  actions: any;
+}
+
 @Component({
   selector: 'app-lista-wizyt',
   templateUrl: './lista-wizyt.component.html',
   styleUrls: ['./lista-wizyt.component.scss']
 })
 export class ListaWizytComponent implements OnInit {
-  public Visits: VisitDTO[] = [];
   @Input('element') public visit: any;
   constructor(
     public dialog: MatDialog,
@@ -30,33 +33,46 @@ export class ListaWizytComponent implements OnInit {
     });
   }
 
+  public Visits: Visit[];
+
+  public logout(): void {
+    this.db.logout();
+    this.router.navigate(["/"]);
+  }
+
   displayedColumns: string[] = ['position', 'pat_name', 'doc_name', 'date', 'actions'];
   dataSource = new MatTableDataSource(this.Visits);
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  public logout(): void {
-    this.db.logout();
-    this.router.navigate(['/']);
+  openStartVisitDialog(data: Visit): void {
+    this.router.navigate(["/lekarz/wizyta/" + data.patientVisitId]);
   }
 
-  private handleData(data: VisitDTO[]) {
-    this.Visits = data;
-    this.dataSource = new MatTableDataSource(this.Visits);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  loadData() {
+  private loadData() {
     this.db.VisitRegisteredAll().subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
     });
+  }
+
+  private handleData(data: VisitDTO[]) {
+    console.log(data);
+    this.Visits = [];
+    for (const visit of data) {
+      this.Visits.push({
+        ...visit,
+        actions: ''
+      });
+    }
+    this.dataSource = new MatTableDataSource(this.Visits);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   private handleError(err: HttpErrorResponse): void {

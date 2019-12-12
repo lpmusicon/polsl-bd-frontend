@@ -11,10 +11,10 @@
             <span>Wybierz pacjenta</span>
             <mat-form-field>
                 <mat-select [disableOptionCentering]="true" #select1 placeholder="Pacjent" formControlName="PatientId">
-                    <mat-select-filter *ngIf="select1.focused" [array]="patients"
+                    <mat-select-filter [noResultsMessage]="'Brak wyników'" [placeholder]="'Wyszukaj...'" *ngIf="select1.focused" [array]="patients"
                         (filteredReturn)="filteredList1 =$event" [displayMember]="'fullName'"></mat-select-filter>
                     <mat-option *ngFor="let item of filteredList1" [value]="item.patientId">
-                        {{item.fullName}} {{item.PESEL}}
+                        {{item.fullName}}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('PatientId').hasError('required')">Należy wybrać pacjenta</mat-error>
@@ -41,7 +41,8 @@
                     <input formControlName="RegisterDate" matInput [matDatepicker]="picker" placeholder="Wybierz datę">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="form.get('RegisterDate').hasError('required')">Data wygaśnięcia jest wymagana</mat-error>
+                    <mat-error *ngIf="form.get('RegisterDate').hasError('required')">Data wygaśnięcia jest wymagana
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="double-input">
