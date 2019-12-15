@@ -4,6 +4,7 @@ import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/m
 import { DbCommunicationService } from 'src/app/db-communication.service';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserDTO } from 'src/app/DTO/UserDto';
 
 interface Visit extends VisitDTO {
   actions: any;
@@ -30,6 +31,7 @@ export class ListaWizytComponent implements OnInit {
   }
 
   public Visits: Visit[];
+  public user: UserDTO;
 
   public logout(): void {
     this._db.logout();
@@ -76,8 +78,11 @@ export class ListaWizytComponent implements OnInit {
   }
 
 
+
+
   ngOnInit() {
     this.loadData();
+    this.user = this._db.getUser();
   }
 
 }

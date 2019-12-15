@@ -8,6 +8,7 @@ import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
+import { IVisitClose } from 'src/app/Form/IVisitClose';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class WizytaComponent implements OnInit {
   public visits: VisitDTO[];
   public visitId: number;
   public form: FormGroup;
+  public patientName: string;
+  public patientLastname: string;
 
   constructor(
     public dialog: MatDialog,
@@ -33,7 +36,9 @@ export class WizytaComponent implements OnInit {
   openAddExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieFizykalneComponent, {
       width: '650px',
-      data: { VisitId: this.visitId }
+      data: { VisitId: this.visitId,
+        PatientName: this.patientName,
+        PatientLastname: this.patientLastname}
     });
 
     openAddExamintionDialogRef.afterClosed().subscribe(result => {
@@ -44,8 +49,12 @@ export class WizytaComponent implements OnInit {
   openAddLabExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieLaboratoryjneComponent, {
       width: '650px',
-      data: { VisitId: this.visitId }
+      data: { VisitId: this.visitId,
+        PatientName: this.patientName,
+        PatientLastname: this.patientLastname}
     });
+
+  
 
     openAddExamintionDialogRef.afterClosed().subscribe({
       next: () => {
@@ -56,6 +65,11 @@ export class WizytaComponent implements OnInit {
 
   private fetchLabExaminations() {
 
+  }
+
+  public logout(): void {
+    this.db.logout();
+    this.router.navigate(["/"]);
   }
 
   private handleParams(a) {
@@ -69,6 +83,9 @@ export class WizytaComponent implements OnInit {
 
   private handleData(visit: PatientVisitDTO) {
     console.log(visit);
+    console.log("visit");
+    this.patientName = visit.patient.name;
+    this.patientLastname = visit.patient.lastname;
     this.visit = visit;
   }
 
@@ -83,23 +100,20 @@ export class WizytaComponent implements OnInit {
     });
   }
 
-  // TODO replace any
-  public onSubmit(value: any): void {
+
+  public onSubmit(value: IVisitClose): void {
     if (!this.form.valid) { return; }
-    // TODO db
+    console.log(value);
+    console.log(this.visitId);
+
+    this.db.VisitClose(this.visitId, value).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
   }
 
   ngOnInit() {
-    this.visit = {
-      Id: 0,
-      RegisterDate: new Date(),
-      Patient: {
-        patientId: 0,
-        name: '',
-        lastname: '',
-        PESEL: ''
-      }
-    };
+    
     this.buildForm();
     this.route.params.subscribe({
       next: this.handleParams.bind(this)
@@ -110,24 +124,6 @@ export class WizytaComponent implements OnInit {
     this.openSnackBar(`Wizyta pacjenta  została zakończona`, 'Ok');
   }
 
-  private handleAuthError(err: HttpErrorResponse): void {
-    switch (err.status) {
-      case 404:
-        this.openSnackBar('Nie znaleziono wizyty', 'Ok');
-        break;
-      case 400:
-        // Złe dane
-        this.openSnackBar('Niepoprawne dane/brak danych', 'Ok');
-        console.warn('Wrong/empty data');
-        break;
-      default:
-        // Nieokreślony błąd
-        this.openSnackBar('Wystąpił nieokreślony błąd', 'Ok');
-        console.warn('Generic error');
-        break;
-    }
-    console.warn(err);
-  }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

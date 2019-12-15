@@ -35,7 +35,7 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
                 <td class="padd" mat-cell *matCellDef="let element"> 
-                    <button mat-raised-button (click)="openStartVisitDialog(element)">Rozpocznij wizytę</button>
+                    <button mat-raised-button (click)="openStartVisitDialog(element)" *ngIf="user.userId == element.doctor.doctorId">Rozpocznij wizytę</button>
                 </td>
             </ng-container>
 
