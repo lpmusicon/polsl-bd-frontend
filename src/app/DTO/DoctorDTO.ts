@@ -1,0 +1,5 @@
+export class DoctorDTO {
+    id: number;
+    name: string;
+    lastname: string;
+}
