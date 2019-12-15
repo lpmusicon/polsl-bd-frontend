@@ -85,6 +85,7 @@ export class DodajWizyteComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.loadData();
+    console.log(this.patients);
   }
 
   private handleResponse(): void {
@@ -94,14 +95,14 @@ export class DodajWizyteComponent implements OnInit {
 
   private handlePatients(dataPat: PatientDTO[]) {
     for (const patient of dataPat) {
-      patient.fullName = `${patient.name} ${patient.lastname}`;
+      patient.fullName = `${patient.name} ${patient.lastname} ${patient.pesel}`;
     }
     this.patients = dataPat;
+    console.log(this.patients);
     this.filteredList1 = dataPat;
   }
 
   private handleDoctors(data: PersonDTO[]) {
-    console.log(data);
     for (const doc of data) {
       doc.fullName = `${doc.name} ${doc.lastname}`;
     }
