@@ -29,6 +29,7 @@ import { LaboratoryExaminationOrderedDTO } from './DTO/LaboratoryExaminationOrde
 import { LaboratoryExaminationExecutedDTO } from './DTO/LaboratoryExaminationExecutedDTO';
 import { LaboratoryExaminationOrderedVisitDTO } from './DTO/LaboratoryExaminationOrderedVisitDTO';
 import { PersonDTO } from './DTO/PersonDTO';
+import { DoctorDTO } from './DTO/DoctorDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -95,11 +96,25 @@ export class DbCommunicationService {
     return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/all`);
   }
 
-  public VisitRegisteredAll(): Observable<VisitDTO[]> {
-    return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/registered/all`)
+  public VisitRegisteredAll(): Observable<PatientVisitDTO[]> {
+    return this.http.get<PatientVisitDTO[]>(`${this._serverURL}/visit/registered/all`)
     .pipe(
-      map((dtos: VisitDTO[]) => {
-        dtos.map((dto: VisitDTO) => { dto.registerDate = new Date(dto.registerDate); return dto; });
+      map((dtos: PatientVisitDTO[]) => {
+        dtos.map((dto: PatientVisitDTO) => { 
+          dto.registerDate = new Date(dto.registerDate);
+          const patient = new PatientDTO();
+          patient.name = dto.patient.name;
+          patient.lastname = dto.patient.lastname;
+          patient.pesel = dto.patient.pesel;
+          patient.patientId = dto.patient.patientId;
+          dto.patient = patient;
+          const doctor = new DoctorDTO();
+          doctor.id = dto.doctor.id;
+          doctor.name = dto.doctor.name;
+          doctor.lastname = dto.doctor.lastname;
+          dto.doctor = doctor;
+          return dto;
+        });
         return dtos;
       })
     );

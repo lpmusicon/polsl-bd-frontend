@@ -46,7 +46,7 @@ export class DodajPacjentaComponent implements OnInit {
     this.form = this.fb.group({
       Name: ['', Validators.required],
       LastName: ['', Validators.required],
-      PESEL: ['', [Validators.minLength(11), Validators.maxLength(11), Validators.pattern('[0-9]')]]
+      PESEL: ['', [Validators.minLength(11)]]
     });
   }
 

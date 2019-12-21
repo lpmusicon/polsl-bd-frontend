@@ -26,7 +26,6 @@
                 </mat-form-field>
                 <mat-form-field *ngIf="form.get('Role').value == 'DOCT'">
                     <input matInput placeholder="PWZ" formControlName="PWZNumber" maxlength="7" />
-                    <mat-error *ngIf="form.get('PWZNumber').hasError('pattern')">Podana treść nie jest numerem</mat-error>
                     <mat-error *ngIf="form.get('PWZNumber').hasError('maxlength')">Podany numer jest za długi</mat-error>
                     <mat-error *ngIf="form.get('PWZNumber').hasError('minlength')">Podany numer jest za krótki</mat-error>
                 </mat-form-field>
