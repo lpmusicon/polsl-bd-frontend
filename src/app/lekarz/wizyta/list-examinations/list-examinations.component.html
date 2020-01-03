@@ -6,15 +6,15 @@
 
         <table mat-table [dataSource]="examinations" matSort>
 
-            <ng-container matColumnDef="position">
+            <!-- <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
+            </ng-container> -->
 
-            <ng-container matColumnDef="doc_name">
+            <!-- <ng-container matColumnDef="doc_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Wykonano przez </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
-            </ng-container>
+            </ng-container> -->
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef> Typ badania </th>
@@ -26,10 +26,10 @@
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="date">
+            <!-- <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data badania </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
-            </ng-container>
+            </ng-container> -->
 
             <tr mat-header-row *matHeaderRowDef="examinationsDisplayedColumns"></tr>
 

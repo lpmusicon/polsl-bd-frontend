@@ -12,22 +12,22 @@
 
         <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="position">
+            <ng-container matColumnDef="patientVisitId">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.patientVisitId}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="pat_name">
+            <ng-container matColumnDef="patient">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pacjent </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{ element.patient.name }} {{ element.patient.lastname }} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ element.patient }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="doc_name">
+            <ng-container matColumnDef="doctor">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{ element.doctor.name }} {{ element.doctor.lastname }} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ element.doctor }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="date">
+            <ng-container matColumnDef="registerDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data rejestracji </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{ element.registerDate | date:"dd/MM/yyyy" }} </td>
             </ng-container>
@@ -35,7 +35,7 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef><span style="margin-left: 16px;"></span> Akcje </th>
                 <td class="padd" mat-cell *matCellDef="let element"> 
-                    <button mat-raised-button (click)="openStartVisitDialog(element)" *ngIf="user.userId == element.doctor.doctorId">Rozpocznij wizytę</button>
+                    <button mat-raised-button (click)="openStartVisitDialog(element)" [disabled]="element.doctor.doctorId !== user.userId ? true : null">Rozpocznij wizytę</button>
                 </td>
             </ng-container>
 

@@ -109,7 +109,7 @@ export class DbCommunicationService {
           patient.patientId = dto.patient.patientId;
           dto.patient = patient;
           const doctor = new DoctorDTO();
-          doctor.id = dto.doctor.id;
+          doctor.doctorId = dto.doctor.doctorId;
           doctor.name = dto.doctor.name;
           doctor.lastname = dto.doctor.lastname;
           dto.doctor = doctor;

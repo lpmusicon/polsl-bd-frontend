@@ -5,10 +5,8 @@ import { DbCommunicationService } from 'src/app/db-communication.service';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserDTO } from 'src/app/DTO/UserDto';
+import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
 
-interface Visit extends VisitDTO {
-  actions: any;
-}
 
 @Component({
   selector: 'app-lista-wizyt',
@@ -30,7 +28,7 @@ export class ListaWizytComponent implements OnInit {
     })
   }
 
-  public Visits: Visit[];
+  public Visits: PatientVisitDTO[];
   public user: UserDTO;
 
   public logout(): void {
@@ -38,7 +36,7 @@ export class ListaWizytComponent implements OnInit {
     this._router.navigate(["/"]);
   }
 
-  displayedColumns: string[] = ['position', 'pat_name', 'doc_name', 'date', 'actions'];
+  displayedColumns: string[] = ['patientVisitId', 'patient', 'doctor', 'registerDate', 'actions'];
   dataSource = new MatTableDataSource(this.Visits);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -48,7 +46,7 @@ export class ListaWizytComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openStartVisitDialog(data: Visit): void {
+  openStartVisitDialog(data: PatientVisitDTO): void {
     this._router.navigate(["/lekarz/wizyta/" + data.patientVisitId]);
   }
 
@@ -59,14 +57,11 @@ export class ListaWizytComponent implements OnInit {
     });
   }
 
-  private handleData(data: VisitDTO[]) {
+  private handleData(data: PatientVisitDTO[]) {
     console.log(data);
     this.Visits = [];
     for(const visit of data) {
-      this.Visits.push({
-        ...visit,
-        actions: ''
-      });
+      this.Visits.push(visit);
     }
     this.dataSource = new MatTableDataSource(this.Visits);
     this.dataSource.paginator = this.paginator;
@@ -76,9 +71,6 @@ export class ListaWizytComponent implements OnInit {
   private handleError(err: HttpErrorResponse) {
     console.warn(err);
   }
-
-
-
 
   ngOnInit() {
     this.loadData();
