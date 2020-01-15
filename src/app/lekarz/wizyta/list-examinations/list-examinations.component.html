@@ -3,39 +3,29 @@
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
         </mat-form-field>
-
-        <table mat-table [dataSource]="examinations" matSort>
-
-            <!-- <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container> -->
-
-            <!-- <ng-container matColumnDef="doc_name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Wykonano przez </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
-            </ng-container> -->
-
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef> Typ badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.type}} </td>
+        <table mat-table [dataSource]="dataExaminations" matSort>
+            <ng-container matColumnDef="examinationName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.examinationName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="result">
-                <th mat-header-cell *matHeaderCellDef> Wynik </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
             </ng-container>
 
-            <!-- <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
-            </ng-container> -->
+            <ng-container matColumnDef="doctorName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Imię Lekarza </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorName}} </td>
+            </ng-container>
 
+            <ng-container matColumnDef="doctorLastName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwisko Lekarza </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorLastName}} </td>
+            </ng-container>
             <tr mat-header-row *matHeaderRowDef="examinationsDisplayedColumns"></tr>
-
             <tr mat-row *matRowDef="let row; columns: examinationsDisplayedColumns;"></tr>
-
         </table>
-        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
     </div>
 </div>

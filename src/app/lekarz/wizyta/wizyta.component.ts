@@ -11,6 +11,8 @@ import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
 import { IVisitClose } from 'src/app/Form/IVisitClose';
 import { LaboratoryExaminationOrderedVisitDTO } from 'src/app/DTO/LaboratoryExaminationOrderedVisitDTO';
 import { PhysicalExaminationDTO } from 'src/app/DTO/PhysicalExaminationDTO';
+import { PatientPhysicalExaminationDTO } from 'src/app/DTO/PatientPhysicalExaminationDTO';
+import { PatientLaboratoryExaminationDTO } from 'src/app/DTO/PatientLaboratoryExaminationDTO';
 
 
 @Component({
@@ -22,8 +24,8 @@ export class WizytaComponent implements OnInit {
   public visit: PatientVisitDTO;
   public visitId: number;
   public form: FormGroup;
-  public labExaminations: LaboratoryExaminationOrderedVisitDTO[];
-  public examinations: PhysicalExaminationDTO[];
+  public labExaminations: PatientLaboratoryExaminationDTO[];
+  public examinations: PatientPhysicalExaminationDTO[];
 
   constructor(
     public dialog: MatDialog,
@@ -44,13 +46,26 @@ export class WizytaComponent implements OnInit {
 
     openAddExamintionDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.fetchPhysicalExaminations();
     });
+  }
+
+  private fetchPhysicalExaminations() {
+    this.db.PatientPhysicalExaminations(this.visit.patient.patientId).subscribe({
+      next: this.handlePhysicalExaminations.bind(this),
+      error: this.handleError.bind(this)
+    });
+  }
+
+  private handlePhysicalExaminations(data: PatientPhysicalExaminationDTO[]) {
+    this.examinations = data;
   }
 
   openAddLabExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieLaboratoryjneComponent, {
       width: '650px',
-      data: { VisitId: this.visitId,
+      data: { 
+        VisitId: this.visitId,
         PatientName: this.visit.patient.name,
         PatientLastname: this.visit.patient.lastname
       }
@@ -65,12 +80,12 @@ export class WizytaComponent implements OnInit {
   }
 
   private fetchLabExaminations() {
-    this.db.LaboratoryExaminationOrderedVisit(this.visitId).subscribe({
+    this.db.PatientLaboratoryExaminations(this.visit.patient.patientId).subscribe({
       next: this.handleLabExaminations.bind(this)
     });
   }
 
-  private handleLabExaminations(labExaminations: LaboratoryExaminationOrderedVisitDTO[]) {
+  private handleLabExaminations(labExaminations: PatientLaboratoryExaminationDTO[]) {
     this.labExaminations = labExaminations;
   }
 
@@ -79,19 +94,19 @@ export class WizytaComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  private handleParams(a) {
+  private handleParams(a: any) {
     console.log(a);
     this.visitId = a.id;
     this.db.Visit(this.visitId).subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
     });
-    this.fetchLabExaminations();
   }
 
   private handleData(visit: PatientVisitDTO) {
-    console.log(visit);
     this.visit = visit;
+    this.fetchPhysicalExaminations();
+    this.fetchLabExaminations();
   }
 
   private handleError(err: HttpErrorResponse) {

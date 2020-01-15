@@ -1,5 +1,5 @@
 export class IExaminationPerform {
-    ExaminationTypeID: number;
+    ExaminationId: number;
     Result: string;
-    VisitID: number;
+    VisitId: number;
 }

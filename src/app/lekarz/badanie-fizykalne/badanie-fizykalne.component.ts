@@ -46,9 +46,12 @@ export class BadanieFizykalneComponent implements OnInit {
 
   private buildForm(): void {
     this.form = this._fb.group({
-      ExamType: ['', Validators.required],
-      Result: ['', Validators.required]
+      ExaminationId: ['', Validators.required],
+      Result: ['', Validators.required],
+      VisitId: ['']
     });
+
+    this.form.get('VisitId').setValue(parseInt(this.data.VisitId));
   }
 
   private handleDictionary(dictionary: DictionaryDTO[]) {
@@ -68,12 +71,8 @@ export class BadanieFizykalneComponent implements OnInit {
   }
 
   private handleResponse(auth: any): void {
-
     this.openSnackBar("Badanie fizykalne zostało wykonane", "Ok");
-    window.setTimeout(() => {
-
-      this._router.navigate(["/TODO"]);
-    }, 1000);
+    this.openAddExaminationRef.close();
   }
 
   private handleError(err: HttpErrorResponse): void {

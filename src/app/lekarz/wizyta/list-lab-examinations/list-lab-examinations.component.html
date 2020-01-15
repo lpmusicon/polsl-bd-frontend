@@ -4,26 +4,11 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
         </mat-form-field>
 
-        <table mat-table [dataSource]="labExaminations" matSort>
+        <table mat-table [dataSource]="examinations" matSort>
 
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="doc_name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Zlecono przez </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="worker_name">
-                <th mat-header-cell *matHeaderCellDef> Wykonano przez </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.workerName}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef> Typ badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.type}} </td>
+            <ng-container matColumnDef="examinationName">
+                <th mat-header-cell *matHeaderCellDef> Nazwa Badania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.examinationName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="result">
@@ -31,9 +16,24 @@
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Data badania </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+            <ng-container matColumnDef="doctorName">
+                <th mat-header-cell *matHeaderCellDef> Imię doktora </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="doctorLastName">
+                <th mat-header-cell *matHeaderCellDef> Nazwisko doktora </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorLastName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="orderExaminationDate">
+                <th mat-header-cell *matHeaderCellDef> Data zamówienia </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.orderExaminationDate | date:"dd/MM/yyyy"}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="executeExaminationDate">
+                <th mat-header-cell *matHeaderCellDef> Data wykonania </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.executeExaminationDate | date:"dd/MM/yyyy"}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="labExaminationsDisplayedColumns"></tr>
@@ -41,6 +41,6 @@
             <tr mat-row *matRowDef="let row; columns: labExaminationsDisplayedColumns;"></tr>
 
         </table>
-        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
     </div>
 </div>

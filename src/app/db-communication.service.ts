@@ -30,6 +30,8 @@ import { LaboratoryExaminationExecutedDTO } from './DTO/LaboratoryExaminationExe
 import { LaboratoryExaminationOrderedVisitDTO } from './DTO/LaboratoryExaminationOrderedVisitDTO';
 import { PersonDTO } from './DTO/PersonDTO';
 import { DoctorDTO } from './DTO/DoctorDTO';
+import { PatientPhysicalExaminationDTO } from './DTO/PatientPhysicalExaminationDTO';
+import { PatientLaboratoryExaminationDTO } from './DTO/PatientLaboratoryExaminationDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -147,6 +149,14 @@ export class DbCommunicationService {
 
   public PatientVisits(patientId: number): Observable<PatientVisitDTO[]> {
     return this.http.get<PatientVisitDTO[]>(`${this._serverURL}/patient/${patientId}/visit/all`);
+  }
+
+  public PatientPhysicalExaminations(patientId: number): Observable<PatientPhysicalExaminationDTO[]> {
+    return this.http.get<PatientPhysicalExaminationDTO[]>(`${this._serverURL}/patient/${patientId}/physical_examinations/all`);
+  }
+
+  public PatientLaboratoryExaminations(patientId: number): Observable<PatientLaboratoryExaminationDTO[]> {
+    return this.http.get<PatientLaboratoryExaminationDTO[]>(`${this._serverURL}/patient/${patientId}/laboratory_examinations/all`);
   }
 
   public ExaminationDictionaryAll(): Observable<DictionaryDTO[]> {

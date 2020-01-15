@@ -1,15 +1,7 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { LaboratoryExaminationOrderedVisitDTO } from 'src/app/DTO/LaboratoryExaminationOrderedVisitDTO';
-
-export interface LabExamination {
-  id: number;
-  docName: string;
-  workerName: any;
-  type: string;
-  result: string;
-  date: any;
-}
+import { PatientLaboratoryExaminationDTO } from 'src/app/DTO/PatientLaboratoryExaminationDTO';
 
 @Component({
   selector: 'app-list-lab-examinations',
@@ -17,10 +9,9 @@ export interface LabExamination {
   styleUrls: ['./list-lab-examinations.component.scss']
 })
 export class ListLabExaminationsComponent implements OnInit, OnChanges {
-  @Input() public labExaminations: LaboratoryExaminationOrderedVisitDTO[];
-  public LabExaminations: LabExamination[] = [];
-  public labExaminationsDisplayedColumns: string[] = ['position', 'doc_name', 'worker_name', 'type' , 'result', 'date'];
-  public examinations = new MatTableDataSource(this.LabExaminations);
+  @Input() public labExaminations: PatientLaboratoryExaminationDTO[];
+  public labExaminationsDisplayedColumns: string[] = ['examinationName', 'result', 'doctorName', 'doctorLastName' , 'orderExaminationDate', 'executeExaminationDate'];
+  public examinations = new MatTableDataSource(this.labExaminations);
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 

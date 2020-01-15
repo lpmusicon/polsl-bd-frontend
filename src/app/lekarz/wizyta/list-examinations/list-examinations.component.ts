@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { LaboratoryExaminationOrderedVisitDTO } from 'src/app/DTO/LaboratoryExaminationOrderedVisitDTO';
 import { PhysicalExaminationDTO } from 'src/app/DTO/PhysicalExaminationDTO';
+import { PatientPhysicalExaminationDTO } from 'src/app/DTO/PatientPhysicalExaminationDTO';
 
 @Component({
   selector: 'app-list-examinations',
@@ -9,8 +10,8 @@ import { PhysicalExaminationDTO } from 'src/app/DTO/PhysicalExaminationDTO';
   styleUrls: ['./list-examinations.component.scss']
 })
 export class ListExaminationsComponent implements OnInit, OnChanges {
-  @Input() public examinations: PhysicalExaminationDTO[];
-  public examinationsDisplayedColumns: string[] = ['type', 'result'];
+  @Input() public examinations: PatientPhysicalExaminationDTO[];
+  public examinationsDisplayedColumns: string[] = ['examinationName', 'result', 'doctorName', 'doctorLastName'];
   public dataExaminations = new MatTableDataSource(this.examinations);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -24,7 +25,9 @@ export class ListExaminationsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+    if(changes.examinations.currentValue !== undefined) {
+      this.dataExaminations.data = changes.examinations.currentValue;
+    }
   }
 
   applyFilter(filterValue: string) {
