@@ -13,6 +13,7 @@ import { LaboratoryExaminationOrderedVisitDTO } from 'src/app/DTO/LaboratoryExam
 import { PhysicalExaminationDTO } from 'src/app/DTO/PhysicalExaminationDTO';
 import { PatientPhysicalExaminationDTO } from 'src/app/DTO/PatientPhysicalExaminationDTO';
 import { PatientLaboratoryExaminationDTO } from 'src/app/DTO/PatientLaboratoryExaminationDTO';
+import { PatientClosedVisitDTO } from 'src/app/DTO/PatientClosedVisitDTO';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class WizytaComponent implements OnInit {
   public form: FormGroup;
   public labExaminations: PatientLaboratoryExaminationDTO[];
   public examinations: PatientPhysicalExaminationDTO[];
+  public visits: PatientClosedVisitDTO[];
 
   constructor(
     public dialog: MatDialog,
@@ -35,6 +37,29 @@ export class WizytaComponent implements OnInit {
     private db: DbCommunicationService,
     private snackBar: MatSnackBar
   ) {}
+
+  public ngOnInit() {
+    this.visit = {
+      patientVisitId: this.visitId,
+      patient: {
+        name: '',
+        lastname: '',
+        patientId: 0,
+        pesel: ''
+      },
+      registerDate: new Date()
+    };
+
+    this.buildForm();
+    this.route.params.subscribe({
+      next: this.handleParams.bind(this)
+    });
+  }
+
+  public logout(): void {
+    this.db.logout();
+    this.router.navigate(['/']);
+  }
 
   openAddExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieFizykalneComponent, {
@@ -89,11 +114,6 @@ export class WizytaComponent implements OnInit {
     this.labExaminations = labExaminations;
   }
 
-  public logout(): void {
-    this.db.logout();
-    this.router.navigate(['/']);
-  }
-
   private handleParams(a: any) {
     console.log(a);
     this.visitId = a.id;
@@ -107,6 +127,7 @@ export class WizytaComponent implements OnInit {
     this.visit = visit;
     this.fetchPhysicalExaminations();
     this.fetchLabExaminations();
+    this.fetchPreviousVisits();
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -120,7 +141,6 @@ export class WizytaComponent implements OnInit {
     });
   }
 
-
   public onSubmit(value: IVisitClose): void {
     if (!this.form.valid) { return; }
     console.log(value);
@@ -131,32 +151,27 @@ export class WizytaComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.visit = {
-      patientVisitId: this.visitId,
-      patient: {
-        name: '',
-        lastname: '',
-        patientId: 0,
-        pesel: ''
-      },
-      registerDate: new Date()
-    };
-
-    this.buildForm();
-    this.route.params.subscribe({
-      next: this.handleParams.bind(this)
-    });
-  }
-
   private handleResponse(auth: any): void {
     this.openSnackBar(`Wizyta pacjenta ${this.visit.patient.name} ${this.visit.patient.lastname} została zakończona`, 'Ok');
+
+    this.router.navigate(['/lekarz']);
   }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  private fetchPreviousVisits() {
+    this.db.PatientVisits(this.visit.patient.patientId).subscribe({
+      next: this.handlePreviousVisits.bind(this)
+    });
+  }
+
+  private handlePreviousVisits(data: PatientClosedVisitDTO[]) {
+    this.visits = data;
+    console.log(data);
   }
 
 }

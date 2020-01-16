@@ -32,6 +32,8 @@ import { PersonDTO } from './DTO/PersonDTO';
 import { DoctorDTO } from './DTO/DoctorDTO';
 import { PatientPhysicalExaminationDTO } from './DTO/PatientPhysicalExaminationDTO';
 import { PatientLaboratoryExaminationDTO } from './DTO/PatientLaboratoryExaminationDTO';
+import { PatientClosedVisitDTO } from './DTO/PatientClosedVisitDTO';
+import { DataRowOutlet } from '@angular/cdk/table';
 
 @Injectable({
   providedIn: 'root'
@@ -147,8 +149,20 @@ export class DbCommunicationService {
     return this.http.post<any>(`${this._serverURL}/patient/register`, iPatientRegister);
   }
 
-  public PatientVisits(patientId: number): Observable<PatientVisitDTO[]> {
-    return this.http.get<PatientVisitDTO[]>(`${this._serverURL}/patient/${patientId}/visit/all`);
+  public PatientVisits(patientId: number): Observable<PatientClosedVisitDTO[]> {
+    return this.http.get<PatientClosedVisitDTO[]>(`${this._serverURL}/patient/${patientId}/visit/all`).pipe(
+      map((dtos: PatientClosedVisitDTO[]) => {
+        dtos.map((dto: PatientClosedVisitDTO) => {
+          const doctor = new DoctorDTO();
+          doctor.doctorId = dto.doctor.doctorId;
+          doctor.name = dto.doctor.name;
+          doctor.lastname = dto.doctor.lastname;
+          dto.doctor = doctor;
+          return dto;
+        });
+        return dtos;
+      })
+    );
   }
 
   public PatientPhysicalExaminations(patientId: number): Observable<PatientPhysicalExaminationDTO[]> {

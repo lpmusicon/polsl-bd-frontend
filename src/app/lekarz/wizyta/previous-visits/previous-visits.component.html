@@ -4,31 +4,31 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
         </mat-form-field>
 
-        <table mat-table [dataSource]="visits" matSort>
+        <table mat-table [dataSource]="visitsDataSource" matSort>
 
-            <ng-container matColumnDef="position">
+            <ng-container matColumnDef="patientVisitId">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="doc_name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.docName}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.patientVisitId}} </td>
             </ng-container>
 
             <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef> Opis wizyty </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.desc}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Opis </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.description}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="diagnose">
+            <ng-container matColumnDef="diagnosis">
                 <th mat-header-cell *matHeaderCellDef> Diagnoza </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.diagnose}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.diagnosis}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="date">
+            <ng-container matColumnDef="doctor">
+                <th mat-header-cell *matHeaderCellDef> Lekarz </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctor}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="registerDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wizyty </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.registerDate |  date:"dd/MM/yyyy"}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="visitsDisplayedColumns"></tr>
@@ -36,6 +36,6 @@
             <tr mat-row *matRowDef="let row; columns: visitsDisplayedColumns;"></tr>
 
         </table>
-        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
     </div>
 </div>
