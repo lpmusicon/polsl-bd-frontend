@@ -170,8 +170,9 @@ export class WizytaComponent implements OnInit {
   }
 
   private handlePreviousVisits(data: PatientClosedVisitDTO[]) {
-    this.visits = data;
-    console.log(data);
+    this.visits = data.filter((e: PatientClosedVisitDTO) => {
+      return e.patientVisitId !== parseInt(this.visitId.toString());
+    });
   }
 
 }

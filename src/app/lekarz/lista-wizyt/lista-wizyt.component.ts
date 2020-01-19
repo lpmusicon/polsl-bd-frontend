@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { DbCommunicationService } from 'src/app/db-communication.service';
-import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserDTO } from 'src/app/DTO/UserDto';
 import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
@@ -58,7 +57,6 @@ export class ListaWizytComponent implements OnInit {
   }
 
   private handleData(data: PatientVisitDTO[]) {
-    console.log(data);
     this.Visits = [];
     for(const visit of data) {
       this.Visits.push(visit);
