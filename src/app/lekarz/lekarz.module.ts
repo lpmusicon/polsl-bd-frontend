@@ -11,6 +11,7 @@ import { ListExaminationsComponent } from './wizyta/list-examinations/list-exami
 import { ListLabExaminationsComponent } from './wizyta/list-lab-examinations/list-lab-examinations.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CancelVisitComponent } from './wizyta/cancel-visit/cancel-visit.component';
+import { PastVisitsComponent } from './lista-wizyt/past-visits/past-visits.component';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { CancelVisitComponent } from './wizyta/cancel-visit/cancel-visit.compone
     PreviousVisitsComponent, 
     ListExaminationsComponent, 
     ListLabExaminationsComponent, 
-    CancelVisitComponent
+    CancelVisitComponent, PastVisitsComponent
   ],
   imports: [
     LekarzRoutingModule,

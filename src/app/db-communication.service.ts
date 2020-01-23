@@ -35,6 +35,7 @@ import { PatientLaboratoryExaminationDTO } from './DTO/PatientLaboratoryExaminat
 import { PatientClosedVisitDTO } from './DTO/PatientClosedVisitDTO';
 import { DataRowOutlet } from '@angular/cdk/table';
 import { LaboratoryExaminationGenericDTO } from './DTO/LaboratoryExaminationGenericDTO';
+import { GenericVisitDTO } from './DTO/GenericVisitDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -241,6 +242,32 @@ export class DbCommunicationService {
 
   public DoctorAll(): Observable<PersonDTO[]> {
     return this.http.get<PersonDTO[]>(`${this._serverURL}/doctor/all`);
+  }
+
+  public DoctorPast(): Observable<GenericVisitDTO[]> {
+    return this.http.get<GenericVisitDTO[]>(`${this._serverURL}/doctor/${this._user.userId}/visits/past`).pipe(
+      map((dtos: GenericVisitDTO[]) => {
+        dtos.map((dto: GenericVisitDTO) => { 
+          dto.registerDate = new Date(dto.registerDate);
+          dto.closeDate = new Date(dto.closeDate);
+          const patient = new PatientDTO();
+          patient.name = dto.patient.name;
+          patient.lastname = dto.patient.lastname;
+          patient.pesel = dto.patient.pesel;
+          patient.patientId = dto.patient.patientId;
+          dto.patient = patient;
+
+          switch(dto.status) {
+            case 'Canceled': dto.status = "Anulowana"; break;
+            case 'Closed': dto.status = "Zakończona"; break;
+            default: break;
+          }
+
+          return dto;
+        });
+        return dtos;
+      })
+    );
   }
   
 }

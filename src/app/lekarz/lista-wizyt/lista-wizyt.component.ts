@@ -5,6 +5,7 @@ import { DbCommunicationService } from 'src/app/db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserDTO } from 'src/app/DTO/UserDto';
 import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
+import { GenericVisitDTO } from 'src/app/DTO/GenericVisitDTO';
 
 
 @Component({
@@ -19,14 +20,9 @@ export class ListaWizytComponent implements OnInit {
     public dialog: MatDialog, 
     private route: ActivatedRoute,
     private _db: DbCommunicationService) { 
-    this.route.queryParams.subscribe(params => {
-      if(params["visit"]) {
-        console.log("Visit: ", params["visit"]);
-      }
-      console.log("Par: ", params);
-    })
   }
 
+  public pastVisits: GenericVisitDTO[] = [];
   public Visits: PatientVisitDTO[];
   public user: UserDTO;
 
@@ -54,6 +50,15 @@ export class ListaWizytComponent implements OnInit {
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
     });
+
+    this._db.DoctorPast().subscribe({
+      next: this.handlePast.bind(this),
+      error: this.handleError.bind(this)
+    })
+  }
+
+  private handlePast(data: GenericVisitDTO[]) {
+    this.pastVisits = data;
   }
 
   private handleData(data: PatientVisitDTO[]) {
