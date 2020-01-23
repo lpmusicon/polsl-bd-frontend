@@ -55,9 +55,12 @@ div.wrapper {
                 span.flex {
                     flex: 1 0 auto;
                 }
+                button {
+                    margin: 0 8px;
+                }
                 .mat-raised-button:last-child {
-                    margin-left: 20px;
-                    background-color: #3f51b5;
+                    margin-left: 12px;
+                    // background-color: #3f51b5;
                 }
             }
 

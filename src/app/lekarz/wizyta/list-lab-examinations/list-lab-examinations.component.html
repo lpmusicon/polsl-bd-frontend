@@ -11,6 +11,11 @@
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.examinationName}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td class="padd" mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="result">
                 <th mat-header-cell *matHeaderCellDef> Wynik </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>

@@ -2,16 +2,14 @@
     <mat-toolbar>
         <span>Panel Kierownika Laboratorium</span>
         <span class="flex"></span>
-        <button mat-raised-button (click)="logout()">Zdetonuj sesję</button>
+        <button mat-raised-button (click)="logout()">Wyloguj się</button>
     </mat-toolbar>
     <div class="inner-wrapper">
         <h3>Lista badań</h3>
         <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
+            <input matInput (keyup)="applyFilter($event.target.value, dataSource)" placeholder="Filtruj">
         </mat-form-field>
-
         <table mat-table [dataSource]="dataSource" matSort>
-
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
@@ -53,13 +51,10 @@
                     <app-list-item-manage (change)="onChange()" [lab-examination]="LabExamination"></app-list-item-manage>
                 </td>
             </ng-container>
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-
     </div>
+    <app-past-examinations [examinations]="doneLabExaminations" ></app-past-examinations>
 </div>

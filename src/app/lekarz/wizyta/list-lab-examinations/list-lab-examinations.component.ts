@@ -10,7 +10,7 @@ import { PatientLaboratoryExaminationDTO } from 'src/app/DTO/PatientLaboratoryEx
 })
 export class ListLabExaminationsComponent implements OnInit, OnChanges {
   @Input() public labExaminations: PatientLaboratoryExaminationDTO[];
-  public labExaminationsDisplayedColumns: string[] = ['examinationName', 'result', 'doctorName', 'doctorLastName' , 'orderExaminationDate', 'executeExaminationDate'];
+  public labExaminationsDisplayedColumns: string[] = ['examinationName', 'status', 'result', 'doctorName', 'doctorLastName' , 'orderExaminationDate', 'executeExaminationDate'];
   public examinations = new MatTableDataSource(this.labExaminations);
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

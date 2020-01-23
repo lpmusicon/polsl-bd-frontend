@@ -34,6 +34,7 @@ import { PatientPhysicalExaminationDTO } from './DTO/PatientPhysicalExaminationD
 import { PatientLaboratoryExaminationDTO } from './DTO/PatientLaboratoryExaminationDTO';
 import { PatientClosedVisitDTO } from './DTO/PatientClosedVisitDTO';
 import { DataRowOutlet } from '@angular/cdk/table';
+import { LaboratoryExaminationGenericDTO } from './DTO/LaboratoryExaminationGenericDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -200,6 +201,14 @@ export class DbCommunicationService {
 
   public LaboratoryExaminationOrdered(): Observable<LaboratoryExaminationOrderedDTO[]> {
     return this.http.get<LaboratoryExaminationOrderedDTO[]>(`${this._serverURL}/examination/laboratory/ordered`);
+  }
+
+  public LaboratoryExaminationAllDone(): Observable<LaboratoryExaminationGenericDTO[]> {
+    return this.http.get<LaboratoryExaminationGenericDTO[]>(`${this._serverURL}/examination/laboratory/alldone`);
+  }
+
+  public LaboratoryExaminationDone(): Observable<LaboratoryExaminationGenericDTO[]> {
+    return this.http.get<LaboratoryExaminationGenericDTO[]>(`${this._serverURL}/examination/laboratory/done`);
   }
 
   public LaboratoryExaminationOrderedVisit(visitId: number): Observable<LaboratoryExaminationOrderedVisitDTO[]> {

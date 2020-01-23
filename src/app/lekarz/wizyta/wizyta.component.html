@@ -2,7 +2,7 @@
     <mat-toolbar>
         <span>Panel Lekarza</span>
         <span class="flex"></span>
-        <button mat-raised-button (click)="logout()">Zdetonuj sesję</button>
+        <button mat-raised-button (click)="logout()">Wyloguj się</button>
     </mat-toolbar>
     <div class="inner-wrapper">
         <h3>Wizyta nr {{ visitId }}</h3>
@@ -53,13 +53,14 @@
             </mat-accordion>
             <br>
             <mat-form-field>
-                <textarea matInput placeholder="Diagnoza" formControlName="Diagnosis" type="text" required></textarea>
+                <textarea matInput placeholder="Diagnoza" formControlName="Diagnosis" type="text"></textarea>
                 <mat-error *ngIf="form.get('Diagnosis').hasError('required')">Diagnoza jest wymagana</mat-error>
             </mat-form-field>
             <div class="double-input">
                 <span class="flex"></span>
                 <button type="button" mat-raised-button [routerLink]="'/lekarz'">Wróć</button>
-                <button type="submit" mat-raised-button>Zakończ wizytę</button>
+                <button type="button" mat-raised-button (click)="openCancelVisitDialog()">Anuluj wizytę</button>
+                <button type="submit" color="primary" mat-raised-button>Zakończ wizytę</button>
             </div>
         </form>
     </div>

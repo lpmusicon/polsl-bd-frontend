@@ -14,6 +14,7 @@ import { PhysicalExaminationDTO } from 'src/app/DTO/PhysicalExaminationDTO';
 import { PatientPhysicalExaminationDTO } from 'src/app/DTO/PatientPhysicalExaminationDTO';
 import { PatientLaboratoryExaminationDTO } from 'src/app/DTO/PatientLaboratoryExaminationDTO';
 import { PatientClosedVisitDTO } from 'src/app/DTO/PatientClosedVisitDTO';
+import { CancelVisitComponent } from './cancel-visit/cancel-visit.component';
 
 
 @Component({
@@ -111,7 +112,23 @@ export class WizytaComponent implements OnInit {
   }
 
   private handleLabExaminations(labExaminations: PatientLaboratoryExaminationDTO[]) {
-    this.labExaminations = labExaminations;
+    const lab = labExaminations.map((labEx: PatientLaboratoryExaminationDTO) => {
+      switch(labEx.status) {
+        case 'Ordered': labEx.status = 'Zlecone'; break;
+        case 'Executed': labEx.status = 'Wykonane'; break;
+        case 'Canceled': labEx.status = 'Anulowane'; break;
+        default: break;
+      }
+
+      if(labEx.result === null) {
+        labEx.result = '-';
+      }
+
+      // console.log(labEx);
+      return labEx;
+    });
+
+    this.labExaminations = lab;
   }
 
   private handleParams(a: any) {
@@ -137,7 +154,7 @@ export class WizytaComponent implements OnInit {
   private buildForm(): void {
     this.form = this.fb.group({
       Description: ['', Validators.required],
-      Diagnosis: ['', Validators.required]
+      Diagnosis: ['']
     });
   }
 
@@ -172,6 +189,23 @@ export class WizytaComponent implements OnInit {
   private handlePreviousVisits(data: PatientClosedVisitDTO[]) {
     this.visits = data.filter((e: PatientClosedVisitDTO) => {
       return e.patientVisitId !== parseInt(this.visitId.toString());
+    });
+  }
+
+  public openCancelVisitDialog(): void {
+    const dialog = this.dialog.open(CancelVisitComponent, {
+      width: '650px',
+      data: { 
+        visit: this.visit
+      }
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if(result.id == 1) {
+        console.debug('Visit has been canceled', result);
+        this.openSnackBar(`Wizyta pacjenta ${this.visit.patient.name} ${this.visit.patient.lastname} została anulowana`, 'Ok');
+        this.router.navigate(['/lekarz']);
+      }
     });
   }
 

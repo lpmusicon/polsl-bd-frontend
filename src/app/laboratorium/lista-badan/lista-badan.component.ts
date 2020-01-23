@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { DbCommunicationService } from 'src/app/db-communication.service';
 import { LaboratoryExaminationOrderedDTO } from 'src/app/DTO/LaboratoryExaminationOrderedDTO';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LaboratoryExaminationGenericDTO } from 'src/app/DTO/LaboratoryExaminationGenericDTO';
 
 @Component({
   selector: 'app-lista-badan',
@@ -15,18 +16,13 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./lista-badan.component.scss']
 })
 export class ListaBadanComponent implements OnInit {
+  public pastExaminations: LaboratoryExaminationGenericDTO[] = [];
 
   constructor(
     public dialog: MatDialog, 
     private route: ActivatedRoute,
     private _db: DbCommunicationService,
     private router: Router) {
-    this.route.queryParams.subscribe(params => {
-      if(params["lab-examination"]) {
-        console.log("LabExamination: ", params["lab-examination"]);
-      }
-      console.log(params);
-    })
   }
 
   public LabExaminations: LaboratoryExaminationOrderedDTO[] = [];
@@ -42,7 +38,27 @@ export class ListaBadanComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-
+  private handleDataDone(data: LaboratoryExaminationGenericDTO[])
+  {
+    this.pastExaminations = data.map((lab: LaboratoryExaminationGenericDTO) => {
+      switch(lab.status) {
+        case 'Approval':
+          lab.status = "Zatwierdzone";
+          break;
+        case 'Rejected':
+          lab.status = "Odrzucone";
+          break;
+        case 'Canceled':
+          lab.status = "Anulowane";
+          break;
+        case 'Executed':
+          lab.status = "Wykonane";
+          break;
+          default: break;
+      }
+      return lab;
+    });
+  }
 
   private handleResponse(data: LaboratoryExaminationOrderedDTO[]) {
     console.log(data);
@@ -57,7 +73,12 @@ export class ListaBadanComponent implements OnInit {
     this._db.LaboratoryExaminationOrdered().subscribe({
       next: this.handleResponse.bind(this),
       error: this.handleError.bind(this)
-    })
+    });
+
+    this._db.LaboratoryExaminationDone().subscribe({
+      next: this.handleDataDone.bind(this),
+      error: this.handleError.bind(this)
+    });
   }
 
   onChange() {

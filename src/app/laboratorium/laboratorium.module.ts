@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { ListItemManageComponent } from './lista-badan/list-item-manage/list-item-manage.component'
 import { ReactiveFormsModule } from '@angular/forms';
+import { PastExaminationsComponent } from './lista-badan/past-examinations/past-examinations.component';
 
 
 
@@ -16,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ListaBadanComponent, 
     WykonajBadanieComponent, 
     AnulujBadanieComponent,
-    ListItemManageComponent
+    ListItemManageComponent,
+    PastExaminationsComponent
   ],
   imports: [
     CommonModule,

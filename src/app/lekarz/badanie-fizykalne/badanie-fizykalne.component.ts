@@ -21,7 +21,6 @@ export class BadanieFizykalneComponent implements OnInit {
 
   constructor(
     private openAddExaminationRef: MatDialogRef<BadanieFizykalneComponent>,
-    private _router: Router,
     private _fb: FormBuilder,
     private _db: DbCommunicationService,
     private _snackBar: MatSnackBar,

@@ -1,9 +1,10 @@
 
 export class PatientLaboratoryExaminationDTO {
     ExaminationName: string;
-    Result: string;
+    result: string;
     DoctorName: string;
     DoctorLastName: string;
     OrderExaminationDate?: Date;
     ExecuteExaminationDate?: Date;
+    status: string;
 }
