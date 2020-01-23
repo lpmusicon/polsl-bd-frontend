@@ -8,6 +8,13 @@ import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
+import { IVisitClose } from 'src/app/Form/IVisitClose';
+import { LaboratoryExaminationOrderedVisitDTO } from 'src/app/DTO/LaboratoryExaminationOrderedVisitDTO';
+import { PhysicalExaminationDTO } from 'src/app/DTO/PhysicalExaminationDTO';
+import { PatientPhysicalExaminationDTO } from 'src/app/DTO/PatientPhysicalExaminationDTO';
+import { PatientLaboratoryExaminationDTO } from 'src/app/DTO/PatientLaboratoryExaminationDTO';
+import { PatientClosedVisitDTO } from 'src/app/DTO/PatientClosedVisitDTO';
+import { CancelVisitComponent } from './cancel-visit/cancel-visit.component';
 
 
 @Component({
@@ -17,9 +24,11 @@ import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
 })
 export class WizytaComponent implements OnInit {
   public visit: PatientVisitDTO;
-  public visits: VisitDTO[];
   public visitId: number;
   public form: FormGroup;
+  public labExaminations: PatientLaboratoryExaminationDTO[];
+  public examinations: PatientPhysicalExaminationDTO[];
+  public visits: PatientClosedVisitDTO[];
 
   constructor(
     public dialog: MatDialog,
@@ -30,22 +39,64 @@ export class WizytaComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
+  public ngOnInit() {
+    this.visit = {
+      patientVisitId: this.visitId,
+      patient: {
+        name: '',
+        lastname: '',
+        patientId: 0,
+        pesel: ''
+      },
+      registerDate: new Date()
+    };
+
+    this.buildForm();
+    this.route.params.subscribe({
+      next: this.handleParams.bind(this)
+    });
+  }
+
+  public logout(): void {
+    this.db.logout();
+    this.router.navigate(['/']);
+  }
+
   openAddExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieFizykalneComponent, {
       width: '650px',
-      data: { VisitId: this.visitId }
+      data: { VisitId: this.visitId,
+        PatientName: this.visit.patient.name,
+        PatientLastname: this.visit.patient.lastname}
     });
 
     openAddExamintionDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.fetchPhysicalExaminations();
     });
+  }
+
+  private fetchPhysicalExaminations() {
+    this.db.PatientPhysicalExaminations(this.visit.patient.patientId).subscribe({
+      next: this.handlePhysicalExaminations.bind(this),
+      error: this.handleError.bind(this)
+    });
+  }
+
+  private handlePhysicalExaminations(data: PatientPhysicalExaminationDTO[]) {
+    this.examinations = data;
   }
 
   openAddLabExaminationDialog(): void {
     const openAddExamintionDialogRef = this.dialog.open(BadanieLaboratoryjneComponent, {
       width: '650px',
-      data: { VisitId: this.visitId }
+      data: { 
+        VisitId: this.visitId,
+        PatientName: this.visit.patient.name,
+        PatientLastname: this.visit.patient.lastname
+      }
     });
+
 
     openAddExamintionDialogRef.afterClosed().subscribe({
       next: () => {
@@ -55,10 +106,32 @@ export class WizytaComponent implements OnInit {
   }
 
   private fetchLabExaminations() {
-
+    this.db.PatientLaboratoryExaminations(this.visit.patient.patientId).subscribe({
+      next: this.handleLabExaminations.bind(this)
+    });
   }
 
-  private handleParams(a) {
+  private handleLabExaminations(labExaminations: PatientLaboratoryExaminationDTO[]) {
+    const lab = labExaminations.map((labEx: PatientLaboratoryExaminationDTO) => {
+      switch(labEx.status) {
+        case 'Ordered': labEx.status = 'Zlecone'; break;
+        case 'Executed': labEx.status = 'Wykonane'; break;
+        case 'Canceled': labEx.status = 'Anulowane'; break;
+        default: break;
+      }
+
+      if(labEx.result === null) {
+        labEx.result = '-';
+      }
+
+      // console.log(labEx);
+      return labEx;
+    });
+
+    this.labExaminations = lab;
+  }
+
+  private handleParams(a: any) {
     console.log(a);
     this.visitId = a.id;
     this.db.Visit(this.visitId).subscribe({
@@ -68,8 +141,10 @@ export class WizytaComponent implements OnInit {
   }
 
   private handleData(visit: PatientVisitDTO) {
-    console.log(visit);
     this.visit = visit;
+    this.fetchPhysicalExaminations();
+    this.fetchLabExaminations();
+    this.fetchPreviousVisits();
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -79,59 +154,58 @@ export class WizytaComponent implements OnInit {
   private buildForm(): void {
     this.form = this.fb.group({
       Description: ['', Validators.required],
-      Diagnosis: ['', Validators.required]
+      Diagnosis: ['']
     });
   }
 
-  // TODO replace any
-  public onSubmit(value: any): void {
+  public onSubmit(value: IVisitClose): void {
     if (!this.form.valid) { return; }
-    // TODO db
-  }
+    console.log(value);
 
-  ngOnInit() {
-    this.visit = {
-      Id: 0,
-      RegisterDate: new Date(),
-      Patient: {
-        patientId: 0,
-        name: '',
-        lastname: '',
-        PESEL: ''
-      }
-    };
-    this.buildForm();
-    this.route.params.subscribe({
-      next: this.handleParams.bind(this)
+    this.db.VisitClose(this.visitId, value).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
     });
   }
 
   private handleResponse(auth: any): void {
-    this.openSnackBar(`Wizyta pacjenta  została zakończona`, 'Ok');
-  }
+    this.openSnackBar(`Wizyta pacjenta ${this.visit.patient.name} ${this.visit.patient.lastname} została zakończona`, 'Ok');
 
-  private handleAuthError(err: HttpErrorResponse): void {
-    switch (err.status) {
-      case 404:
-        this.openSnackBar('Nie znaleziono wizyty', 'Ok');
-        break;
-      case 400:
-        // Złe dane
-        this.openSnackBar('Niepoprawne dane/brak danych', 'Ok');
-        console.warn('Wrong/empty data');
-        break;
-      default:
-        // Nieokreślony błąd
-        this.openSnackBar('Wystąpił nieokreślony błąd', 'Ok');
-        console.warn('Generic error');
-        break;
-    }
-    console.warn(err);
+    this.router.navigate(['/lekarz']);
   }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
+    });
+  }
+
+  private fetchPreviousVisits() {
+    this.db.PatientVisits(this.visit.patient.patientId).subscribe({
+      next: this.handlePreviousVisits.bind(this)
+    });
+  }
+
+  private handlePreviousVisits(data: PatientClosedVisitDTO[]) {
+    this.visits = data.filter((e: PatientClosedVisitDTO) => {
+      return e.patientVisitId !== parseInt(this.visitId.toString());
+    });
+  }
+
+  public openCancelVisitDialog(): void {
+    const dialog = this.dialog.open(CancelVisitComponent, {
+      width: '650px',
+      data: { 
+        visit: this.visit
+      }
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if(result.id == 1) {
+        console.debug('Visit has been canceled', result);
+        this.openSnackBar(`Wizyta pacjenta ${this.visit.patient.name} ${this.visit.patient.lastname} została anulowana`, 'Ok');
+        this.router.navigate(['/lekarz']);
+      }
     });
   }
 

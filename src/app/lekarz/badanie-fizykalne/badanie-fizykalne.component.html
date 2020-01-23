@@ -1,16 +1,16 @@
 <div class="wrapper">
     <div class="inner-wrapper">
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-            <h2>Badanie dla: {{ data.patId }}</h2><br>
+            <h2>Badanie dla: {{ data.PatientName }} {{ data.PatientLastname }}</h2><br>
             <h2>Wybierz typ badania fizykalnego</h2>
             <mat-form-field>
                 <mat-label>Typ badania</mat-label>
-                <mat-select formControlName="ExamType" required>
-                    <mat-option *ngFor="let examType of examTypes" [value]="examType.value">
-                        {{examType.viewValue}}
+                <mat-select formControlName="ExaminationId" required>
+                    <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
+                        {{examType.name}}
                     </mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('ExamType').hasError('required')">Typ badania jest wymagany</mat-error>
+                <mat-error *ngIf="form.get('ExaminationId').hasError('required')">Typ badania jest wymagany</mat-error>
             </mat-form-field>
             <h2>Wprowadź wynik badania</h2>
             <mat-form-field>

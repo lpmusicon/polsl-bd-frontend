@@ -1,7 +1,9 @@
 import { PatientDTO } from './PatientDTO';
+import { DoctorDTO } from './DoctorDTO';
 
 export class PatientVisitDTO {
-    Id: number;
-    Patient: PatientDTO;
-    RegisterDate: Date;
+    patientVisitId: number;
+    patient: PatientDTO;
+    doctor?: DoctorDTO;
+    registerDate: Date;
 }

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbCommunicationService } from '../../db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { DictionaryDTO } from 'src/app/DTO/DictionaryDTO';
+import { IExaminationPerform } from 'src/app/Form/IExaminationPerform';
 
 export interface examType {
   value: string;
@@ -19,46 +21,60 @@ export class BadanieFizykalneComponent implements OnInit {
 
   constructor(
     private openAddExaminationRef: MatDialogRef<BadanieFizykalneComponent>,
-    private _router: Router,
     private _fb: FormBuilder,
     private _db: DbCommunicationService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+    
   public cancelAddExamination() {
     this.openAddExaminationRef.close({ reason: "cancel" });
     this.openSnackBar("Anulowano", "Ok");
   }
 
-  public onSubmit(value: any): void {
+  public onSubmit(value: IExaminationPerform): void {
     if (!this.form.valid) return;
-    //TODO db
-
+    
+    this._db.PhysicalExaminationPerform(value).subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this)
+    })
   }
 
   public form: FormGroup;
 
   private buildForm(): void {
     this.form = this._fb.group({
-      ExamType: ['', Validators.required],
-      Result: ['', Validators.required]
+      ExaminationId: ['', Validators.required],
+      Result: ['', Validators.required],
+      VisitId: ['']
     });
+
+    this.form.get('VisitId').setValue(parseInt(this.data.VisitId));
+  }
+
+  private handleDictionary(dictionary: DictionaryDTO[]) {
+    this.examTypes = dictionary;
+  }
+
+  private fetchDictionary() {
+    this._db.PhysicalExaminationDictionary().subscribe({
+      next: this.handleDictionary.bind(this),
+      error: this.handleError.bind(this)
+    })
   }
 
   ngOnInit() {
+    this.fetchDictionary();
     this.buildForm();
   }
 
   private handleResponse(auth: any): void {
-
     this.openSnackBar("Badanie fizykalne zostało wykonane", "Ok");
-    window.setTimeout(() => {
-
-      this._router.navigate(["/TODO"]);
-    }, 1000);
+    this.openAddExaminationRef.close();
   }
 
-  private handleAuthError(err: HttpErrorResponse): void {
+  private handleError(err: HttpErrorResponse): void {
     switch (err.status) {
 	case 404:
         this.openSnackBar("Nie znaleziono pacjenta", "Ok");
@@ -83,12 +99,5 @@ export class BadanieFizykalneComponent implements OnInit {
     });
   }
 
-  examTypes: examType[] = [
-    { value: 'admin-0', viewValue: 'Admin' },
-    { value: 'lekarz-1', viewValue: 'Lekarz' },
-    { value: 'recepcja-2', viewValue: 'Recepcja' },
-    { value: 'lab-3', viewValue: 'Laborant' },
-    { value: 'lab_kier-4', viewValue: 'Kierownik Laboratorium' }
-  ];
-
+  examTypes: DictionaryDTO[] = [];
 }

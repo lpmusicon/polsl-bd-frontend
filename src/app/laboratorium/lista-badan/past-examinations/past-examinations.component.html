@@ -1,0 +1,46 @@
+<div class="inner-wrapper">
+    <h3>Poprzednie badania</h3>
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value, dataSource)" placeholder="Filtruj">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
+            <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td class="padd" mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="orderDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zlecenia </th>
+            <td class="padd" mat-cell *matCellDef="let element"> {{element.orderDate | date:"dd/MM/yyyy"}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="examinationDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wykonania </th>
+            <td class="padd" mat-cell *matCellDef="let element"> {{element.examinationDate | date:"dd/MM/yyyy"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="laboratoryExaminationName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ badania </th>
+            <td class="padd" mat-cell *matCellDef="let element"> {{element.laboratoryExaminationName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="doctorComment">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Komentarz Lekarza </th>
+            <td class="padd" mat-cell *matCellDef="let element"> {{element.doctorComment}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="result">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik badania </th>
+            <td class="padd" mat-cell *matCellDef="let element"> {{element.result}} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

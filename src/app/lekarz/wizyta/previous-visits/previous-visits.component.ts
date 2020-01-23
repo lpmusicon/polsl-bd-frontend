@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
 
 export interface Visit {
   id: number;
@@ -14,27 +15,33 @@ export interface Visit {
   templateUrl: './previous-visits.component.html',
   styleUrls: ['./previous-visits.component.scss']
 })
-export class PreviousVisitsComponent implements OnInit {
+export class PreviousVisitsComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  @Input("patient") pat: any;
+  @Input("visits") visits: PatientVisitDTO[];
 
   public Visits: Visit[] = [];
-  visitsDisplayedColumns: string[] = ['position', 'doc_name', "description", 'diagnose', 'date'];
-  visits = new MatTableDataSource(this.Visits);
+  visitsDisplayedColumns: string[] = ['patientVisitId', "description", 'diagnosis', 'doctor', 'registerDate'];
+  visitsDataSource = new MatTableDataSource(this.Visits);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   applyFilter(filterValue: string) {
-    this.visits.filter = filterValue.trim().toLowerCase();
+    this.visitsDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
-    
-    this.visits.paginator = this.paginator;
-    this.visits.sort = this.sort;
+    this.visitsDataSource.paginator = this.paginator;
+    this.visitsDataSource.sort = this.sort;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.visits.currentValue !== undefined) {
+      console.log('Visit changes:', changes);
+      this.visitsDataSource.data = changes.visits.currentValue;
+    }
   }
 
 }

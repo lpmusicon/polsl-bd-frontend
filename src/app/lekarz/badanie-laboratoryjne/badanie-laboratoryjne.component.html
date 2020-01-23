@@ -1,7 +1,7 @@
 <div class="wrapper">
         <div class="inner-wrapper">
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-                <h2>Badanie dla: {{ data.patId }}</h2><br>
+                <h2>Badanie dla: {{ data.PatientName }} {{ data.PatientLastname }}</h2><br>
                 <h2>Wybierz typ badania laboratoryjnego</h2>
                 <mat-form-field>
                     <mat-label>Typ badania</mat-label>

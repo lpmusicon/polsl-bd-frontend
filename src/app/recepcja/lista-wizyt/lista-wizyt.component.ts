@@ -8,6 +8,8 @@ import { AnulujWizyteComponent } from '../anuluj-wizyte/anuluj-wizyte.component'
 import { DbCommunicationService } from 'src/app/db-communication.service';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
+import { GenericVisitDTO } from 'src/app/DTO/GenericVisitDTO';
 
 @Component({
   selector: 'app-lista-wizyt',
@@ -15,48 +17,62 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./lista-wizyt.component.scss']
 })
 export class ListaWizytComponent implements OnInit {
-  public Visits: VisitDTO[] = [];
   @Input('element') public visit: any;
+
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private db: DbCommunicationService) {
-    this.route.queryParams.subscribe(params => {
-      if (params.visit) {
-        console.log('Visit: ', params.visit);
-      }
-      console.log('Par: ', params);
-    });
   }
 
-  displayedColumns: string[] = ['position', 'pat_name', 'doc_name', 'date', 'actions'];
-  dataSource = new MatTableDataSource(this.Visits);
-
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  public pastVisits: GenericVisitDTO[] = [];
+  public Visits: PatientVisitDTO[];
 
   public logout(): void {
     this.db.logout();
     this.router.navigate(['/']);
   }
 
-  private handleData(data: VisitDTO[]) {
-    this.Visits = data;
-    this.dataSource = new MatTableDataSource(this.Visits);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  displayedColumns: string[] = ['patientVisitId', 'patient', 'doctor', 'registerDate', 'actions'];
+  dataSource = new MatTableDataSource(this.Visits);
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  loadData() {
+  openStartVisitDialog(data: PatientVisitDTO): void {
+    this.router.navigate([`/lekarz/wizyta/${data.patientVisitId}`]);
+  }
+
+  private loadData() {
     this.db.VisitRegisteredAll().subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
     });
+
+    this.db.VisitPast().subscribe({
+      next: this.handlePast.bind(this),
+      error: this.handleError.bind(this)
+    });
+  }
+
+  private handlePast(data: GenericVisitDTO[]) {
+    this.pastVisits = data;
+  }
+
+  private handleData(data: PatientVisitDTO[]) {
+    console.log(data);
+    this.Visits = [];
+    for (const visit of data) {
+      this.Visits.push(visit);
+    }
+    this.dataSource = new MatTableDataSource(this.Visits);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   private handleError(err: HttpErrorResponse): void {

@@ -2,12 +2,12 @@
     <mat-toolbar>
         <span>Panel Lekarza</span>
         <span class="flex"></span>
-        <button mat-raised-button>Zdetonuj sesję</button>
+        <button mat-raised-button (click)="logout()">Wyloguj się</button>
     </mat-toolbar>
     <div class="inner-wrapper">
-        <h3>Wizyta nr {{ visit.id }}</h3>
-        <span>Data rejestracji: {{ visit.registerDate | date:"dd/MM/yyyy" }}</span>
-        <span>Pacjent: </span>
+        <h3>Wizyta nr {{ visitId }}</h3>
+        <span>Data rejestracji: {{ visit.registerDate | date:"dd/MM/yyyy" }}</span><br>
+        <span>Pacjent: {{ visit.patient.name }} {{ visit.patient.lastname }}</span>
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
             <mat-form-field >
                 <textarea matInput placeholder="Opis wizyty" formControlName="Description" type="text" required></textarea>
@@ -22,7 +22,7 @@
                         <mat-panel-description>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <app-previous-visits [patient]="patient"></app-previous-visits>
+                    <app-previous-visits [visits]="visits"></app-previous-visits>
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -35,7 +35,7 @@
                     <div class="single-input">
                         <button mat-raised-button type="button" (click)="openAddLabExaminationDialog()">Zleć badanie</button>
                     </div>
-                    <app-list-lab-examinations [patient]="patient"></app-list-lab-examinations>
+                    <app-list-lab-examinations [labExaminations]="labExaminations"></app-list-lab-examinations>
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -48,17 +48,19 @@
                     <div class="single-input">
                         <button mat-raised-button type="button" (click)="openAddExaminationDialog()">Dodaj badanie</button>
                     </div>
-                    <app-list-examinations [patient]="patient"></app-list-examinations>
+                    <app-list-examinations [examinations]="examinations"></app-list-examinations>
                 </mat-expansion-panel>
             </mat-accordion>
+            <br>
             <mat-form-field>
-                <textarea matInput placeholder="Diagnoza" formControlName="Diagnosis" type="text" required></textarea>
+                <textarea matInput placeholder="Diagnoza" formControlName="Diagnosis" type="text"></textarea>
                 <mat-error *ngIf="form.get('Diagnosis').hasError('required')">Diagnoza jest wymagana</mat-error>
             </mat-form-field>
             <div class="double-input">
                 <span class="flex"></span>
-                <button type="button" mat-raised-button [routerLink]="'/lekarz'">Anuluj</button>
-                <button type="submit" mat-raised-button>Zakończ wizytę</button>
+                <button type="button" mat-raised-button [routerLink]="'/lekarz'">Wróć</button>
+                <button type="button" mat-raised-button (click)="openCancelVisitDialog()">Anuluj wizytę</button>
+                <button type="submit" color="primary" mat-raised-button>Zakończ wizytę</button>
             </div>
         </form>
     </div>

@@ -51,7 +51,7 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     LabMGuard,
     RecpGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+    { provide: MAT_DATE_LOCALE, useValue: 'pl' }
   ],
   bootstrap: [AppComponent]
 })

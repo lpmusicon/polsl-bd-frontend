@@ -29,6 +29,13 @@ import { LaboratoryExaminationOrderedDTO } from './DTO/LaboratoryExaminationOrde
 import { LaboratoryExaminationExecutedDTO } from './DTO/LaboratoryExaminationExecutedDTO';
 import { LaboratoryExaminationOrderedVisitDTO } from './DTO/LaboratoryExaminationOrderedVisitDTO';
 import { PersonDTO } from './DTO/PersonDTO';
+import { DoctorDTO } from './DTO/DoctorDTO';
+import { PatientPhysicalExaminationDTO } from './DTO/PatientPhysicalExaminationDTO';
+import { PatientLaboratoryExaminationDTO } from './DTO/PatientLaboratoryExaminationDTO';
+import { PatientClosedVisitDTO } from './DTO/PatientClosedVisitDTO';
+import { DataRowOutlet } from '@angular/cdk/table';
+import { LaboratoryExaminationGenericDTO } from './DTO/LaboratoryExaminationGenericDTO';
+import { GenericVisitDTO } from './DTO/GenericVisitDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -78,10 +85,12 @@ export class DbCommunicationService {
   }
 
   public UserDisable(userId: number, newDisabled: IDisabledTo): Observable<any> {
+    newDisabled.expiryDate.setTime(newDisabled.expiryDate.getTime() + 3600000);
     return this.http.patch<any>(`${this._serverURL}/user/${userId}/disable`, newDisabled);
   }
 
   public UserRegister(iUserRegister: IUserRegister): Observable<any> {
+    iUserRegister.ExpiryDate.setTime(iUserRegister.ExpiryDate.getTime() + 3600000);
     return this.http.post<any>(`${this._serverURL}/user/register`, iUserRegister);
   }
 
@@ -93,17 +102,34 @@ export class DbCommunicationService {
     return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/all`);
   }
 
-  public VisitRegisteredAll(): Observable<VisitDTO[]> {
-    return this.http.get<VisitDTO[]>(`${this._serverURL}/visit/registered/all`)
+  public VisitRegisteredAll(): Observable<PatientVisitDTO[]> {
+    return this.http.get<PatientVisitDTO[]>(`${this._serverURL}/visit/registered/all`)
     .pipe(
-      map((dtos: VisitDTO[]) => {
-        dtos.map((dto: VisitDTO) => { dto.registerDate = new Date(dto.registerDate); return dto; });
+      map((dtos: PatientVisitDTO[]) => {
+        dtos.map((dto: PatientVisitDTO) => { 
+          dto.registerDate = new Date(dto.registerDate);
+          const patient = new PatientDTO();
+          patient.name = dto.patient.name;
+          patient.lastname = dto.patient.lastname;
+          patient.pesel = dto.patient.pesel;
+          patient.patientId = dto.patient.patientId;
+          dto.patient = patient;
+          const doctor = new DoctorDTO();
+          doctor.doctorId = dto.doctor.doctorId;
+          doctor.name = dto.doctor.name;
+          doctor.lastname = dto.doctor.lastname;
+          dto.doctor = doctor;
+          return dto;
+        });
         return dtos;
       })
     );
   }
 
   public VisitRegister(iVisitRegister: IVisitRegister): Observable<any> {
+    const regTime = new Date();
+    iVisitRegister.RegisterDate.setHours(regTime.getHours());
+    iVisitRegister.RegisterDate.setMinutes(regTime.getMinutes());
     return this.http.post<Observable<any>>(`${this._serverURL}/visit/register`, iVisitRegister);
   }
 
@@ -127,8 +153,28 @@ export class DbCommunicationService {
     return this.http.post<any>(`${this._serverURL}/patient/register`, iPatientRegister);
   }
 
-  public PatientVisits(patientId: number): Observable<PatientVisitDTO[]> {
-    return this.http.get<PatientVisitDTO[]>(`${this._serverURL}/patient/${patientId}/visit/all`);
+  public PatientVisits(patientId: number): Observable<PatientClosedVisitDTO[]> {
+    return this.http.get<PatientClosedVisitDTO[]>(`${this._serverURL}/patient/${patientId}/visit/all`).pipe(
+      map((dtos: PatientClosedVisitDTO[]) => {
+        dtos.map((dto: PatientClosedVisitDTO) => {
+          const doctor = new DoctorDTO();
+          doctor.doctorId = dto.doctor.doctorId;
+          doctor.name = dto.doctor.name;
+          doctor.lastname = dto.doctor.lastname;
+          dto.doctor = doctor;
+          return dto;
+        });
+        return dtos;
+      })
+    );
+  }
+
+  public PatientPhysicalExaminations(patientId: number): Observable<PatientPhysicalExaminationDTO[]> {
+    return this.http.get<PatientPhysicalExaminationDTO[]>(`${this._serverURL}/patient/${patientId}/physical_examinations/all`);
+  }
+
+  public PatientLaboratoryExaminations(patientId: number): Observable<PatientLaboratoryExaminationDTO[]> {
+    return this.http.get<PatientLaboratoryExaminationDTO[]>(`${this._serverURL}/patient/${patientId}/laboratory_examinations/all`);
   }
 
   public ExaminationDictionaryAll(): Observable<DictionaryDTO[]> {
@@ -157,6 +203,14 @@ export class DbCommunicationService {
 
   public LaboratoryExaminationOrdered(): Observable<LaboratoryExaminationOrderedDTO[]> {
     return this.http.get<LaboratoryExaminationOrderedDTO[]>(`${this._serverURL}/examination/laboratory/ordered`);
+  }
+
+  public LaboratoryExaminationAllDone(): Observable<LaboratoryExaminationGenericDTO[]> {
+    return this.http.get<LaboratoryExaminationGenericDTO[]>(`${this._serverURL}/examination/laboratory/alldone`);
+  }
+
+  public LaboratoryExaminationDone(): Observable<LaboratoryExaminationGenericDTO[]> {
+    return this.http.get<LaboratoryExaminationGenericDTO[]>(`${this._serverURL}/examination/laboratory/done`);
   }
 
   public LaboratoryExaminationOrderedVisit(visitId: number): Observable<LaboratoryExaminationOrderedVisitDTO[]> {
@@ -189,6 +243,63 @@ export class DbCommunicationService {
 
   public DoctorAll(): Observable<PersonDTO[]> {
     return this.http.get<PersonDTO[]>(`${this._serverURL}/doctor/all`);
+  }
+
+  public DoctorPast(): Observable<GenericVisitDTO[]> {
+    return this.http.get<GenericVisitDTO[]>(`${this._serverURL}/doctor/${this._user.userId}/visits/past`).pipe(
+      map((dtos: GenericVisitDTO[]) => {
+        dtos.map((dto: GenericVisitDTO) => { 
+          dto.registerDate = new Date(dto.registerDate);
+          dto.closeDate = new Date(dto.closeDate);
+          const patient = new PatientDTO();
+          patient.name = dto.patient.name;
+          patient.lastname = dto.patient.lastname;
+          patient.pesel = dto.patient.pesel;
+          patient.patientId = dto.patient.patientId;
+          dto.patient = patient;
+
+          switch(dto.status) {
+            case 'Canceled': dto.status = "Anulowana"; break;
+            case 'Closed': dto.status = "Zakończona"; break;
+            default: break;
+          }
+
+          return dto;
+        });
+        return dtos;
+      })
+    );
+  }
+
+  public VisitPast(): Observable<GenericVisitDTO[]> {
+    return this.http.get<GenericVisitDTO[]>(`${this._serverURL}/visit/past`).pipe(
+      map((dtos: GenericVisitDTO[]) => {
+        dtos.map((dto: GenericVisitDTO) => { 
+          dto.registerDate = new Date(dto.registerDate);
+          dto.closeDate = new Date(dto.closeDate);
+          const patient = new PatientDTO();
+          patient.name = dto.patient.name;
+          patient.lastname = dto.patient.lastname;
+          patient.pesel = dto.patient.pesel;
+          patient.patientId = dto.patient.patientId;
+          dto.patient = patient;
+          const doctor = new DoctorDTO();
+          doctor.doctorId = dto.doctor.doctorId;
+          doctor.name = dto.doctor.name;
+          doctor.lastname = dto.doctor.lastname;
+          dto.doctor = doctor;
+
+          switch(dto.status) {
+            case 'Canceled': dto.status = "Anulowana"; break;
+            case 'Closed': dto.status = "Zakończona"; break;
+            default: break;
+          }
+
+          return dto;
+        });
+        return dtos;
+      })
+    );
   }
   
 }

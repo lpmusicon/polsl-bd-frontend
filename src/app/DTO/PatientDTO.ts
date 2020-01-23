@@ -4,7 +4,11 @@ export class PatientDTO {
     patientId: number;
     name: string;
     lastname: string;
-    PESEL: string;
+    pesel: string;
     patientVisits?: VisitDTO[];
     fullName?: string;
+
+    public toString(): string {
+        return `${this.name} ${this.lastname}`;
+    }
 }

@@ -10,10 +10,21 @@ import { PreviousVisitsComponent } from './wizyta/previous-visits/previous-visit
 import { ListExaminationsComponent } from './wizyta/list-examinations/list-examinations.component';
 import { ListLabExaminationsComponent } from './wizyta/list-lab-examinations/list-lab-examinations.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CancelVisitComponent } from './wizyta/cancel-visit/cancel-visit.component';
+import { PastVisitsComponent } from './lista-wizyt/past-visits/past-visits.component';
 
 
 @NgModule({
-  declarations: [ListaWizytComponent, WizytaComponent, BadanieFizykalneComponent, BadanieLaboratoryjneComponent, PreviousVisitsComponent, ListExaminationsComponent, ListLabExaminationsComponent],
+  declarations: [
+    ListaWizytComponent, 
+    WizytaComponent, 
+    BadanieFizykalneComponent, 
+    BadanieLaboratoryjneComponent, 
+    PreviousVisitsComponent, 
+    ListExaminationsComponent, 
+    ListLabExaminationsComponent, 
+    CancelVisitComponent, PastVisitsComponent
+  ],
   imports: [
     LekarzRoutingModule,
     CommonModule,
@@ -22,7 +33,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   entryComponents: [
     BadanieFizykalneComponent,
-    BadanieLaboratoryjneComponent
+    BadanieLaboratoryjneComponent,
+    CancelVisitComponent
   ]
 })
 export class LekarzModule { }

@@ -3,32 +3,32 @@
         <span>Panel Recepcji</span>
         <span class="flex"></span>
         <button mat-button [routerLink]="'/recepcja/addvisit'">Dodaj wizytę</button>
-        <button mat-raised-button (click)="logout()">Zdetonuj sesję</button>
+        <button mat-raised-button (click)="logout()">Wyloguj się</button>
     </mat-toolbar>
     <div class="inner-wrapper">
         <h3>Lista Wizyt</h3>
         <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj" value="">
         </mat-form-field>
 
         <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="position">
+            <ng-container matColumnDef="patientVisitId">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lp. </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ element.patientVisitId }} </td>
             </ng-container>
-            <!-- TODO PatientName -->
-            <ng-container matColumnDef="pat_name">
+
+            <ng-container matColumnDef="patient">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pacjent </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.patient.name}}  {{element.patient.lastname}} </td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ element.patient }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="doc_name">
+            <ng-container matColumnDef="doctor">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </th>
-                <td class="padd" mat-cell *matCellDef="let element"> {{element.doctor.name}}  {{element.doctor.lastname}}</td>
+                <td class="padd" mat-cell *matCellDef="let element"> {{ element.doctor }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="date">
+            <ng-container matColumnDef="registerDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data rejestracji </th>
                 <td class="padd" mat-cell *matCellDef="let element"> {{ element.registerDate | date:"dd/MM/yyyy" }} </td>
             </ng-container>
@@ -48,4 +48,5 @@
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
     </div>
+    <app-past-visits [visits]="pastVisits"></app-past-visits>
 </div>

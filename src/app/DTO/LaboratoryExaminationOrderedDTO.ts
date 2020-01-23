@@ -1,6 +1,6 @@
 export class LaboratoryExaminationOrderedDTO {
-    Id: number;
-    DoctorComment: string;
-    LaboratoryExaminationName: string;
-    OrderDate: Date;
+    id: number;
+    doctorComment: string;
+    laboratoryExaminationName: string;
+    orderDate: Date;
 }

@@ -35,12 +35,6 @@ export class DodajWizyteComponent implements OnInit {
     private db: DbCommunicationService,
     private snackBar: MatSnackBar
   ) {
-    this.route.queryParams.subscribe(params => {
-      if (params.patient) {
-        console.log('Patient: ', params.patient);
-      }
-      console.log('Par: ', params);
-    });
   }
 
   public form: FormGroup;
@@ -63,6 +57,7 @@ export class DodajWizyteComponent implements OnInit {
   }
 
   public onSubmit(value: IVisitRegister): void {
+    console.log(value.RegisterDate);
     if (!this.form.valid) { return; }
     this.db.VisitRegister(value).subscribe({
       next: this.handleResponse.bind(this),
@@ -85,6 +80,7 @@ export class DodajWizyteComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.loadData();
+    console.log(this.patients);
   }
 
   private handleResponse(): void {
@@ -94,14 +90,14 @@ export class DodajWizyteComponent implements OnInit {
 
   private handlePatients(dataPat: PatientDTO[]) {
     for (const patient of dataPat) {
-      patient.fullName = `${patient.name} ${patient.lastname}`;
+      patient.fullName = `${patient.name} ${patient.lastname} ${patient.pesel}`;
     }
     this.patients = dataPat;
+    console.log(this.patients);
     this.filteredList1 = dataPat;
   }
 
   private handleDoctors(data: PersonDTO[]) {
-    console.log(data);
     for (const doc of data) {
       doc.fullName = `${doc.name} ${doc.lastname}`;
     }

@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <h2>Czy na pewno chcesz anulować wizytę?</h2>
+        <div>
+            <p>{{ data.visit.patient.name }} {{ data.visit.patient.lastname }}</p>
+            <p>PESEL: {{ data.visit.patient.pesel }}</p>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <mat-form-field>
+                <input matInput placeholder="Podaj powód" formControlName="Reason" type="text" required />
+                <mat-error *ngIf="form.get('Reason').hasError('required')">Wymagane jest podanie powodu anulowania</mat-error>
+            </mat-form-field>
+            <div class="buttons">
+                <button type="button" mat-raised-button (click)="close()">Nie</button>
+                <button type="submit" mat-raised-button color="warn">Tak</button>
+            </div>
+        </form>
+    </div>
+</div>

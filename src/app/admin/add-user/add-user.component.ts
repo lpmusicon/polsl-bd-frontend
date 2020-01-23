@@ -50,13 +50,13 @@ export class AddUserComponent implements OnInit {
       Role: ['', Validators.required],
       Password: ['', [Validators.required, this.noWhitespaceValidator, Validators.minLength(5)]],
       ExpiryDate: ['', Validators.required],
-      PWZNumber: ['', [Validators.minLength(7), Validators.maxLength(7), Validators.pattern('[0-9]')]]
+      PWZNumber: ['', [Validators.minLength(7), Validators.maxLength(7)]]
     });
   }
-  
+
   public onSubmit(iUserRegister: IUserRegister): void {
     if (!this.form.valid) return;
-    
+
     this._db.UserRegister(iUserRegister).subscribe({
       next: this.handleResponse.bind(this),
       error: this.handleError.bind(this)

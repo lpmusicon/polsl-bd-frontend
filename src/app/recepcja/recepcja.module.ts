@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { MatSelectFilterModule } from 'mat-select-filter';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PastVisitsComponent } from './lista-wizyt/past-visits/past-visits.component';
 
 
 
 @NgModule({
-  declarations: [ListaWizytComponent, DodajWizyteComponent, DodajPacjentaComponent, AnulujWizyteComponent],
+  declarations: [ListaWizytComponent, DodajWizyteComponent, DodajPacjentaComponent, AnulujWizyteComponent, PastVisitsComponent],
   imports: [
     RecepcjaRoutingModule,
     FormsModule,

@@ -26,14 +26,13 @@
                 </mat-form-field>
                 <mat-form-field *ngIf="form.get('Role').value == 'DOCT'">
                     <input matInput placeholder="PWZ" formControlName="PWZNumber" maxlength="7" />
-                    <mat-error *ngIf="form.get('PWZNumber').hasError('pattern')">Podana treść nie jest numerem</mat-error>
                     <mat-error *ngIf="form.get('PWZNumber').hasError('maxlength')">Podany numer jest za długi</mat-error>
                     <mat-error *ngIf="form.get('PWZNumber').hasError('minlength')">Podany numer jest za krótki</mat-error>
                 </mat-form-field>
             </div>
             <div class="double-input">
                 <mat-form-field>
-                    <input formControlName="ExpiryDate" matInput [matDatepicker]="picker" placeholder="Wybierz datę">
+                    <input formControlName="ExpiryDate" matInput [matDatepicker]="picker" placeholder="Wybierz datę wygaśnięcia konta">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error *ngIf="form.get('ExpiryDate').hasError('required')">Data wygaśnięcia jest wymagana

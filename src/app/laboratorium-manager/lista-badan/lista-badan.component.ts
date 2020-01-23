@@ -4,12 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { DatePipe } from '@angular/common';
 import { DbCommunicationService } from 'src/app/db-communication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LaboratoryExaminationExecutedDTO } from 'src/app/DTO/LaboratoryExaminationExecutedDTO';
-
-
+import { LaboratoryExaminationGenericDTO } from 'src/app/DTO/LaboratoryExaminationGenericDTO';
 
 @Component({
   selector: 'app-lista-badan',
@@ -21,14 +19,16 @@ export class ListaBadanComponent implements OnInit {
   constructor(
     public dialog: MatDialog, 
     private route: ActivatedRoute,
-    private _db: DbCommunicationService,
+    private db: DbCommunicationService,
     private router: Router
     ) {}
 
   public KLabExaminations: LaboratoryExaminationExecutedDTO[] = [];
 
+  public doneLabExaminations: LaboratoryExaminationGenericDTO[] = [];
+
   public logout(): void {
-    this._db.logout();
+    this.db.logout();
     this.router.navigate(['/']);
   }
 
@@ -38,14 +38,34 @@ export class ListaBadanComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(filterValue: string, dataSource: MatTableDataSource<any>) {
+    dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   private handleData(data: LaboratoryExaminationExecutedDTO[])
   {
     console.log(data);
     this.dataSource.data = data;
+  }
+
+  private handleDataDone(data: LaboratoryExaminationGenericDTO[])
+  {
+    console.log(data);
+    this.doneLabExaminations = data.map((lab: LaboratoryExaminationGenericDTO) => {
+      switch(lab.status) {
+        case 'Approval':
+          lab.status = "Zatwierdzone";
+          break;
+        case 'Rejected':
+          lab.status = "Odrzucone";
+          break;
+        case 'Canceled':
+          lab.status = "Anulowane";
+          break;
+          default: break;
+      }
+      return lab;
+    });
   }
   
   private handleError(err: HttpErrorResponse): void {
@@ -59,10 +79,15 @@ export class ListaBadanComponent implements OnInit {
   }
 
   loadData() {
-    this._db.LaboratoryExaminationPending().subscribe({
+    this.db.LaboratoryExaminationPending().subscribe({
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
-    })
+    });
+
+    this.db.LaboratoryExaminationAllDone().subscribe({
+      next: this.handleDataDone.bind(this),
+      error: this.handleError.bind(this)
+    });
   }
 
   onChange() {
@@ -70,7 +95,6 @@ export class ListaBadanComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.loadData();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
