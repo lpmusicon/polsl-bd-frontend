@@ -35,12 +35,6 @@ export class DodajWizyteComponent implements OnInit {
     private db: DbCommunicationService,
     private snackBar: MatSnackBar
   ) {
-    this.route.queryParams.subscribe(params => {
-      if (params.patient) {
-        console.log('Patient: ', params.patient);
-      }
-      console.log('Par: ', params);
-    });
   }
 
   public form: FormGroup;
@@ -63,6 +57,7 @@ export class DodajWizyteComponent implements OnInit {
   }
 
   public onSubmit(value: IVisitRegister): void {
+    console.log(value.RegisterDate);
     if (!this.form.valid) { return; }
     this.db.VisitRegister(value).subscribe({
       next: this.handleResponse.bind(this),

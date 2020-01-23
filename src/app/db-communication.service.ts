@@ -127,8 +127,9 @@ export class DbCommunicationService {
   }
 
   public VisitRegister(iVisitRegister: IVisitRegister): Observable<any> {
-    const regTime = new Date().getTime();
-    iVisitRegister.RegisterDate.setTime(regTime + 5400000);
+    const regTime = new Date();
+    iVisitRegister.RegisterDate.setHours(regTime.getHours());
+    iVisitRegister.RegisterDate.setMinutes(regTime.getMinutes());
     return this.http.post<Observable<any>>(`${this._serverURL}/visit/register`, iVisitRegister);
   }
 
