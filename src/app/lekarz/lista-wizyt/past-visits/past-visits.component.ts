@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/cor
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
+import { GenericVisitDTO } from 'src/app/DTO/GenericVisitDTO';
 
 @Component({
   selector: 'app-past-visits',
@@ -10,7 +10,7 @@ import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
   styleUrls: ['./past-visits.component.scss']
 })
 export class PastVisitsComponent implements OnInit {
-  @Input('visits') examinations: PatientVisitDTO[];
+  @Input('visits') examinations: GenericVisitDTO[];
 
   constructor() { }
 

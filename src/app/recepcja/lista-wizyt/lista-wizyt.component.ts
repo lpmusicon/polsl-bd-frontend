@@ -9,6 +9,7 @@ import { DbCommunicationService } from 'src/app/db-communication.service';
 import { VisitDTO } from 'src/app/DTO/VisitDTO';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PatientVisitDTO } from 'src/app/DTO/PatientVisitDTO';
+import { GenericVisitDTO } from 'src/app/DTO/GenericVisitDTO';
 
 @Component({
   selector: 'app-lista-wizyt',
@@ -23,14 +24,9 @@ export class ListaWizytComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private db: DbCommunicationService) {
-    this.route.queryParams.subscribe(params => {
-      if (params.visit) {
-        console.log('Visit: ', params.visit);
-      }
-      console.log('Par: ', params);
-    });
   }
 
+  public pastVisits: GenericVisitDTO[] = [];
   public Visits: PatientVisitDTO[];
 
   public logout(): void {
@@ -57,6 +53,15 @@ export class ListaWizytComponent implements OnInit {
       next: this.handleData.bind(this),
       error: this.handleError.bind(this)
     });
+
+    this.db.VisitPast().subscribe({
+      next: this.handlePast.bind(this),
+      error: this.handleError.bind(this)
+    });
+  }
+
+  private handlePast(data: GenericVisitDTO[]) {
+    this.pastVisits = data;
   }
 
   private handleData(data: PatientVisitDTO[]) {
